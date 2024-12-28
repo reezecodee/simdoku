@@ -26,6 +26,15 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
+    <style>
+        .letter-format{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+        }
+        .paragraph-height{
+            line-height: 1;
+        }
+    </style>
     <!-- /END GA -->
     @livewireStyles
 </head>
@@ -47,7 +56,7 @@
     <script src="/assets/modules/jquery.min.js"></script>
     <script src="/assets/modules/popper.js"></script>
     <script src="/assets/modules/tooltip.js"></script>
-    <script src="/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script data-navigate-once src="/assets/modules/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
     <script src="/assets/js/stisla.js"></script>
 

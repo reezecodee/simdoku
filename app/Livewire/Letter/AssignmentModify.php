@@ -9,7 +9,7 @@ use Livewire\Component;
 class AssignmentModify extends Component
 {
     #[Title('Buat Surat Tugas')]
-
+    
     public function downloadPDF()
     {
         $pdf = Pdf::loadView('pdf.surat-tugas');

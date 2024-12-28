@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg main-navbar">
-    <a href="index.html" class="navbar-brand sidebar-gone-hide">Archivin</a>
+    <a href="{{ route('dashboard') }}" wire:navigate.hover class="navbar-brand sidebar-gone-hide">Archivin</a>
     <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
     <div class="nav-collapse">
       <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
@@ -231,25 +231,25 @@
     <div class="container">
       <ul class="navbar-nav">
         <li class="nav-item {{ Request::is('dashboard*') ? 'active' : '' }}">
-          <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+          <a href="{{ route('dashboard') }}" wire:navigate.hover class="nav-link"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
         </li>
         <li class="nav-item dropdown {{ Request::is('surat*') ? 'active' : '' }}">
           <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-mail-bulk"></i><span>Buat Surat</span></a>
           <ul class="dropdown-menu">
-            <li class="nav-item {{ Request::is('surat/tugas*') ? 'active' : '' }}"><a href="{{ route('letter.assignment') }}" class="nav-link">Surat Tugas</a></li>
+            <li class="nav-item {{ Request::is('surat/tugas*') ? 'active' : '' }}"><a href="{{ route('letter.assignment') }}" wire:navigate.hover class="nav-link">Surat Tugas</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
           <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-book"></i><span>Proposal & laporan</span></a>
           <ul class="dropdown-menu">
-            <li class="nav-item"><a href="" class="nav-link">Proposal</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Laporan</a></li>
+            <li class="nav-item"><a href="" wire:navigate.hover class="nav-link">Proposal</a></li>
+            <li class="nav-item"><a href="" wire:navigate.hover class="nav-link">Laporan</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
           <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-table"></i><span>Formulir</span></a>
           <ul class="dropdown-menu">
-            <li class="nav-item"><a href="" class="nav-link">Pengajuan Dana</a></li>
+            <li class="nav-item"><a href="" wire:navigate.hover class="nav-link">Pengajuan Dana</a></li>
           </ul>
         </li>
       </ul>
