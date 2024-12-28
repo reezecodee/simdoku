@@ -6,9 +6,9 @@
         <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav">
-        <li class="nav-item active"><a href="#" class="nav-link">Application</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Report Something</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Server Status</a></li>
+        <li class="nav-item active"><a href="#" class="nav-link">Pengaturan</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Upload Tanda Tangan</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Penyimpanan</a></li>
       </ul>
     </div>
     <form class="form-inline ml-auto">
@@ -205,18 +205,11 @@
         </div>
       </li>
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-        <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-        <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a>
+        <img alt="image" src="{{ asset('images/profile/profile.jpg') }}" class="rounded-circle mr-1">
+        <div class="d-sm-none d-lg-inline-block">Agung Baitul Hikmah</div></a>
         <div class="dropdown-menu dropdown-menu-right">
-          <div class="dropdown-title">Logged in 5 min ago</div>
           <a href="features-profile.html" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Profile
-          </a>
-          <a href="features-activities.html" class="dropdown-item has-icon">
-            <i class="fas fa-bolt"></i> Activities
-          </a>
-          <a href="features-settings.html" class="dropdown-item has-icon">
-            <i class="fas fa-cog"></i> Settings
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item has-icon text-danger">
@@ -236,20 +229,20 @@
         <li class="nav-item dropdown {{ Request::is('surat*') ? 'active' : '' }}">
           <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-mail-bulk"></i><span>Buat Surat</span></a>
           <ul class="dropdown-menu">
-            <li class="nav-item {{ Request::is('surat/tugas*') ? 'active' : '' }}"><a href="{{ route('letter.assignment') }}" wire:navigate.hover class="nav-link">Surat Tugas</a></li>
+            <li class="nav-item {{ Request::is('surat/tugas*') ? 'active' : '' }}"><a href="{{ route('letter.index') }}" wire:navigate.hover class="nav-link">Surat Tugas</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item {{ Request::is('proposal*') || Request::is('laporan*') ? 'active' : '' }} dropdown">
           <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-book"></i><span>Proposal & laporan</span></a>
           <ul class="dropdown-menu">
-            <li class="nav-item"><a href="" wire:navigate.hover class="nav-link">Proposal</a></li>
-            <li class="nav-item"><a href="" wire:navigate.hover class="nav-link">Laporan</a></li>
+            <li class="nav-item {{ Request::is('proposal*') ? 'active' : '' }}"><a href="{{ route('proposal.index') }}" wire:navigate.hover class="nav-link">Proposal</a></li>
+            <li class="nav-item {{ Request::is('laporan*') ? 'active' : '' }}"><a href="{{ route('report.index') }}" wire:navigate.hover class="nav-link">Laporan</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item {{ Request::is('formulir*') ? 'active' : '' }} dropdown">
           <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-table"></i><span>Formulir</span></a>
           <ul class="dropdown-menu">
-            <li class="nav-item"><a href="" wire:navigate.hover class="nav-link">Pengajuan Dana</a></li>
+            <li class="nav-item {{ Request::is('formulir*') ? 'active' : '' }}"><a href="{{ route('form.index') }}" wire:navigate.hover class="nav-link">Pengajuan Dana</a></li>
           </ul>
         </li>
       </ul>

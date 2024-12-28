@@ -11,7 +11,7 @@ class Assignment extends Component
 
     public function createLetterAssigment()
     {
-        $this->redirect(route('letter.modify-assignment', 1));
+        $this->redirect(route('letter.modify', 1));
     }
 
     public function render()

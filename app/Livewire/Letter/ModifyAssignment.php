@@ -6,7 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class AssignmentModify extends Component
+class ModifyAssignment extends Component
 {
     #[Title('Buat Surat Tugas')]
     
