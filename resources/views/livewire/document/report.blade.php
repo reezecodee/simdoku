@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-3">
                     <a>
-                        <button class="btn btn-primary">Buat Laporan</button>
+                        <button wire:click="createReport" class="btn btn-primary">Buat Laporan</button>
                     </a>
                 </div>
                 <div class="table-responsive table-invoice">

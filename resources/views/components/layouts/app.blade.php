@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/modules/fontawesome/css/all.min.css">
 
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.7/css/froala_editor.pkgd.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -34,6 +36,9 @@
         .paragraph-height{
             line-height: 1;
         }
+        #fr-logo {
+            display: none;
+        }
     </style>
     <!-- /END GA -->
     @livewireStyles
@@ -53,15 +58,19 @@
         </div>
     </div>
 
-    <script src="/assets/modules/jquery.min.js"></script>
-    <script src="/assets/modules/popper.js"></script>
-    <script src="/assets/modules/tooltip.js"></script>
+    <script data-navigate-once src="/assets/modules/jquery.min.js"></script>
+    <script data-navigate-once src="/assets/modules/popper.js"></script>
+    <script data-navigate-once src="/assets/modules/tooltip.js"></script>
     <script data-navigate-once src="/assets/modules/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
-    <script src="/assets/js/stisla.js"></script>
+    <script data-navigate-once src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script data-navigate-once src="/assets/js/stisla.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.7/js/froala_editor.pkgd.min.js"></script>
+    <script>
+        new FroalaEditor('#editor');
+    </script>
 
     <!-- Template JS File -->
-    <script src="/assets/js/scripts.js"></script>
+    <script data-navigate-once src="/assets/js/scripts.js"></script>
     @livewireScripts
 </body>
 

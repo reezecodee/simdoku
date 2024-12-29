@@ -8,6 +8,11 @@ use Livewire\Component;
 class Proposal extends Component
 {
     #[Title('Proposal Kegiatan')]
+
+    public function createProposal()
+    {
+        $this->redirect(route('proposal.modify', 1));
+    }
     
     public function render()
     {
