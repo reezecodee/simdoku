@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-3">
                     <a>
-                        <button class="btn btn-primary">Buat Formulir Pengajuan</button>
+                        <button wire:click="createFormulir" class="btn btn-primary">Buat Formulir Pengajuan</button>
                     </a>
                 </div>
                 <div class="table-responsive table-invoice">

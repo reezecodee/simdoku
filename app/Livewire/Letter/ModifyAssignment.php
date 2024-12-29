@@ -21,6 +21,6 @@ class ModifyAssignment extends Component
 
     public function render()
     {
-        return view('livewire.letter.assignment-modify');
+        return view('livewire.letter.modify-assignment');
     }
 }
