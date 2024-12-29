@@ -1,8 +1,20 @@
 <div>
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-danger" wire:click="generatePdf">Cetak PDF</button>
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="cursor: pointer">
+                        <label style="cursor: pointer" class="form-check-label" for="flexCheckDefault">
+                            Gunakan tanda tangan digital
+                        </label>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success mr-2">Preview Surat</button>
+                    <button class="btn btn-primary mr-2">Cetak Word</button>
+                    <button class="btn btn-danger">Cetak PDF</button>
+                </div>
             </div>
         </div>
     </div>
@@ -99,11 +111,11 @@
                             <td>1</td>
                             <td>
                                 <input type="number" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="NIP staff">
+                                    placeholder="NIM volunteer">
                             </td>
                             <td>
                                 <input type="text" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="Nama staff">
+                                    placeholder="Nama volunteer">
                             </td>
                             <td rowspan="3">
                                 <textarea cols="30" rows="10" wire:model.live.debounce.500ms="" class="form-control"
@@ -118,11 +130,11 @@
                             <td>1</td>
                             <td>
                                 <input type="number" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="NIP staff">
+                                    placeholder="NIM volunteer">
                             </td>
                             <td>
                                 <input type="text" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="Nama staff">
+                                    placeholder="Nama volunteer">
                             </td>
                         </tr>
                     </tbody>
