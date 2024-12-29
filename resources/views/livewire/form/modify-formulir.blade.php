@@ -54,6 +54,9 @@
     </div>
     <div class="card">
         <div class="card-body">
+            <div class="d-flex justify-content-end mb-2">
+                <button class="btn btn-primary">Tambah Pengajuan</button>
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>

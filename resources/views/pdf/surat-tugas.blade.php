@@ -154,6 +154,9 @@
             </div>
         </div>
     </div>
+    ppp
+    <br>
+    {!! $image !!}
 </body>
 
 </html>

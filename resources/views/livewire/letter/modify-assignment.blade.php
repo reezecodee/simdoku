@@ -2,6 +2,13 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-end">
+                <button class="btn btn-danger" wire:click="generatePdf">Cetak PDF</button>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-end">
                 <p class="letter-format">Tasikmalaya, 20 Oktober 2024</p>
             </div>
             <div class="d-flex justify-content-start">
