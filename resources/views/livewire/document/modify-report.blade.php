@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="judul" class="form-label"><b>Judul Proposal</b></label>
-                        <input type="text" id="judul" class="form-control" placeholder="Masukkan judul proposal">
+                        <label for="judul" class="form-label"><b>Judul laporan</b></label>
+                        <input type="text" id="judul" class="form-control" placeholder="Masukkan judul laporan">
                     </div>
                 </div>
                 <div class="col-md-6">

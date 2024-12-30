@@ -169,7 +169,6 @@
             <div class="form-group">
                 <label for="susunan-panitia" class="form-label"><b>2.7 Susunan Panitia</b></label>
                 <div class="form-group">
-                    <label for="pelindung" class="form-label">1. Pelindung</label>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-primary mb-3">Tambah Pelindung</button>
                     </div>
@@ -178,6 +177,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Pelindung</th>
+                                <th>Peran</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -188,212 +188,18 @@
                                     <input type="text" wire:model.live.debounce.500ms class="form-control">
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="penanggung-jawab" class="form-label">2. Penanggung Jawab</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Penanggung Jawab</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Penanggung Jawab</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="ketua-pelaksana" class="form-label">3. Ketua Pelaksana</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Ketua Pelaksana</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Ketua Pelaksana</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="sekertaris" class="form-label">4. Sekertaris</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Sekertaris</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Sekertaris</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="bendahara" class="form-label">5. Bendahara</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Bendahara</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Bendahara</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="seksi-acara" class="form-label">6. Seksi Acara</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Seksi Acara</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Seksi Acara</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="devisi-humas" class="form-label">7. Divisi Humas</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Devisi Humas</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Devisi Humas</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="seksi-acara" class="form-label">8. Seksi Pudekdok</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Seksi Pudekdok</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Seksi Pudekdok</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <label for="seksi-acara" class="form-label">9. Koordinator Lapangan</label>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mb-3">Tambah Koordinator Lapangan</button>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Koordinator Lapangan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" wire:model.live.debounce.500ms class="form-control">
+                                    <select class="form-control">
+                                        <option selected>Pilih peran</option>
+                                        <option value="Pelindung">Pelindung</option>
+                                        <option value="Penanggung jawab">Penanggung jawab</option>
+                                        <option value="Ketua pelaksana">Ketua pelaksana</option>
+                                        <option value="Sekertaris">Sekertaris</option>
+                                        <option value="Bendahara">Bendahara</option>
+                                        <option value="Seksi acara">Seksi acara</option>
+                                        <option value="Divisi humas">Divisi humas</option>
+                                        <option value="Seksi pudekdok">Seksi pudekdok</option>
+                                        <option value="Koordinator lapangan">Koordinator lapangan</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
@@ -435,7 +241,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4">Jumlah Pengeluaran:</td>
+                            <td colspan="3">Jumlah Pengeluaran:</td>
                             <td>
                                 <span id="totalTotal">0</span> 
                             </td>
@@ -466,22 +272,20 @@
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-center">
                     <div>
-                        <p>Koordinator Markom UBSI Tasikmalaya</p>
                         <div class="d-flex justify-content-center">
                             <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
                         </div>
                         <p class="paragraph-height"><b>Prof. Budi Budiman, S.T, M.Kom</b></p>
-                        <p class="paragraph-height"><b>NIP.29398434234</b></p>
+                        <p class="paragraph-height"><b>Ketua Panitia</b></p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div>
-                        <p>Koordinator Markom UBSI Tasikmalaya</p>
                         <div class="d-flex justify-content-center">
                             <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
                         </div>
                         <p class="paragraph-height"><b>Prof. Budi Budiman, S.T, M.Kom</b></p>
-                        <p class="paragraph-height"><b>NIP.29398434234</b></p>
+                        <p class="paragraph-height"><b>Kepala Kampus</b></p>
                     </div>
                 </div>
             </div>

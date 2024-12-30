@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('letter_staff', function (Blueprint $table) {
+        Schema::create('budget_submissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('letter_id')->constrained('letter_assignments');
-            $table->string('nip')->nullable();
-            $table->string('nama')->nullable();
-            $table->string('tgl_pelaksanaan')->nullable();
+            $table->foreignUuid('formulir_id')->constrained('formulirs');
+            $table->string('keterangan')->nullable();
+            $table->string('jumlah')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('letter_staff');
+        Schema::dropIfExists('budget_submissions');
     }
 };

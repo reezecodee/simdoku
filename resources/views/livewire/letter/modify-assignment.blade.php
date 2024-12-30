@@ -54,39 +54,26 @@
                             <th>NIP</th>
                             <th>Nama</th>
                             <th>Sekolah</th>
-                            <th>Tanggal pelaksanaan</th>
+                            <th>Tanggal Pelaksanaan</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="NIP staff">
-                            </td>
-                            <td>
-                                <input type="text" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="Nama staff">
-                            </td>
+                            <td rowspan="3">1</td>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                            <td rowspan="3"><input type="text" class="form-control"></td>
                             <td rowspan="3">
-                                <textarea cols="30" rows="10" wire:model.live.debounce.500ms="" class="form-control"
-                                    placeholder="Nama sekolah"></textarea>
-                            </td>
-                            <td rowspan="3">
-                                <textarea cols="30" rows="10" wire:model.live.debounce.500ms="" class="form-control"
-                                    placeholder="Hari, tanggal, dan jam"></textarea>
+                                <input type="text" class="form-control">
                             </td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="NIP staff">
-                            </td>
-                            <td>
-                                <input type="text" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="Nama staff">
-                            </td>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -103,42 +90,31 @@
                             <th>NIM</th>
                             <th>Nama</th>
                             <th>Sekolah</th>
-                            <th>Tanggal pelaksanaan</th>
+                            <th>Tanggal Pelaksanaan</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="NIM volunteer">
-                            </td>
-                            <td>
-                                <input type="text" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="Nama volunteer">
-                            </td>
+                            <td rowspan="4">1</td>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                            {{-- buat dinamis --}}
+                            <td rowspan="3"><input type="text" class="form-control"></td> 
+                            {{-- buat dinamis --}}
                             <td rowspan="3">
-                                <textarea cols="30" rows="10" wire:model.live.debounce.500ms="" class="form-control"
-                                    placeholder="Nama sekolah"></textarea>
-                            </td>
-                            <td rowspan="3">
-                                <textarea cols="30" rows="10" wire:model.live.debounce.500ms="" class="form-control"
-                                    placeholder="Hari, tanggal, dan jam"></textarea>
+                                <input type="text" class="form-control">
                             </td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="NIM volunteer">
-                            </td>
-                            <td>
-                                <input type="text" wire:model.live.debounce.500ms class="form-control"
-                                    placeholder="Nama volunteer">
-                            </td>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
                         </tr>
                     </tbody>
-                </table>
+                </table>                
             </div>
             <div class="mt-1 letter-format">
                 <p>Demikian pengajuan ini kami sampaikan. Atas segala perhatian dan kebijakannya kami mengucapkan terimakasih.</p>
@@ -155,7 +131,7 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <div>
-                            <p>Koordinator Markom UBSI Tasikmalaya</p>
+                            <p>Kepala Kampus UBSI Tasikmalaya</p>
                             <div class="d-flex justify-content-center">
                                 <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
                             </div>
