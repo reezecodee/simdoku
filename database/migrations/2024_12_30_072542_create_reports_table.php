@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('judul')->nullable();
             $table->string('kutipan')->nullable();
             $table->text('penutup')->nullable();
-            $table->foreignUuid('ttd_ketua_pelaksana')->nullable()->constrained('signature');
-            $table->foreignUuid('ttd_kadiv_dmer')->nullable()->constrained('signature');
+            $table->foreignUuid('ttd_ketua_pelaksana')->nullable()->constrained('signatures');
+            $table->foreignUuid('ttd_kadiv_dmer')->nullable()->constrained('signatures');
             $table->timestamps();
         });
     }

@@ -44,3 +44,5 @@ Route::prefix('tanda-tangan')->group(function(){
 });
 
 Route::get('/data', [DataController::class, 'getDummyData']);
+
+require __DIR__.'/datatable.php';

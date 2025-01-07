@@ -11,8 +11,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Email</th>
+                            <th>Perihal</th>
+                            <th>Acara</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -26,11 +26,11 @@
                 $('#myTable').DataTable({
                     processing: true,       
                     serverSide: true,      
-                    ajax: "/data", 
+                    ajax: '{{ route('letter.list') }}', 
                     columns: [
                         { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false }, 
-                        { data: 'name', name: 'name' }, 
-                        { data: 'email', name: 'email' }, 
+                        { data: 'perihal', name: 'perihal' }, 
+                        { data: 'nama_acara', name: 'nama_acara' }, 
                         { data: 'action', name: 'action', orderable: false, searchable: false } 
                     ]
                 });

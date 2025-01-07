@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Letter;
 
+use App\Models\LetterAssignment;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -11,7 +12,8 @@ class Assignment extends Component
 
     public function createLetterAssigment()
     {
-        $this->redirect(route('letter.modify', 1));
+        $letter = LetterAssignment::create([]);
+        $this->redirect(route('letter.modify', $letter->id));
     }
 
     public function render()

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('no_rekening')->nullable();
             $table->string('atas_nama')->nullable();
             $table->string('tanggal_diperlukan')->nullable();
-            $table->foreignUuid('ttd_ka_devisi_mer')->nullable()->constrained('signature');
-            $table->foreignUuid('ttd_ka_baku')->nullable()->constrained('signature');
+            $table->foreignUuid('ttd_ka_devisi_mer')->nullable()->constrained('signatures');
+            $table->foreignUuid('ttd_ka_baku')->nullable()->constrained('signatures');
             $table->timestamps();
         });
     }
