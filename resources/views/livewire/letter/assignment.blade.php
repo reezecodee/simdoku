@@ -7,78 +7,34 @@
                         <button class="btn btn-primary">Buat Surat Tugas</button>
                     </a>
                 </div>
-                <div class="table-responsive table-invoice">
-                    <table class="table table-striped">
+                <table id="myTable" class="table table-striped">
+                    <thead>
                         <tr>
-                            <th>Judul surat</th>
-                            <th>Surat tugas kegiatan</th>
-                            <th>Dibuat pada</th>
-                            <th>Terakhir diperbarui</th>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>INV-87239</td>
-                            <td>INV-87239</td>
-                            <td>INV-87239</td>
-                            <td>INV-87239</td>
-                            <td>
-                                <a href="#" class="btn btn-success"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-file-word"></i> Word</a>
-                                <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>INV-48574</td>
-                            <td>INV-48574</td>
-                            <td>INV-48574</td>
-                            <td>INV-48574</td>
-                            <td>
-                                <a href="#" class="btn btn-success"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-file-word"></i> Word</a>
-                                <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>INV-76824</td>
-                            <td>INV-76824</td>
-                            <td>INV-76824</td>
-                            <td>INV-76824</td>
-                            <td>
-                                <a href="#" class="btn btn-success"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-file-word"></i> Word</a>
-                                <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>INV-84990</td>
-                            <td>INV-84990</td>
-                            <td>INV-84990</td>
-                            <td>INV-84990</td>
-                            <td>
-                                <a href="#" class="btn btn-success"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-file-word"></i> Word</a>
-                                <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>INV-87320</td>
-                            <td>INV-87320</td>
-                            <td>INV-87320</td>
-                            <td>INV-87320</td>
-                            <td>
-                                <a href="#" class="btn btn-success"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-file-word"></i> Word</a>
-                                <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
+    <x-slot name="script">
+        <script>
+            $(document).ready(function () {
+                $('#myTable').DataTable({
+                    processing: true,       
+                    serverSide: true,      
+                    ajax: "/data", 
+                    columns: [
+                        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false }, 
+                        { data: 'name', name: 'name' }, 
+                        { data: 'email', name: 'email' }, 
+                        { data: 'action', name: 'action', orderable: false, searchable: false } 
+                    ]
+                });
+            });
+        </script>
+    </x-slot>
 </div>

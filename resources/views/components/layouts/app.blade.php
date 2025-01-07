@@ -9,6 +9,7 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/modules/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.7/css/froala_editor.pkgd.min.css">
@@ -29,13 +30,15 @@
         gtag('config', 'UA-94034622-3');
     </script>
     <style>
-        .letter-format{
+        .letter-format {
             font-family: 'Times New Roman', Times, serif;
             font-size: 12pt;
         }
-        .paragraph-height{
+
+        .paragraph-height {
             line-height: 1;
         }
+
         #fr-logo {
             display: none;
         }
@@ -65,6 +68,9 @@
     <script data-navigate-once src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
     <script data-navigate-once src="/assets/js/stisla.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.7/js/froala_editor.pkgd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    {{ $script ?? '' }}
     <script>
         new FroalaEditor('#editor');
     </script>

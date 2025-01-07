@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DataController;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Document\ModifyProposal;
 use App\Livewire\Document\ModifyReport;
@@ -41,3 +42,5 @@ Route::prefix('formulir')->group(function(){
 Route::prefix('tanda-tangan')->group(function(){
     Route::get('/', Signature::class)->name('signature.index');
 });
+
+Route::get('/data', [DataController::class, 'getDummyData']);
