@@ -6,9 +6,8 @@
         <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav">
-        <li class="nav-item active"><a href="#" class="nav-link">Pengaturan</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Upload Tanda Tangan</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Penyimpanan</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" wire:navigate.hover>Arsip</a></li>
+        <li class="nav-item {{ Request::is('tanda-tangan*') ? 'active' : '' }}"><a href="{{ route('signature.index') }}" class="nav-link" wire:navigate.hover>Upload Tanda Tangan</a></li>
       </ul>
     </div>
     <form class="form-inline ml-auto">

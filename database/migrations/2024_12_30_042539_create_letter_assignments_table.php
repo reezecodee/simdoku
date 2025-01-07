@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('perihal')->nullable();
             $table->string('nama_acara')->nullable();
             $table->foreignUuid('ttd_markom_id')->nullable()->constrained('signature');
+            $table->string('nip_markom')->nullable();
             $table->enum('ttd_digital', ['Ya', 'Tidak'])->default('Tidak');
             $table->timestamps();
         });
