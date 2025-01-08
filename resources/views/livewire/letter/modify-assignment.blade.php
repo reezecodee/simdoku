@@ -43,16 +43,12 @@
             </div>
 
             <div class="mt-1">
-                <livewire:components.staff-table 
-                :letter-id="$id" 
-                :first-id-execution="$firstIdExecutionStaff"/>
+                <livewire:components.staff-table :letter-id="$id" :first-id-execution="$firstIdExecutionStaff" />
             </div>
 
             <div class="mt-1">
-                <livewire:components.volunteer-table
-                :letter-id="$id" 
-                :first-id-execution="$firstIdExecutionVolunteer"
-                />
+                <livewire:components.volunteer-table :letter-id="$id"
+                    :first-id-execution="$firstIdExecutionVolunteer" />
             </div>
 
 
@@ -61,6 +57,7 @@
                     terimakasih.</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-center">
+                        @if($letter->ttd_markom_id)
                         <div>
                             <p>Koordinator Markom UBSI Tasikmalaya</p>
                             <div class="d-flex justify-content-center">
@@ -71,6 +68,16 @@
                             <p class="paragraph-height"><b>Prof. Budi Budiman, S.T, M.Kom</b></p>
                             <p class="paragraph-height"><b>NIP.29398434234</b></p>
                         </div>
+                        @else
+                        <div>
+                            <p>Koordinator Markom UBSI Tasikmalaya</p>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-danger trigger--fire-modal-7" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="alert('Deleted :)');">Delete</button>
+                                {{-- <button type="button" class="btn btn-primary btn-sm trigger--fire-modal-7"
+                                    id="modal-1">Pilih tanda tangan</button> --}}
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <div class="d-flex justify-content-center">
                         <div>
@@ -88,4 +95,7 @@
             </div>
         </div>
     </div>
+    
+    <livewire:components.signature-modal" />
+    
 </div>

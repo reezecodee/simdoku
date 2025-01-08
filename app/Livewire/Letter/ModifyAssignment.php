@@ -17,6 +17,7 @@ class ModifyAssignment extends Component
 
     public $date;
     public $id;
+    public $letter;
 
     public $firstIdExecutionStaff;
     public $firstIdExecutionVolunteer;
@@ -25,6 +26,7 @@ class ModifyAssignment extends Component
     {
         $this->date = Carbon::now()->translatedFormat('d F Y');
         $this->id = $id;
+        $this->letter = LetterAssignment::findOrFail($id);
 
         $this->firstIdExecutionStaff = Execution::where('surat_tugas_id', $id)->where('type', 'Staff')->first();
         $this->firstIdExecutionVolunteer = Execution::where('surat_tugas_id', $id)->where('type', 'Volunteer')->first();
