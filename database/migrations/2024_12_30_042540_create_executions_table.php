@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('surat_tugas_id')->constrained('letter_assignments');
             $table->string('nama_sekolah')->nullable();
             $table->string('tgl_pelaksanaan')->nullable();
+            $table->enum('type', ['Staff', 'Volunteer']);
             $table->timestamps();
         });
     }

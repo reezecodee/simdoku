@@ -1,11 +1,14 @@
 <div>
     <div class="card">
         <div class="card-body">
-            <div class="d-flex align-items-center justify-content-end">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="{{ route('letter.index') }}" wire:navigate.hover>
+                    <button class="btn btn-danger">Kembali</button>
+                </a>
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-success mr-2">Preview Surat</button>
                     <button class="btn btn-primary mr-2">Cetak Word</button>
-                    <button class="btn btn-danger">Cetak PDF</button>
+                    <button class="btn btn-danger" wire:click="generatePdf">Cetak PDF</button>
                 </div>
             </div>
         </div>
@@ -40,110 +43,18 @@
             </div>
 
             <div class="mt-1">
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary mb-3" wire:click="addStaff(0)">Tambah Staff</button>
-                </div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Sekolah</th>
-                            <th>Tanggal pelaksanaan</th>
-                            <th>NIP</th>
-                            <th>Nama</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($executions as $index => $execution)
-                        <tr>
-                            <td rowspan="{{ max(1, count($execution['staff'])) + 1 }}">{{ $loop->iteration }}</td>
-                            <td rowspan="{{ max(1, count($execution['staff'])) + 1 }}">
-                                <input type="text" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.nama_sekolah"
-                                    placeholder="Nama Sekolah">
-                            </td>
-                            <td rowspan="{{ max(1, count($execution['staff'])) + 1 }}">
-                                <input type="date" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.tgl_pelaksanaan">
-                            </td>
-                        </tr>
-                        @if (count($execution['staff']) > 0)
-                        @foreach ($execution['staff'] as $staffIndex => $staff)
-                        <tr>
-                            <td>
-                                <input type="text" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.staff.{{ $staffIndex }}.nip"
-                                    placeholder="NIP">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.staff.{{ $staffIndex }}.nama"
-                                    placeholder="Nama">
-                            </td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td colspan="2" class="text-center">Tidak ada staff</td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                <livewire:components.staff-table 
+                :letter-id="$id" 
+                :first-id-execution="$firstIdExecutionStaff"/>
             </div>
 
             <div class="mt-1">
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary mb-3" wire:click="addVolunteer(0)">Tambah Volunteer</button>
-                </div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Sekolah</th>
-                            <th>Tanggal pelaksanaan</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($executions as $index => $execution)
-                        <tr>
-                            <td rowspan="{{ max(1, count($execution['volunteers'])) + 1 }}">{{ $loop->iteration }}</td>
-                            <td rowspan="{{ max(1, count($execution['volunteers'])) + 1 }}">
-                                <input type="text" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.nama_sekolah"
-                                    placeholder="Nama Sekolah">
-                            </td>
-                            <td rowspan="{{ max(1, count($execution['volunteers'])) + 1 }}">
-                                <input type="date" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.tgl_pelaksanaan">
-                            </td>
-                        </tr>
-                        @if (count($execution['volunteers']) > 0)
-                        @foreach ($execution['volunteers'] as $volunteerIndex => $volunteer)
-                        <tr>
-                            <td>
-                                <input type="text" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.volunteers.{{ $volunteerIndex }}.nim"
-                                    placeholder="NIM">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control"
-                                    wire:model.debounce.500ms="executions.{{ $index }}.volunteers.{{ $volunteerIndex }}.nama"
-                                    placeholder="Nama">
-                            </td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td colspan="2" class="text-center">Tidak ada volunteer</td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                <livewire:components.volunteer-table
+                :letter-id="$id" 
+                :first-id-execution="$firstIdExecutionVolunteer"
+                />
             </div>
+
 
             <div class="mt-1 letter-format">
                 <p>Demikian pengajuan ini kami sampaikan. Atas segala perhatian dan kebijakannya kami mengucapkan
