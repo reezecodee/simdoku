@@ -20,4 +20,9 @@ class Execution extends Model
     {
         return $this->hasMany(Staff::class, 'pelaksanaan_id');
     }
+
+    public function volunteer()
+    {
+        return $this->hasMany(Volunteer::class, 'pelaksanaan_id');
+    }
 }

@@ -16,6 +16,8 @@ class StaffTable extends Component
     public $firstIdExecutionStaff;
     public $selectedExecutionId;
 
+    public $saving = false;
+
     public function mount()
     {
         $this->selectedExecutionId = null;
@@ -69,6 +71,34 @@ class StaffTable extends Component
 
         $this->staffs = Staff::where('surat_tugas_id', $this->letterId)->get();
         $this->executionStaffs = Execution::where('surat_tugas_id', $this->letterId)->where('type', 'Staff')->get();
+    }
+
+    public function updateStaff($id, $field, $value)
+    {
+        $this->saving = true; 
+
+        $staff = Staff::findOrFail($id);
+
+        if ($staff) {
+            $staff->$field = $value;
+            $staff->save();
+        }
+
+        $this->saving = false; 
+    }
+
+    public function updateExecution($id, $field, $value)
+    {
+        $this->saving = true; 
+
+        $execution = Execution::findOrFail($id);
+
+        if ($execution) {
+            $execution->$field = $value;
+            $execution->save();
+        }
+
+        $this->saving = false; 
     }
 
     public function render()

@@ -10,4 +10,14 @@ class Volunteer extends Model
     use HasUuids;
 
     protected $guarded = ['id'];
+
+    public function letter()
+    {
+        return $this->belongsTo(LetterAssignment::class, 'surat_tugas_id');
+    }
+
+    public function execution()
+    {
+        return $this->belongsTo(Execution::class, 'pelaksanaan_id');
+    }
 }

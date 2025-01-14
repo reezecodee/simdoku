@@ -7,6 +7,10 @@
         }
     </style>
 
+    <div wire:loading wire:target="updateStaff, updateExecution" class="text-info">
+        Menyimpan data...
+    </div>
+
     <div class="d-flex justify-content-end">
         <button class="btn btn-primary mb-3 mr-2" wire:click="addExecutionStaff('{{ $letterId }}')">Tambah
             Pelaksanaan</button>
@@ -51,10 +55,14 @@
                 <td colspan="3">Belum ada anggota</td>
                 @else
                 <td>
-                    <input type="text" class="form-control" value="{{ $relatedStaffs->first()->nip }}">
+                    <input type="number" class="form-control"
+                        wire:input="updateStaff('{{ $relatedStaffs->first()->id }}', 'nip', $event.target.value)"
+                        value="{{ $relatedStaffs->first()->nip }}">
                 </td>
                 <td>
-                    <input type="text" class="form-control" value="{{ $relatedStaffs->first()->nama }}">
+                    <input type="text" class="form-control"
+                        wire:input="updateStaff('{{ $relatedStaffs->first()->id }}', 'nama', $event.target.value)"
+                        value="{{ $relatedStaffs->first()->nama }}">
                 </td>
                 <td>
                     <button class="btn btn-danger" wire:click="deleteStaff('{{ $relatedStaffs->first()->id }}')">
@@ -63,10 +71,14 @@
                 </td>
                 @endif
                 <td rowspan="{{ max($relatedStaffs->count(), 1) }}">
-                    <input type="text" class="form-control" value="{{ $execution->nama_sekolah }}">
+                    <input type="text" class="form-control"
+                        wire:input="updateExecution('{{ $execution->id }}', 'nama_sekolah', $event.target.value)"
+                        value="{{ $execution->nama_sekolah }}">
                 </td>
                 <td rowspan="{{ max($relatedStaffs->count(), 1) }}">
-                    <input type="text" class="form-control" value="{{ $execution->tgl_pelaksanaan }}">
+                    <input type="date" class="form-control"
+                        wire:input="updateExecution('{{ $execution->id }}', 'tgl_pelaksanaan', $event.target.value)"
+                        value="{{ $execution->tgl_pelaksanaan }}">
                 </td>
                 <td rowspan="{{ max($relatedStaffs->count(), 1) }}">
                     <button class="btn btn-danger" wire:click="deleteExecution('{{ $execution->id }}')">
@@ -77,12 +89,16 @@
 
             @if($relatedStaffs->count() > 1)
             @foreach ($relatedStaffs->skip(1) as $staff)
-            <tr>
+            <tr wire:key="{{ $staff->id }}">
                 <td>
-                    <input type="text" class="form-control" value="{{ $staff->nip }}">
+                    <input type="number" class="form-control"
+                        wire:input="updateStaff('{{ $staff->id }}', 'nip', $event.target.value)"
+                        value="{{ $staff->nip }}">
                 </td>
                 <td>
-                    <input type="text" class="form-control" value="{{ $staff->nama }}">
+                    <input type="text" class="form-control"
+                        wire:input="updateStaff('{{ $staff->id }}', 'nama', $event.target.value)"
+                        value="{{ $staff->nama }}">
                 </td>
                 <td>
                     <button class="btn btn-danger" wire:click="deleteStaff('{{ $staff->id }}')">
@@ -95,6 +111,4 @@
             @endforeach
         </tbody>
     </table>
-
-</div>
 </div>
