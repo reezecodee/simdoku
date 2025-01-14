@@ -23,10 +23,16 @@ class LetterDatatableController extends Controller
         })
         ->addColumn('action', function ($row) {
             return '
-            <a wire:navigate href="'. route('letter.modify', $row->id) .'" style="text-decoration: none;">
+            <div class="d-flex">
+            <a wire:navigate class="mr-2 d-inline-block" href="'. route('letter.modify', $row->id) .'" style="text-decoration: none;">
             <button class="btn btn-primary btn-sm">Edit</button>
             </a>
-            <button class="btn btn-danger btn-sm">Hapus</button>
+            <form action="'. route('letter.delete', $row->id) .'" method="POST" id="'. $row->id .'">
+            '. csrf_field() .'
+            '. method_field('DELETE') .'
+            <button class="btn btn-danger btn-sm" onclick="submitForm(\'' . $row->id . '\')" type="button">Hapus</button>
+            </form>
+            </div>
             ';
         }) 
         ->rawColumns(['action']) 

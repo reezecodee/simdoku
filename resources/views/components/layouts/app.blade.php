@@ -67,21 +67,22 @@
     <script src="/assets/modules/tooltip.js"></script>
     <script data-navigate-once src="/assets/modules/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
-    <script src="/assets/js/page/bootstrap-modal.js"></script>
-    <script src="/assets/modules/prism/prism.js"></script>
     <script src="/assets/modules/moment.min.js"></script>
     <script src="/assets/js/stisla.js"></script>
-    <script src="/assets/js/custom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.7/js/froala_editor.pkgd.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/swal.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     {{ $script ?? '' }}
     <script>
         new FroalaEditor('#editor');
     </script>
+    
 
     <!-- Template JS File -->
-    <script data-navigate-once src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/custom.js"></script>
     @livewireScripts
 </body>
 

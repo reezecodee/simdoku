@@ -72,9 +72,7 @@
                         <div>
                             <p>Koordinator Markom UBSI Tasikmalaya</p>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-danger trigger--fire-modal-7" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="alert('Deleted :)');">Delete</button>
-                                {{-- <button type="button" class="btn btn-primary btn-sm trigger--fire-modal-7"
-                                    id="modal-1">Pilih tanda tangan</button> --}}
+                                <button class="btn btn-primary btn-sm">Pilih tanda tangan</button>
                             </div>
                         </div>
                         @endif
@@ -95,7 +93,4 @@
             </div>
         </div>
     </div>
-    
-    <livewire:components.signature-modal" />
-    
 </div>

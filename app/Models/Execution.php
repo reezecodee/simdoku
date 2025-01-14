@@ -15,4 +15,9 @@ class Execution extends Model
     {
         return $this->belongsTo(LetterAssignment::class, 'surat_tugas_id');
     }
+
+    public function staff()
+    {
+        return $this->hasMany(Staff::class, 'pelaksanaan_id');
+    }
 }

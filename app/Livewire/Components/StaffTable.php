@@ -3,7 +3,6 @@
 namespace App\Livewire\Components;
 
 use App\Models\Execution;
-use App\Models\LetterAssignment;
 use App\Models\Staff;
 use Livewire\Component;
 
@@ -15,9 +14,11 @@ class StaffTable extends Component
 
     public $letterId;
     public $firstIdExecutionStaff;
+    public $selectedExecutionId;
 
     public function mount()
     {
+        $this->selectedExecutionId = null;
         $this->executionStaffs = Execution::where('surat_tugas_id', $this->letterId)->where('type', 'Staff')->get();
         $this->staffs = Staff::where('surat_tugas_id', $this->letterId)->get();
     }
@@ -40,6 +41,7 @@ class StaffTable extends Component
         ]);
 
         $this->staffs = Staff::where('surat_tugas_id', $this->letterId)->get();
+        $this->executionStaffs = Execution::where('surat_tugas_id', $this->letterId)->where('type', 'Staff')->get();
     }
 
     public function addStaffFromDropdown($executionId)
@@ -49,6 +51,24 @@ class StaffTable extends Component
         }
 
         $this->addStaff($executionId);
+        $this->selectedExecutionId = null;
+    }
+
+    public function deleteStaff($staffId)
+    {
+        $staff = Staff::findOrFail($staffId);
+        $staff->delete();
+
+        $this->staffs = Staff::where('surat_tugas_id', $this->letterId)->get();
+    }
+
+    public function deleteExecution($executionId)
+    {
+        $execution = Execution::findOrFail($executionId);
+        $execution->delete();
+
+        $this->staffs = Staff::where('surat_tugas_id', $this->letterId)->get();
+        $this->executionStaffs = Execution::where('surat_tugas_id', $this->letterId)->where('type', 'Staff')->get();
     }
 
     public function render()

@@ -24,8 +24,10 @@
                 <th>No</th>
                 <th>NIM</th>
                 <th>Nama</th>
+                <th></th>
                 <th>Sekolah</th>
                 <th>Tanggal Pelaksanaan</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +37,14 @@
             @endphp
             <tr>
                 <td rowspan="{{ max($relatedVolunteers->count(), 1) + 1 }}">{{ $loop->iteration }}</td>
-                <td><input type="text" class="form-control" wire:model.defer="executionVolunteers.{{ $loop->index }}.nim">
+                <td><input type="text" class="form-control"
+                        wire:model.defer="executionVolunteers.{{ $loop->index }}.nim">
                 </td>
-                <td><input type="text" class="form-control" wire:model.defer="executionVolunteers.{{ $loop->index }}.nama">
+                <td><input type="text" class="form-control"
+                        wire:model.defer="executionVolunteers.{{ $loop->index }}.nama">
+                </td>
+                <td>
+                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                 </td>
                 <td rowspan="{{ max($relatedVolunteers->count(), 1) + 1 }}">
                     <input type="text" class="form-control" value="{{ $execution->nama_sekolah }}">
@@ -45,11 +52,21 @@
                 <td rowspan="{{ max($relatedVolunteers->count(), 1) + 1 }}">
                     <input type="text" class="form-control" value="{{ $execution->tgl_pelaksanaan }}">
                 </td>
+                <td rowspan="{{ max($relatedVolunteers->count(), 1) + 1 }}">
+                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
             </tr>
             @foreach ($relatedVolunteers as $volunteer)
             <tr>
-                <td><input type="text" class="form-control" value="{{ $volunteer->nim }}"></td>
-                <td><input type="text" class="form-control" value="{{ $volunteer->nama }}"></td>
+                <td>
+                    <input type="text" class="form-control" value="{{ $volunteer->nim }}">
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="{{ $volunteer->nama }}">
+                </td>
+                <td>
+                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
             </tr>
             @endforeach
             @endforeach

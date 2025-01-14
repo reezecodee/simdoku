@@ -23,6 +23,7 @@ class VolunteerTable extends Component
 
     public function addExecutionVolunteer($id, $type = 'Volunteer')
     {
+        dd('test');
         Execution::create([
             'surat_tugas_id' => $id,
             'type' => $type

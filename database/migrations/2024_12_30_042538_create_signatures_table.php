@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_pemilik');
             $table->string('nip');
             $table->string('tanda_tangan');
-            $table->enum('status', ['Kepala kampus', 'Kadiv DMER', 'Mahasiswa', 'Lainnya']);
+            $table->enum('status', ['Kadiv DMER', 'Koordinator Markom', 'KA. Divisi MER', 'KA. BAKU', 'Ketua Panitia', 'Ketua Pelaksana']);
             $table->timestamps();
         });
     }

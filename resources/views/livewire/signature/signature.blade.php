@@ -32,31 +32,26 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">Total Tanda Tangan</div>
-                    <div class="row">                        
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="card shadow-sm text-center">
                                 <div class="card-body">
                                     <h3 class="mb-1 fw-bold">2</h3>
-                                    <p class="text-muted">Kdiv DMER</p>
+                                    <p class="text-muted">Total Tanda Tangan</p>
                                 </div>
                             </div>
-                        </div>                        
-                        <div class="col-md-4">
-                            <div class="card shadow-sm text-center">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <h3 class="mb-1 fw-bold">2</h3>
-                                    <p class="text-muted">Mahasiswa</p>
+                                    <span class="mb-2 d-block fw-bold">Pencarian cepat</span>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" class="form-control mr-2" placeholder="Cari tanda tangan...">
+                                        <button class="btn btn-primary">Cari</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>                        
-                        <div class="col-md-4">
-                            <div class="card shadow-sm text-center">
-                                <div class="card-body">
-                                    <h3 class="mb-1 fw-bold">2</h3>
-                                    <p class="text-muted">Lainnya</p>
-                                </div>
-                            </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,8 +64,11 @@
                     <select name="" id="" class="d-flex justify-content-start form-control mb-2">
                         <option selected>Pilih jabatan</option>
                         <option value="Kadiv DMER">Kadiv DMER</option>
-                        <option value="Mahasiswa">Mahasiswa</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="Koordinator Markom">Koordinator Markom</option>
+                        <option value="KA. Divisi MER">KA. Divisi MER</option>
+                        <option value="KA. BAKU">KA. BAKU</option>
+                        <option value="Ketua Panitia">Ketua Panitia</option>
+                        <option value="Ketua Pelaksana">Ketua Pelaksana</option>
                     </select>
                     <div class="mb-3">
                         <img src="https://smconsult.co.id/wp-content/uploads/2021/07/wet_digital_signature.jpg" alt=""

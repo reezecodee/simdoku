@@ -15,4 +15,9 @@ class Staff extends Model
     {
         return $this->belongsTo(LetterAssignment::class, 'surat_tugas_id');
     }
+
+    public function execution()
+    {
+        return $this->belongsTo(Execution::class, 'pelaksanaan_id');
+    }
 }
