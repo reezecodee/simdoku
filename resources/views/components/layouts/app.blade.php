@@ -56,6 +56,7 @@
 
             <div class="main-content">
                 <section class="section">
+                    <x-alert.success />
                     {{ $slot }}
                 </section>
             </div>
@@ -79,7 +80,7 @@
     <script>
         new FroalaEditor('#editor');
     </script>
-    
+
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
