@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('surat_tugas_id')->constrained('letter_assignments');
-            $table->foreignUuid('pelaksanaan_id')->constrained('executions');
+            $table->foreignUuid('surat_tugas_id')->constrained('letter_assignments')->cascadeOnDelete();
+            $table->foreignUuid('pelaksanaan_id')->constrained('executions')->cascadeOnDelete();
             $table->string('nip')->nullable();
             $table->string('nama')->nullable();
             $table->timestamps();

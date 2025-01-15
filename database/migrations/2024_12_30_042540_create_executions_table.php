@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('executions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('surat_tugas_id')->constrained('letter_assignments');
+            $table->foreignUuid('surat_tugas_id')->constrained('letter_assignments')->cascadeOnDelete();
             $table->string('nama_sekolah')->nullable();
             $table->string('tgl_pelaksanaan')->nullable();
             $table->enum('type', ['Staff', 'Volunteer']);

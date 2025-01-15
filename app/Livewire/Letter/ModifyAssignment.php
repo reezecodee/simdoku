@@ -21,55 +21,14 @@ class ModifyAssignment extends Component
     public $firstIdExecutionStaff;
     public $firstIdExecutionVolunteer;
 
-    #[Validate]
-    public $kepala_devisi_mer = '';
-    #[Validate]
-    public $perihal = '';
-    #[Validate]
-    public $nama_acara = '';
-
-    public function rules()
-    {
-        return [
-            'kepala_devisi_mer' => 'nullable', 
-            'perihal' => 'nullable',
-            'nama_acara' => 'nullable',
-        ];
-    }
-
     public function mount($id)
     {
         $this->date = Carbon::now()->translatedFormat('d F Y');
         $this->id = $id;
         $this->letter = LetterAssignment::findOrFail($id);
 
-        $this->kepala_devisi_mer = $this->letter->kepala_devisi_mer;
-        $this->perihal = $this->letter->perihal;
-        $this->nama_acara = $this->letter->nama_acara;
-
         $this->firstIdExecutionStaff = Execution::where('surat_tugas_id', $id)->where('type', 'Staff')->first();
         $this->firstIdExecutionVolunteer = Execution::where('surat_tugas_id', $id)->where('type', 'Volunteer')->first();
-    }
-
-    public function updatedKepalaDevisiMer($value)
-    {
-        $letter = LetterAssignment::findOrFail($this->id);
-        $letter->kepala_devisi_mer = $value;
-        $letter->save();
-    }
-
-    public function updatedPerihal($value)
-    {
-        $letter = LetterAssignment::findOrFail($this->id);
-        $letter->perihal = $value;
-        $letter->save();
-    }
-
-    public function updatedNamaAcara($value)
-    {
-        $letter = LetterAssignment::findOrFail($this->id);
-        $letter->nama_acara = $value;
-        $letter->save();
     }
 
     public function generatePdf()
