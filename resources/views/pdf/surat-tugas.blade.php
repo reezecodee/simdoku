@@ -10,7 +10,7 @@
         body {
             font-family: 'Times New Roman', serif;
             font-size: 11pt;
-            padding: 1rem;
+            padding: 2rem;
         }
 
         table {
@@ -28,8 +28,8 @@
 
         th {
             background-color: #f2f2f2;
-            font-weight: bold;
-            text-align: center
+            text-align: center;
+            font-weight: normal;
         }
 
         tr:nth-child(even) {
@@ -64,6 +64,48 @@
         tr:hover {
             background-color: #f5f5f5;
         }
+
+        .signature-container {
+            width: 100%;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .signature-wrapper {
+            width: 100%;
+            display: table;
+            margin: 0 auto;
+        }
+
+        .signature-column {
+            display: table-cell;
+            width: 50%;
+            text-align: center;
+            vertical-align: top;
+            padding: 10px;
+        }
+
+        .signature-line {
+            margin: 0 auto;
+            border-bottom: 1px solid black;
+            width: 200px;
+            height: auto;
+        }
+
+        .signature-title {
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .signature-name {
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+
+        .signature-nip {
+            margin-top: 3px;
+        }
     </style>
 </head>
 
@@ -72,14 +114,14 @@
     <div style="text-align: left; line-height: 0.7">
         <p>Kepada Yth.</p>
         <p>Kepala Divisi MER Universitas Bina Sarana Informatika</p>
-        <p>Bapak Ir. Naba Aji Notoseputro, M.Kom</p>
+        <p>{{ $letter->kepala_devisi_mer }}</p>
         <p>di</p>
         <p style="margin-left: 3rem; letter-spacing: 2px;"><u>JAKARTA</u></p>
     </div>
-    <p style="text-align: justify">Perihal : <b>Pengajuan Surat Tugas Edu Fair dan Job Fair SMAN 10 Tasikmalaya</b></p>
-    <p style="text-align: justify">Berikut kami kirimkan pengajuan Surat Tugas kegiatan <b>Surat Tugas Edu Fair dan Job
-            Fair SMAN 10 Tasikmalaya</b>. Berikut Staf yang akan bertugas:</p>
+    <p style="text-align: justify">Perihal : <b>{{ $letter->perihal }}</b></p>
+    <p style="text-align: justify; line-height: 1.5">Berikut kami kirimkan pengajuan Surat Tugas kegiatan <b>{{ $letter->nama_acara }}</b>. Berikut Staf yang akan bertugas:</p>
 
+    @if($executionStaffs)
     <table class="custom-table">
         <thead>
             <tr>
@@ -96,7 +138,7 @@
             $relatedStaffs = $execution->staff;
             @endphp
             <tr>
-                <td rowspan="{{ max($relatedStaffs->count(), 1) }}">{{ $loop->iteration }}</td>
+                <td style="text-align: center" rowspan="{{ max($relatedStaffs->count(), 1) }}">{{ $loop->iteration }}</td>
                 @if($relatedStaffs->count() == 0)
                 <td colspan="3">Belum ada anggota</td>
                 @else
@@ -107,10 +149,10 @@
                     {{ $relatedStaffs->first()->nama }}
                 </td>
                 @endif
-                <td rowspan="{{ max($relatedStaffs->count(), 1) }}">
-                    {{ $execution->nama_sekolah }}
+                <td style="text-align: center" rowspan="{{ max($relatedStaffs->count(), 1) }}">
+                    <b>{{ $execution->nama_sekolah }}</b>
                 </td>
-                <td rowspan="{{ max($relatedStaffs->count(), 1) }}">
+                <td style="text-align: center" rowspan="{{ max($relatedStaffs->count(), 1) }}">
                     {{ $execution->tgl_pelaksanaan }}
                 </td>
             </tr>
@@ -130,8 +172,10 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 
-    <br><br>
+    @if($executionVolunteers)
+    <p><b>Volunteer:</b></p>
 
     <table class="custom-table">
         <thead>
@@ -149,7 +193,7 @@
             $relatedVolunteers = $execution->volunteer;
             @endphp
             <tr>
-                <td rowspan="{{ max($relatedVolunteers->count(), 1) }}">{{ $loop->iteration }}</td>
+                <td style="text-align: center" rowspan="{{ max($relatedVolunteers->count(), 1) }}">{{ $loop->iteration }}</td>
                 @if($relatedVolunteers->count() == 0)
                 <td colspan="3">Belum ada anggota</td>
                 @else
@@ -160,10 +204,10 @@
                     {{ $relatedVolunteers->first()->nama }}
                 </td>
                 @endif
-                <td rowspan="{{ max($relatedVolunteers->count(), 1) }}">
-                    {{ $execution->nama_sekolah }}
+                <td style="text-align: center" rowspan="{{ max($relatedVolunteers->count(), 1) }}">
+                    <b>{{ $execution->nama_sekolah }}</b>
                 </td>
-                <td rowspan="{{ max($relatedVolunteers->count(), 1) }}">
+                <td style="text-align: center" rowspan="{{ max($relatedVolunteers->count(), 1) }}">
                     {{ $execution->tgl_pelaksanaan }}
                 </td>
             </tr>
@@ -183,6 +227,29 @@
             @endforeach
         </tbody>
     </table>
+    @endif
+
+    <p style="text-align: justify; text-indent: 3rem; line-height: 1.5">
+        Demikian pengajuan ini kami sampaikan. Atas segala perhatian dan kebijakannya kami mengucapkan terimakasih</p>
+    
+        <div class="signature-container">
+            <div class="signature-wrapper">
+                <div class="signature-column">
+                    <p class="signature-title">Koordinator Markom UBSI Tasikmalaya</p>
+                    <div class="signature-line">
+                        <img src="{{ $imgbase64 }}" width="100" alt="" srcset="">
+                    </div>
+                    <p class="signature-name">{{ $letter->signature->nama_pemilik }}</p>
+                    <p class="signature-nip">NIP. 201706153</p>
+                </div>
+                <div class="signature-column">
+                    <p class="signature-title">Kepala Kampus UBSI Tasikmalaya</p>
+                    <div class="signature-line"></div>
+                    <p class="signature-name">Agung Baitul Hikmah, S.Kom</p>
+                    <p class="signature-nip">NIP. 200809852</p>
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>

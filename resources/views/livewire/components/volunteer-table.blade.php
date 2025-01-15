@@ -76,7 +76,7 @@
                         value="{{ $execution->nama_sekolah }}">
                 </td>
                 <td rowspan="{{ max($relatedVolunteers->count(), 1) }}">
-                    <input type="date" class="form-control"
+                    <input type="text" class="form-control"
                         wire:input="updateExecution('{{ $execution->id }}', 'tgl_pelaksanaan', $event.target.value)"
                         value="{{ $execution->tgl_pelaksanaan }}">
                 </td>

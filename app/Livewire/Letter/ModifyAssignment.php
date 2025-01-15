@@ -82,9 +82,14 @@ class ModifyAssignment extends Component
     public function printPDF()
     {
         $today = Carbon::today()->translatedFormat('d F Y');
+        $path = storage_path('app/public/'.$this->letter->signature->tanda_tangan);
+        $imageData = base64_encode(file_get_contents($path));
+        $imageBase64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$imageData;
+        
         $pdf = Pdf::loadView('pdf.surat-tugas', [
             'letter' => $this->letter,
             'today' => $today,
+            'imgbase64' => $imageBase64,
             'executionStaffs' => $this->executionStaffs,
             'staffs' => $this->staffs,
             'executionVolunteers' => $this->executionVolunteers,
