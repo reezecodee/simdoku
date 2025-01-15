@@ -20,4 +20,9 @@ class LetterAssignment extends Model
     {
         return $this->hasMany(Execution::class, 'surat_tugas_id');
     }
+
+    public function signature()
+    {
+        return $this->belongsTo(Signature::class, 'ttd_markom_id');
+    }
 }

@@ -35,25 +35,7 @@
                     terimakasih.</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-center">
-                        @if($letter->ttd_markom_id)
-                        <div>
-                            <p>Koordinator Markom UBSI Tasikmalaya</p>
-                            <div class="d-flex justify-content-center">
-                                <img width="150"
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png"
-                                    alt="" srcset="">
-                            </div>
-                            <p class="paragraph-height"><b>Prof. Budi Budiman, S.T, M.Kom</b></p>
-                            <p class="paragraph-height"><b>NIP.29398434234</b></p>
-                        </div>
-                        @else
-                        <div>
-                            <p>Koordinator Markom UBSI Tasikmalaya</p>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-primary btn-sm">Pilih tanda tangan</button>
-                            </div>
-                        </div>
-                        @endif
+                        <livewire:components.select-signature type="Koordinator Markom" :id="$id"/>
                     </div>
                     <div class="d-flex justify-content-center">
                         <div>

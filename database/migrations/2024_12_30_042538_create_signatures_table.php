@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('signatures', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nama_pemilik');
-            $table->string('nip');
+            $table->string('nip')->nullable();
             $table->string('tanda_tangan');
             $table->enum('status', ['Kadiv DMER', 'Koordinator Markom', 'KA. Divisi MER', 'KA. BAKU', 'Ketua Panitia', 'Ketua Pelaksana']);
             $table->timestamps();
