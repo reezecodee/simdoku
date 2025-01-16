@@ -13,11 +13,8 @@ use App\Livewire\Letter\ModifyAssignment;
 use App\Livewire\Signature\Signature;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pdf.surat-tugas');
-});
 
-Route::get('dashboard', Dashboard::class)->name('dashboard');
+Route::get('/', Dashboard::class)->name('dashboard');
 
 Route::prefix('surat')->group(function(){
     Route::get('tugas', Assignment::class)->name('letter.index');

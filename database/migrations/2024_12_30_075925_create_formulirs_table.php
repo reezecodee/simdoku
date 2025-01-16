@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('formulirs', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('judul')->nullable();
-            $table->string('kampus')->nullable();
             $table->string('tgl_pengajuan')->nullable();
             $table->string('pemohon')->nullable();
             $table->string('unit_kerja')->nullable();

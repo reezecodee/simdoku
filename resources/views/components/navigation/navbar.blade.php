@@ -222,7 +222,7 @@
   <nav class="navbar navbar-secondary navbar-expand-lg">
     <div class="container">
       <ul class="navbar-nav">
-        <li class="nav-item {{ Request::is('dashboard*') ? 'active' : '' }}">
+        <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
           <a href="{{ route('dashboard') }}" wire:navigate.hover class="nav-link"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
         </li>
         <li class="nav-item dropdown {{ Request::is('surat*') ? 'active' : '' }}">

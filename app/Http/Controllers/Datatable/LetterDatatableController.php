@@ -11,7 +11,7 @@ class LetterDatatableController extends Controller
 {
     public function getLetters()
     {
-        $letters = LetterAssignment::query();
+        $letters = LetterAssignment::orderBy('created_at', 'desc')->get();
         
         return DataTables::of($letters)
         ->addIndexColumn()
