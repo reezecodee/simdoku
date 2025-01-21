@@ -6,7 +6,6 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary mr-2">Preview Formulir</button>
                     <button class="btn btn-success" wire:click="exportExcel">Cetak Excel</button>
                 </div>
             </div>
@@ -114,17 +113,7 @@
                         <p class="text-center">Menyetujui,</p>
                         <p class="text-center">KA. Divisi MER</p>
                         <div class="d-flex justify-content-center">
-                            <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
-                        </div>
-                        <p class="paragraph-height text-center">(Prof. Budi Budiman, S.T, M.Kom)</p>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div>
-                        <p class="text-center">Pemohon,</p>
-                        <p class="text-center">Kepala Kampus UBSI Kampus Tasikmalaya</p>
-                        <div class="d-flex justify-content-center">
-                            <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
+                            <div style="height: 87px"></div>
                         </div>
                         <p class="paragraph-height text-center">(Prof. Budi Budiman, S.T, M.Kom)</p>
                     </div>
@@ -133,6 +122,16 @@
                     <div>
                         <p class="text-center">Mengetahui,</p>
                         <p class="text-center">KA. BAKU</p>
+                        <div class="d-flex justify-content-center">
+                            <div style="height: 87px"></div>
+                        </div>
+                        <p class="paragraph-height text-center">(Prof. Budi Budiman, S.T, M.Kom)</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <p class="text-center">Pemohon,</p>
+                        <p class="text-center">Kepala Kampus UBSI Kampus Tasikmalaya</p>
                         <div class="d-flex justify-content-center">
                             <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
                         </div>
