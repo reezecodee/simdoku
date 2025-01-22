@@ -39,10 +39,10 @@
                 </div>
                 @else
                 <div class="mb-4">
-                    <img wire:ignore id="fileIcon" src="https://www.svgrepo.com/show/529274/upload.svg" width="80"
+                    <img id="fileIcon" src="https://www.svgrepo.com/show/529274/upload.svg" width="80"
                         alt="Upload Icon">
                 </div>
-                <h5 id="fileName" class="card-title fw-bold" wire:ignore>
+                <h5 id="fileName" class="card-title fw-bold">
                     Upload file
                 </h5>
                 <p class="text-muted mb-4">Pilih file dari perangkat Anda untuk diunggah.</p>

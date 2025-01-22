@@ -12,6 +12,7 @@ use App\Livewire\Form\Formulir;
 use App\Livewire\Form\ModifyFormulir;
 use App\Livewire\Letter\Assignment;
 use App\Livewire\Letter\ModifyAssignment;
+use App\Livewire\Profile\Profile;
 use App\Livewire\Signature\Signature;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,10 @@ Route::prefix('tanda-tangan')->group(function(){
 Route::prefix('arsip')->group(function(){
     Route::get('/', ListFiles::class)->name('archive.index');
     Route::get('/upload', UploadFile::class)->name('archive.upload');
+});
+
+Route::prefix('profile-saya')->group(function(){
+    Route::get('/', Profile::class)->name('profile.index');
 });
 
 Route::get('/data', [DataController::class, 'getDummyData']);
