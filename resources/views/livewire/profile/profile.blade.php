@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="" class="form-label">Nomor Induk Pegawai NIP</label>
+                            <label for="" class="form-label">Nomor induk pegawai NIP</label>
                             <input type="text" wire:model.lazy="nip"
                                 class="form-control @error('nip') is-invalid @enderror"
                                 placeholder="Masukkan nomor NIP">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="" class="form-label">Nomor Induk Pegawai NIP</label>
+                            <label for="" class="form-label">Upload tanda tangan</label>
                             <div class="d-flex justify-content-center mb-2">
                                 @if($user->tanda_tangan)
                                 <div>
