@@ -6,7 +6,7 @@
         <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav">
-        <li class="nav-item"><a href="#" class="nav-link" wire:navigate.hover>Arsip</a></li>
+        <li class="nav-item {{ Request::is('arsip*') ? 'active' : '' }}"><a href="{{ route('archive.index') }}" class="nav-link" wire:navigate.hover>Arsip</a></li>
         <li class="nav-item {{ Request::is('tanda-tangan*') ? 'active' : '' }}"><a href="{{ route('signature.index') }}" class="nav-link" wire:navigate.hover>Upload Tanda Tangan</a></li>
       </ul>
     </div>
@@ -78,7 +78,7 @@
       </div>
     </form>
     <ul class="navbar-nav navbar-right">
-      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
+      {{-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
         <div class="dropdown-menu dropdown-list dropdown-menu-right">
           <div class="dropdown-header">Messages
             <div class="float-right">
@@ -202,7 +202,7 @@
             <a href="#">View All <i class="fas fa-chevron-right"></i></a>
           </div>
         </div>
-      </li>
+      </li> --}}
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
         <img alt="image" src="{{ asset('images/profile/profile.jpg') }}" class="rounded-circle mr-1">
         <div class="d-sm-none d-lg-inline-block">Agung Baitul Hikmah</div></a>

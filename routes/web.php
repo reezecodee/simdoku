@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DataController;
+use App\Livewire\Archive\ListFiles;
+use App\Livewire\Archive\UploadFile;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Document\ModifyProposal;
 use App\Livewire\Document\ModifyReport;
@@ -38,6 +40,11 @@ Route::prefix('formulir')->group(function(){
 
 Route::prefix('tanda-tangan')->group(function(){
     Route::get('/', Signature::class)->name('signature.index');
+});
+
+Route::prefix('arsip')->group(function(){
+    Route::get('/', ListFiles::class)->name('archive.index');
+    Route::get('/upload', UploadFile::class)->name('archive.upload');
 });
 
 Route::get('/data', [DataController::class, 'getDummyData']);
