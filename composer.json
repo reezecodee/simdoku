@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "maatwebsite/excel": "^3.1",
+        "phpoffice/phpword": "^1.3",
         "riskihajar/terbilang": "^2.0",
         "yajra/laravel-datatables-oracle": "11.0"
     },
