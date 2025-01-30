@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/components.css">
     <!-- Start GA -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -41,8 +42,8 @@
             line-height: 1;
         }
 
-        #fr-logo {
-            display: none;
+        trix-editor{
+            height: 10rem;
         }
     </style>
     <!-- /END GA -->
@@ -71,16 +72,12 @@
     <script src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
     <script src="/assets/modules/moment.min.js"></script>
     <script src="/assets/js/stisla.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.7/js/froala_editor.pkgd.min.js"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/swal.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     {{ $script ?? '' }}
-    <script>
-        new FroalaEditor('#editor');
-    </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>

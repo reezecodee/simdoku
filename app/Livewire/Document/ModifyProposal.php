@@ -3,6 +3,7 @@
 namespace App\Livewire\Document;
 
 use App\Models\Proposal;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Livewire\Attributes\Title;
@@ -18,6 +19,7 @@ class ModifyProposal extends Component
 
     public $id;
     public $proposal;
+    public $date;
 
     public function mount($id)
     {
@@ -27,6 +29,7 @@ class ModifyProposal extends Component
         $this->tahun = $this->proposal->tahun ?? '';
         $this->kata_pengantar = $this->proposal->kata_pengantar ?? '';
         $this->penutup = $this->proposal->penutup ?? '';
+        $this->date = Carbon::now()->translatedFormat('d F Y');
     }
 
     public function updated($property, $value)

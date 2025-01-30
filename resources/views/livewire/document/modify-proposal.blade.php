@@ -40,8 +40,7 @@
             </div>
             <div class="form-group">
                 <label for="kata-pengantar" class="form-label"><b>Kata Pengantar</b></label>
-                <textarea id="editor" wire:model.lazy="kata_pengantar">
-                </textarea>
+                <x-text-editor.trix title="kata_pengantar" value="{{ $kata_pengantar }}"/>
             </div>
         </div>
     </div>
@@ -50,7 +49,7 @@
             <div class="d-flex justify-content-center">
                 <h4 class="card-title">Halaman BAB I PENDAHULUAN</h4>
             </div>
-            <livewire:components.proposal-intro :id="$id"/>
+            <livewire:components.proposal-intro :id="$id" />
         </div>
     </div>
     <div class="card" wire:ignore>
@@ -58,10 +57,10 @@
             <div class="d-flex justify-content-center">
                 <h4 class="card-title">Halaman BAB II PERENCANAAN KEGIATAN</h4>
             </div>
-            <livewire:components.proposal-plan :id="$id"/>
+            <livewire:components.proposal-plan :id="$id" />
             <livewire:components.proposal-plan-schedule :id="$id" />
-            <livewire:components.proposal-plan-committee :id="$id" />  
-            <livewire:components.proposal-plan-budget :id="$id" />  
+            <livewire:components.proposal-plan-committee :id="$id" />
+            <livewire:components.proposal-plan-budget :id="$id" />
         </div>
     </div>
     <div class="card" wire:ignore>
@@ -70,12 +69,11 @@
                 <h4 class="card-title">Halaman BAB III PENUTUP</h4>
             </div>
             <div class="form-group">
-                <label for="peserta-kegiatan" class="form-label"><b>Penutup</b></label>
-                <textarea id="editor" wire:model.lazy="penutup">	
-                </textarea>
+                <label for="penutup" class="form-label"><b>Penutup</b></label>
+                <x-text-editor.trix title="penutup" value="{{ $penutup }}"/>
             </div>
             <div class="d-flex justify-content-end">
-                <p>Tasikmalaya, 20 Oktober 2024</p>
+                <p>Tasikmalaya, {{ $date }}</p>
             </div>
             <div class="d-flex justify-content-start mt-4">
                 <p>Hormat kami,</p>
