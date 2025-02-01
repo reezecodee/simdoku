@@ -42,8 +42,8 @@
             line-height: 1;
         }
 
-        trix-editor{
-            height: 10rem;
+        trix-editor {
+            min-height: 10rem;
         }
     </style>
     <!-- /END GA -->
@@ -65,23 +65,22 @@
     </div>
 
     @livewireScripts
-    <script src="/assets/modules/jquery.min.js"></script>
-    <script src="/assets/modules/popper.js"></script>
+    <script data-navigate-once src="/assets/modules/jquery.min.js"></script>
+    <script data-navigate-once src="/assets/modules/popper.js"></script>
     {{-- <script src="/assets/modules/tooltip.js"></script> --}}
     <script data-navigate-once src="/assets/modules/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
-    <script src="/assets/modules/moment.min.js"></script>
-    <script src="/assets/js/stisla.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/swal.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script data-navigate-once src="/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script data-navigate-once src="/assets/modules/moment.min.js"></script>
+    <script data-navigate-once src="/assets/js/stisla.js"></script>
+    <script data-navigate-once src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script data-navigate-once src="/js/swal.js"></script>
+    <script data-navigate-once src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     {{ $script ?? '' }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
+    <script data-navigate-once src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
 
     <!-- Template JS File -->
-    <script src="/assets/js/scripts.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script data-navigate-once src="/assets/js/scripts.js"></script>
+    <script data-navigate-once src="/assets/js/custom.js"></script>
 </body>
 
 </html>
