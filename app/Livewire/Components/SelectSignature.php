@@ -15,6 +15,7 @@ class SelectSignature extends Component
     public $doc;
     public $signature;
     public $functionName;
+    public $relationName = 'signature';
 
     public $letter = null;
     public $proposal = null;

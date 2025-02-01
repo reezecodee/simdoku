@@ -10,4 +10,9 @@ class Proposal extends Model
     use HasUuids;
 
     protected $guarded = ['id'];
+
+    public function signature()
+    {
+        return $this->belongsTo(Signature::class, 'ttd_ketua_panitia_id');
+    }
 }

@@ -15,4 +15,19 @@ class Signature extends Model
     {
         return $this->hasMany(LetterAssignment::class, 'ttd_markom_id');
     }
+    
+    public function proposal()
+    {
+        return $this->hasMany(Proposal::class, 'ttd_ketua_panitia_id');
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class, 'ttd_ketua_pelaksana');
+    }
+
+    public function report2()
+    {
+        return $this->hasMany(Report::class, 'ttd_kadiv_dmer');
+    }
 }

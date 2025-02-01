@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <livewire:components.select-signature type="KA. Divisi MER" doc="report" signature="ttd_kdiv_dmer" function-name="SignatureKaDivMER" :id="$id"/>
+                    <livewire:components.select-signature type="KA. Divisi MER" doc="report" signature="ttd_kadiv_dmer" function-name="SignatureKaDivMER" relation-name="signature2" :id="$id"/>
                 </div>
             </div>
         </div>
