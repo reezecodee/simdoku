@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('report_schedules', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('laporan_id')->constrained('reports')->cascadeOnDelete();
             $table->string('waktu')->nullable();
             $table->string('sub_acara')->nullable();
             $table->string('keterangan')->nullable();

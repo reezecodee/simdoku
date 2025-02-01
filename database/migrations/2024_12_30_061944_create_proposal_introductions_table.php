@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('proposal_introductions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('proposal_id')->constrained('proposals');
+            $table->foreignUuid('proposal_id')->constrained('proposals')->cascadeOnDelete();
             $table->text('latar_belakang')->nullable();
             $table->text('tujuan_kegiatan')->nullable();
             $table->text('indikator_keberhasilan')->nullable();

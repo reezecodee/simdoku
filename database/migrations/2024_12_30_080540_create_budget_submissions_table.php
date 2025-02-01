@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('budget_submissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('formulir_id')->constrained('formulirs');
+            $table->foreignUuid('formulir_id')->constrained('formulirs')->cascadeOnDelete();
             $table->string('keterangan')->nullable();
             $table->string('jumlah')->nullable();
             $table->timestamps();

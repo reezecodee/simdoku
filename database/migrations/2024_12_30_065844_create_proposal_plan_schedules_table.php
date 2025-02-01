@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('proposal_plan_schedules', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('proposal_id')->constrained('proposals');
+            $table->foreignUuid('proposal_id')->constrained('proposals')->cascadeOnDelete();
             $table->string('nama_kegiatan')->nullable();
             $table->string('waktu')->nullable();
             $table->timestamps();

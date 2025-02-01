@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('report_evaluations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('laporan_id')->constrained('reports');
+            $table->foreignUuid('laporan_id')->constrained('reports')->cascadeOnDelete();
             $table->string('peserta_daftar')->nullable();
             $table->string('peserta_hadir')->nullable();
             $table->string('peserta_puas')->nullable();

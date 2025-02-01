@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('proposal_plan_committees', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('proposal_id')->constrained('proposals');
+            $table->foreignUuid('proposal_id')->constrained('proposals')->cascadeOnDelete();
             $table->string('nama')->nullable();
             $table->enum('peran', ['Pelindung', 'Penanggung jawab', 'Ketua pelaksana', 'Sekertaris', 'Bendahara', 'Seksi acara', 'Divisi humas', 'Seksi pudekdok', 'Koordinator lapangan'])->nullable();
             $table->timestamps();

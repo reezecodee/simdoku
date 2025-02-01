@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('report_plan_activities', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('laporan_id')->constrained('reports');
+            $table->foreignUuid('laporan_id')->constrained('reports')->cascadeOnDelete();
             $table->text('tema_kegiatan')->nullable();
             $table->text('deskripsi_kegiatan')->nullable();
             $table->text('penyelenggara_kegiatan')->nullable();

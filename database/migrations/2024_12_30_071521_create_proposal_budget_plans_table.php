@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('proposal_budget_plans', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('proposal_id')->constrained('proposals');
+            $table->foreignUuid('proposal_id')->constrained('proposals')->cascadeOnDelete();
             $table->string('uraian')->nullable();
             $table->string('jumlah')->nullable();
             $table->string('total')->nullable();

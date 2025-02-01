@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('report_committees', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('laporan_id')->constrained('reports')->cascadeOnDelete();
             $table->string('penasehat')->nullable();
             $table->string('pembina')->nullable();
             $table->string('penanggung_jawab')->nullable();

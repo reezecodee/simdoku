@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('kepala_devisi_mer')->nullable();
             $table->string('perihal')->nullable();
             $table->string('nama_acara')->nullable();
-            $table->foreignUuid('ttd_markom_id')->nullable()->constrained('signatures');
+            $table->foreignUuid('ttd_markom_id')->nullable()->constrained('signatures')->cascadeOnDelete();
             $table->string('nip_markom')->nullable();
             $table->timestamps();
         });
