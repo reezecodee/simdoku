@@ -2,6 +2,10 @@
 
 namespace App\Livewire\Document;
 
+use App\Models\Report as ModelsReport;
+use App\Models\ReportEvaluation;
+use App\Models\ReportIntroduction;
+use App\Models\ReportPlanActivity;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -11,7 +15,21 @@ class Report extends Component
 
     public function createReport()
     {
-        $this->redirect(route('report.modify', 1));
+        $report = ModelsReport::create([]);
+
+        ReportIntroduction::create([
+            'laporan_id' => $report->id
+        ]);
+
+        ReportPlanActivity::create([
+            'laporan_id' => $report->id
+        ]);
+
+        ReportEvaluation::create([
+            'laporan_id' => $report->id
+        ]);
+
+        $this->redirect(route('report.modify', $report->id));
     }
 
     public function render()
