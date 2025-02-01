@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label for="kata-pengantar" class="form-label"><b>Kata Pengantar</b></label>
-                <x-text-editor.trix title="kata_pengantar" value="{{ $kata_pengantar }}"/>
+                <x-text-editor.trix title="kata_pengantar" value="{{ $kata_pengantar }}" />
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
             </div>
             <div class="form-group">
                 <label for="penutup" class="form-label"><b>Penutup</b></label>
-                <x-text-editor.trix title="penutup" value="{{ $penutup }}"/>
+                <x-text-editor.trix title="penutup" value="{{ $penutup }}" />
             </div>
             <div class="d-flex justify-content-end">
                 <p>Tasikmalaya, {{ $date }}</p>
@@ -80,17 +80,23 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-center">
-                    <livewire:components.select-signature type="Ketua Panitia" doc="proposal" signature="ttd_ketua_panitia_id" function-name="SignatureLeadCommittee" :id="$id"/>
+                    <livewire:components.select-signature type="Ketua Panitia" doc="proposal"
+                        signature="ttd_ketua_panitia_id" function-name="SignatureLeadCommittee" :id="$id" />
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div>
+                    <div class="text-center">
+                        <p>Kepala Kampus UBSI Tasikmalaya</p>
+                        @if($user)
                         <div class="d-flex justify-content-center">
-                            <img width="150"
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png"
-                                alt="" srcset="">
+                            <img width="150" src="{{ asset('storage/'.$user->tanda_tangan) }}" alt="" srcset="">
                         </div>
-                        <p class="paragraph-height"><b>Prof. Budi Budiman, S.T, M.Kom</b></p>
-                        <p class="paragraph-height"><b>Kepala Kampus</b></p>
+                        <p class="paragraph-height"><b>{{ $user->nama }}</b></p>
+                        <p class="paragraph-height"><b>NIP.{{ $user->nip }}</b></p>
+                        @else
+                        <div class="d-flex justify-content-center">
+                            <p>Belum diatur</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

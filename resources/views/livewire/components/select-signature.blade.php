@@ -1,13 +1,13 @@
 <div>
     @if($$doc->$signature)
-    <div>
+    <div class="text-center">
         <p>{{ $type }}</p>
         <div class="d-flex justify-content-center">
             <img width="150"
                 src="{{ asset('storage/'.$$doc->$relationName->tanda_tangan) }}"
                 alt="" srcset="">
         </div>
-        <p class="paragraph-height"><b>{{ $$doc->signature->nama_pemilik }}</b></p>
+        <p class="paragraph-height"><b>{{ $$doc->$relationName->nama_pemilik }}</b></p>
         <p class="paragraph-height"><b>NIP.29398434234</b></p>
     </div>
     @endif
