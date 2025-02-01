@@ -5,13 +5,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="judul" class="form-label"><b>Judul laporan</b></label>
-                        <input type="text" id="judul" class="form-control" placeholder="Masukkan judul laporan">
+                        <input type="text" wire:model.lazy="judul" id="judul" class="form-control" placeholder="Masukkan judul laporan">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="kutipan" class="form-label"><b>Kutipan</b></label>
-                        <input type="text" id="kutipan" class="form-control" placeholder="Masukkan kutipan">
+                        <input type="text" wire:model.lazy="kutipan" id="kutipan" class="form-control" placeholder="Masukkan kutipan">
                     </div>
                 </div>
             </div>
@@ -55,25 +55,11 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <div>
-                            <p class="text-center">Pelaksana,</p>
-                            <div class="d-flex justify-content-center">
-                                <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
-                            </div>
-                            <p class="paragraph-height text-center"><u>Prof. Budi Budiman, S.T, M.Kom</u></p>
-                            <p class="paragraph-height text-center"><b>Ketua Pelaksana</b></p>
-                        </div>
+                        <livewire:components.select-signature type="Ketua Pelaksana" doc="report" signature="ttd_ketua_pelaksana" function-name="SignatureChiefExecutive" :id="$id"/>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div>
-                        <p class="text-center">Menyetujui,</p>
-                        <div class="d-flex justify-content-center">
-                            <img width="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png" alt="" srcset="">
-                        </div>
-                        <p class="paragraph-height text-center"><u>Prof. Budi Budiman, S.T, M.Kom</u></p>
-                        <p class="paragraph-height text-center"><b>Kadiv DMER Universitas Bina Sarana Informatika</b></p>
-                    </div>
+                    <livewire:components.select-signature type="KA. Divisi MER" doc="report" signature="ttd_kdiv_dmer" function-name="SignatureKaDivMER" :id="$id"/>
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('tahun')->nullable();
             $table->text('kata_pengantar')->nullable();
             $table->text('penutup')->nullable();
+            $table->foreignUuid('ttd_ketua_panitia_id')->nullable()->constrained('signatures');
             $table->timestamps();
         });
     }

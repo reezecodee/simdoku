@@ -35,7 +35,7 @@
                     terimakasih.</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-center">
-                        <livewire:components.select-signature type="Koordinator Markom" :id="$id"/>
+                        <livewire:components.select-signature type="Koordinator Markom" doc="letter" signature="ttd_markom_id" function-name="SignatureMarkom" :id="$id"/>
                     </div>
                     <div class="d-flex justify-content-center">
                         <div>

@@ -1,11 +1,16 @@
-<div>  
-    <input id="{{ $title }}" type="hidden" wire:model.lazy="{{ $title }}" name="{{ $title }}" value="{!! $value !!}">
-    <trix-editor input="{{ $title }}"></trix-editor>   
+<div>
+    <div wire:ignore>
+        <input id="{{ $title }}" type="hidden" wire:model.lazy="{{ $title }}" name="{{ $title }}" value="{!! $value !!}">
+        <trix-editor input="{{ $title }}"></trix-editor>
+    </div>
 </div>
-<script>
-    var trixEditor = document.getElementById("{{ $title }}")
 
-    addEventListener("trix-blur", function(event) {
-        @this.set('{{ $title }}', trixEditor.getAttribute('value'))
-    })
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let trixEditor = document.querySelector('trix-editor[input="{{ $title }}"]');
+        
+        trixEditor.addEventListener("trix-change", function () {
+            @this.set('{{ $title }}', trixEditor.value);
+        });
+    });
 </script>

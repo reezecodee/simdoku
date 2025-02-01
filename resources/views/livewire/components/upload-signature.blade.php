@@ -3,7 +3,6 @@
         <div class="card-body text-center">
             <select wire:model.lazy="status" id="" class="d-flex justify-content-start form-control">
                 <option selected>Pilih jabatan</option>
-                <option value="Kadiv DMER">Kadiv DMER</option>
                 <option value="Koordinator Markom">Koordinator Markom</option>
                 <option value="KA. Divisi MER">KA. Divisi MER</option>
                 <option value="KA. BAKU">KA. BAKU</option>

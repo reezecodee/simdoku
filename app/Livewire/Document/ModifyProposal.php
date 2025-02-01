@@ -32,10 +32,10 @@ class ModifyProposal extends Component
         $this->date = Carbon::now()->translatedFormat('d F Y');
     }
 
-    public function updated($property, $value)
+    public function updated($property)
     {
         $this->proposal->update([
-            $property => $value
+            $property => $this->$property
         ]);
     }
 

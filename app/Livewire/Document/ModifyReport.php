@@ -23,10 +23,10 @@ class ModifyReport extends Component
         $this->penutup = $this->report->penutup;
     }
 
-    public function updated($field)
+    public function updated($property)
     {
         $this->report->update([
-            $field => $this->$field
+            $property => $this->$property
         ]);
     }
 

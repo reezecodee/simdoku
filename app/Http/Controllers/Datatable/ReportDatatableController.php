@@ -15,6 +15,12 @@ class ReportDatatableController extends Controller
 
         return DataTables::of($reports)
         ->addIndexColumn()
+        ->addColumn('judul', function($row){
+            return $row->judul ?? 'Judul tidak diketahui';
+        })
+        ->addColumn('kutipan', function($row){
+            return $row->kutipan ?? 'Kutipan tidak diketahui';
+        })
         ->addColumn('action', function($row){
             return '
             <div class="d-flex">

@@ -46,7 +46,6 @@
                 <div class="card-body text-center">
                     <select wire:change="updateStatus('{{ $item->id }}', 'status', $event.target.value)" class="d-flex justify-content-start form-control mb-2">
                         <option selected value="{{ $item->status }}">{{ $item->status }}</option>
-                        <option value="Kadiv DMER">Kadiv DMER</option>
                         <option value="Koordinator Markom">Koordinator Markom</option>
                         <option value="KA. Divisi MER">KA. Divisi MER</option>
                         <option value="KA. BAKU">KA. BAKU</option>

@@ -80,15 +80,7 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-center">
-                    <div>
-                        <div class="d-flex justify-content-center">
-                            <img width="150"
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tanda_tangan_Arsul_Sani.svg/2560px-Tanda_tangan_Arsul_Sani.svg.png"
-                                alt="" srcset="">
-                        </div>
-                        <p class="paragraph-height"><b>Prof. Budi Budiman, S.T, M.Kom</b></p>
-                        <p class="paragraph-height"><b>Ketua Panitia</b></p>
-                    </div>
+                    <livewire:components.select-signature type="Ketua Panitia" doc="proposal" signature="ttd_ketua_panitia_id" function-name="SignatureLeadCommittee" :id="$id"/>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div>

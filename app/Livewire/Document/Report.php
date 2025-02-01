@@ -3,6 +3,7 @@
 namespace App\Livewire\Document;
 
 use App\Models\Report as ModelsReport;
+use App\Models\ReportCommittee;
 use App\Models\ReportEvaluation;
 use App\Models\ReportIntroduction;
 use App\Models\ReportPlanActivity;
@@ -26,6 +27,10 @@ class Report extends Component
         ]);
 
         ReportEvaluation::create([
+            'laporan_id' => $report->id
+        ]);
+
+        ReportCommittee::create([
             'laporan_id' => $report->id
         ]);
 

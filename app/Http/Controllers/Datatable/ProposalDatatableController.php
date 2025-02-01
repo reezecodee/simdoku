@@ -15,6 +15,9 @@ class ProposalDatatableController extends Controller
 
         return DataTables::of($proposals)
         ->addIndexColumn()
+        ->addColumn('judul', function($row){
+            return $row->judul ?? 'Judul tidak diketahui';
+        })
         ->addColumn('action', function($row){
             return '
             <div class="d-flex">
