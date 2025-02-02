@@ -8,6 +8,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 
@@ -46,31 +47,85 @@ class ModifyProposal extends Component
 
     public function createWordDocument()
     {
-        // Membuat instance PHPWord
         $phpWord = new PhpWord();
+        $phpWord->setDefaultFontName('Times New Roman');
+        $phpWord->setDefaultFontSize(12);
+        $phpWord->setDefaultParagraphStyle([
+            'alignment' => Alignment::HORIZONTAL_LEFT, 
+            'lineHeight' => 1.5, 
+            'spaceAfter' => 240, 
+        ]);
+        $phpWord->addTitleStyle(
+            1,
+            ['bold' => true, 'size' => 14],
+            ['alignment' => Alignment::HORIZONTAL_CENTER]
+        );
 
-        // Menambahkan Section baru
         $section = $phpWord->addSection();
 
-        // Menambahkan Judul untuk Daftar Isi
-        $section->addTitle('Daftar Isi', 1);
+        $section->addText('PROPOSAL', ['bold' => true, 'size' => 16], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        $section->addText('BSI FLASH JAPANASE FESTIVAL', ['bold' => true, 'italic' => true, 'size' => 20], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        $section->addText(date('Y'), ['bold' => true, 'size' => 16], ['alignment' => Alignment::HORIZONTAL_CENTER]);
 
-        // Menambahkan Heading yang akan digunakan dalam daftar isi
-        $section->addTitle('LEMBAR JUDUL', 2); // Heading 2
-        $section->addTitle('KATA PENGANTAR', 2); // Heading 2
-        $section->addTitle('DAFTAR ISI', 2); // Heading 2
-        $section->addTitle('BAB I PENDAHULUAN', 2); // Heading 2
-        $section->addTitle('1.1 Latar Belakang', 3); // Heading 3
-        $section->addTitle('1.2 Tujuan Kegiatan', 3); // Heading 3
-        $section->addTitle('1.3 Manfaat Kegiatan', 3); // Heading 3
-        $section->addTitle('1.4 Indikator Keberhasilan', 3); // Heading 3
+        $section->addTextBreak(3);
+        $imagePath = public_path('images/logo/logo-bsi.png');
+        if (file_exists($imagePath)) {
+            $section->addImage($imagePath, [
+                'alignment' => Alignment::VERTICAL_CENTER,
+                'width' => 150,
+                'height' => 150,
+            ]);
+        }
+        $section->addTextBreak(5);
 
-        // Menambahkan Daftar Isi Otomatis
-        $section->addText('Daftar Isi di bawah ini akan otomatis dibuat berdasarkan Heading yang telah ditambahkan.');
+        $section->addText('UNIVERSITAS BINA SARANA INFORMATIKA KAMPUS KOTA ', ['bold' => true, 'size' => 14], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        $section->addText('TASIKMALAYA', ['bold' => true, 'size' => 14], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        $section->addText(date('Y'), ['bold' => true, 'size' => 14], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+
+        $section = $phpWord->addSection();
+        $section->addTitle('KATA PENGANTAR', 1);
+        $section->addText('Assalamualaikum WR WB', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addText('Alhamdulillahi rabbil„alamin, dengan segala kerendahan hati, kami panjatkan puji dan syukur kehadirat Allah SWT, karena atas izin, rahmat serta hidayah Nya, proposal acara kegiatan Festival Budaya Jepang di Universitas Bina Sarana Informatika dengan tema “BSI FLASH JAPANASE FESTIVAL” telah selesai disusun.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addText('Proposal ini disusun berdasarkan rencana pelaksanaan kegiatan Panitia BSI FLASH JAPANASE FESTIVAL, yang dimana akan dilaksanakan pada tanggal 18 November 2023. Kami menyadari, terselesaikannya proposal ini tidak terlepas dari bantuan berbagai pihak, sehingga sepatutnya kami menghaturkan rasa terima kasih kepada seluruh pihak terkait yang telah memberikan bantuan', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addText('Dalam penyajian proposal ini kami tentu menyadari masih belum mendekati kesempurnaan. Oleh karena itu, besar harapan kami agar pembaca berkenan memberikan umpan balik berupa kritik dan saran yang sifatnya membangun demi terciptanya proposal yang lebih baik lagi di masa mendatang. Sebab tidak ada sesuatu yang sempurna tanpa disertai saran yang konstruktif. Akhir kata, semoga makalah ini bisa memberikan manfaat bagi berrbagai pihak. Aamiin.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addText('Wassalamualakium WR WB', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+
+        $section->addTextBreak(2);
+
+        $section->addText('Tasikmalaya, '. $this->date, [], [
+            'alignment' => Alignment::HORIZONTAL_RIGHT
+        ]);
+        $section->addText('Penyusun', [], [
+            'indentation' => ['right' => 800],
+            'alignment' => Alignment::HORIZONTAL_RIGHT
+        ]);
         $section->addTextBreak(1);
+        $section->addText('Agung Baitul Hikmah', [], [
+            'indentation' => ['right' => 390],
+            'alignment' => Alignment::HORIZONTAL_RIGHT
+        ]);
 
-        // Menambahkan TOC (Table of Contents) untuk daftar isi otomatis
+        $section = $phpWord->addSection();
+        $section->addTitle('DAFTAR ISI', 1);
         $section->addTOC();
+        
+        $section = $phpWord->addSection();
+
 
         // Membuat file Word dalam format .docx di memori
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');

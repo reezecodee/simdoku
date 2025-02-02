@@ -119,9 +119,9 @@
         <p style="margin-left: 3rem; letter-spacing: 2px;"><u>JAKARTA</u></p>
     </div>
     <p style="text-align: justify">Perihal : <b>{{ $letter->perihal }}</b></p>
-    <p style="text-align: justify; line-height: 1.5">Berikut kami kirimkan pengajuan Surat Tugas kegiatan <b>{{ $letter->nama_acara }}</b>. Berikut Staf yang akan bertugas:</p>
-
-    @if($executionStaffs)
+    <p style="text-align: justify; line-height: 1.5">Berikut kami kirimkan pengajuan Surat Tugas kegiatan <b>{{
+            $letter->nama_acara }}</b>. Berikut Staf yang akan bertugas:</p>
+    @if($executionStaffs->isNotEmpty())
     <table class="custom-table">
         <thead>
             <tr>
@@ -138,7 +138,8 @@
             $relatedStaffs = $execution->staff;
             @endphp
             <tr>
-                <td style="text-align: center" rowspan="{{ max($relatedStaffs->count(), 1) }}">{{ $loop->iteration }}</td>
+                <td style="text-align: center" rowspan="{{ max($relatedStaffs->count(), 1) }}">{{ $loop->iteration }}
+                </td>
                 @if($relatedStaffs->count() == 0)
                 <td colspan="3">Belum ada anggota</td>
                 @else
@@ -174,7 +175,7 @@
     </table>
     @endif
 
-    @if($executionVolunteers)
+    @if($executionVolunteers->isNotEmpty())
     <p><b>Volunteer:</b></p>
 
     <table class="custom-table">
@@ -193,7 +194,8 @@
             $relatedVolunteers = $execution->volunteer;
             @endphp
             <tr>
-                <td style="text-align: center" rowspan="{{ max($relatedVolunteers->count(), 1) }}">{{ $loop->iteration }}</td>
+                <td style="text-align: center" rowspan="{{ max($relatedVolunteers->count(), 1) }}">{{ $loop->iteration
+                    }}</td>
                 @if($relatedVolunteers->count() == 0)
                 <td colspan="3">Belum ada anggota</td>
                 @else
@@ -231,25 +233,32 @@
 
     <p style="text-align: justify; text-indent: 3rem; line-height: 1.5">
         Demikian pengajuan ini kami sampaikan. Atas segala perhatian dan kebijakannya kami mengucapkan terimakasih</p>
-    
-        <div class="signature-container">
-            <div class="signature-wrapper">
-                <div class="signature-column">
-                    <p class="signature-title">Koordinator Markom UBSI Tasikmalaya</p>
-                    <div class="signature-line">
-                        <img src="{{ $imgbase64 }}" width="100" alt="" srcset="">
-                    </div>
-                    <p class="signature-name">{{ $letter->signature->nama_pemilik }}</p>
-                    <p class="signature-nip">NIP. 201706153</p>
+
+    <div class="signature-container">
+        <div class="signature-wrapper">
+            <div class="signature-column">
+                <p class="signature-title">Koordinator Markom UBSI Tasikmalaya</p>
+                <div class="signature-line">
+                    <img src="{{ $imgbase64 }}" width="120" alt="" srcset="">
                 </div>
-                <div class="signature-column">
-                    <p class="signature-title">Kepala Kampus UBSI Tasikmalaya</p>
-                    <div class="signature-line"></div>
-                    <p class="signature-name">Agung Baitul Hikmah, S.Kom</p>
-                    <p class="signature-nip">NIP. 200809852</p>
+                <p class="signature-name">{{ $letter->signature->nama_pemilik }}</p>
+                <p class="signature-nip">NIP. 201706153</p>
+            </div>
+            @php
+            $path = storage_path('app/public/'.$user->tanda_tangan);
+            $image = base64_encode(file_get_contents($path));
+            $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
+            @endphp
+            <div class="signature-column">
+                <p class="signature-title">Kepala Kampus UBSI Tasikmalaya</p>
+                <div class="signature-line">
+                    <img src="{{ $base64 }}" width="120" alt="" srcset="">
                 </div>
+                <p class="signature-name">{{ $user->nama }}</p>
+                <p class="signature-nip">NIP. {{ $user->nip }}</p>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
