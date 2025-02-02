@@ -30,4 +30,14 @@ class Signature extends Model
     {
         return $this->hasMany(Report::class, 'ttd_kadiv_dmer');
     }
+    
+    public function formulir()
+    {
+        return $this->hasMany(Formulir::class, 'ttd_ka_devisi_mer');
+    }
+
+    public function formulir2()
+    {
+        return $this->hasMany(Formulir::class, 'ttd_ka_baku');
+    }
 }

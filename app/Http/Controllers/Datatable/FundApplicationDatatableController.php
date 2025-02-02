@@ -15,6 +15,15 @@ class FundApplicationDatatableController extends Controller
 
         return DataTables::of($funds)
         ->addIndexColumn()
+        ->addColumn('judul', function($row){
+            return $row->judul ?? 'Judul tidak diketahui';
+        })
+        ->addColumn('tgl_pengajuan', function($row){
+            return $row->tgl_pengajuan ?? 'Belum diatur';
+        })
+        ->addColumn('tgl_diperlukan', function($row){
+            return $row->tgl_diperlukan ?? 'Belum diatur';
+        })
         ->addColumn('action', function($row){
             return '
             <div class="d-flex">
