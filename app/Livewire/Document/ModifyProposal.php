@@ -40,25 +40,25 @@ class ModifyProposal extends Component
         ]);
     }
 
-    public function generateWord()
-    {
-        $phpWord = new PhpWord();
-    }
-
     public function createWordDocument()
     {
         $phpWord = new PhpWord();
         $phpWord->setDefaultFontName('Times New Roman');
         $phpWord->setDefaultFontSize(12);
         $phpWord->setDefaultParagraphStyle([
-            'alignment' => Alignment::HORIZONTAL_LEFT, 
-            'lineHeight' => 1.5, 
-            'spaceAfter' => 240, 
+            'alignment' => Alignment::HORIZONTAL_LEFT,
+            'lineHeight' => 1.5,
+            'spaceAfter' => 240,
         ]);
         $phpWord->addTitleStyle(
             1,
             ['bold' => true, 'size' => 14],
             ['alignment' => Alignment::HORIZONTAL_CENTER]
+        );
+        $phpWord->addTitleStyle(
+            2,
+            ['bold' => true, 'size' => 12],
+            ['alignment' => Alignment::HORIZONTAL_LEFT]
         );
 
         $section = $phpWord->addSection();
@@ -107,7 +107,7 @@ class ModifyProposal extends Component
 
         $section->addTextBreak(2);
 
-        $section->addText('Tasikmalaya, '. $this->date, [], [
+        $section->addText('Tasikmalaya, ' . $this->date, [], [
             'alignment' => Alignment::HORIZONTAL_RIGHT
         ]);
         $section->addText('Penyusun', [], [
@@ -123,9 +123,103 @@ class ModifyProposal extends Component
         $section = $phpWord->addSection();
         $section->addTitle('DAFTAR ISI', 1);
         $section->addTOC();
-        
-        $section = $phpWord->addSection();
 
+        $section = $phpWord->addSection();
+        $section->addTitle("BAB I \nPENDAHULUAN", 1);
+        $section->addTitle('1.1 Latar Belakang', 2);
+        $section->addText('Maraknya acara/event yang sudah berlangsung di wilayah kota kota indonesia, membuat kami termotifasi ingin membuat acara tersebut di wilayah Tasikmalaya. Maka dari itu kami dari Markom bekerjasama dengan volunteer dari mahasiswa Universitas Bina Sarana Informatika Kmapus Tasikmalaya ingin mengadakan acara tersebut untuk memeriahkan sekaligus mengisi kegiatan rutinitas kami dalam bidang budaya dan seni sekaligus memperkenalkan kampus kami dan sebagai upaya strategi markom branding dan Beasiswa BJU PMB UBSI 2025.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('1.2 Tujuan Kegiatan', 2);
+        $section->addText('Maraknya acara/event yang sudah berlangsung di wilayah kota kota indonesia, membuat kami termotifasi ingin membuat acara tersebut di wilayah Tasikmalaya. Maka dari itu kami dari Markom bekerjasama dengan volunteer dari mahasiswa Universitas Bina Sarana Informatika Kmapus Tasikmalaya ingin mengadakan acara tersebut untuk memeriahkan sekaligus mengisi kegiatan rutinitas kami dalam bidang budaya dan seni sekaligus memperkenalkan kampus kami dan sebagai upaya strategi markom branding dan Beasiswa BJU PMB UBSI 2025.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('1.3 Indikator Keberhasilan', 2);
+        $section->addText('Maraknya acara/event yang sudah berlangsung di wilayah kota kota indonesia, membuat kami termotifasi ingin membuat acara tersebut di wilayah Tasikmalaya. Maka dari itu kami dari Markom bekerjasama dengan volunteer dari mahasiswa Universitas Bina Sarana Informatika Kmapus Tasikmalaya ingin mengadakan acara tersebut untuk memeriahkan sekaligus mengisi kegiatan rutinitas kami dalam bidang budaya dan seni sekaligus memperkenalkan kampus kami dan sebagai upaya strategi markom branding dan Beasiswa BJU PMB UBSI 2025.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+
+        $section = $phpWord->addSection();
+        $section->addTitle("BAB II \PERENCANAAN KEGIATAN", 1);
+        $section->addTitle('2.1 Nama dan Tema Kegiatan', 2);
+        $section->addText('Tema Kegiatan ini adalah “BSI FLASH JAPANASE FESTIVAL ”', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.2 Deskripsi Kegiatan', 2);
+        $section->addText('Maraknya acara/event yang sudah berlangsung di wilayah kota kota indonesia, membuat kami termotifasi ingin membuat acara tersebut di wilayah Tasikmalaya. Maka dari itu kami dari Markom bekerjasama dengan volunteer dari mahasiswa Universitas Bina Sarana Informatika Kmapus Tasikmalaya ingin mengadakan acara tersebut untuk memeriahkan sekaligus mengisi kegiatan rutinitas kami dalam bidang budaya dan seni sekaligus memperkenalkan kampus kami dan sebagai upaya strategi markom branding dan Beasiswa BJU PMB UBSI 2025.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.3 Penyelenggara Kegiatan', 2);
+        $section->addText('Kegiatan ini diselenggarakan oleh Markom bekerjasama dengan mahasiswa Universitas Bina Sarana Informatika Kampus Kota Tasikmalaya.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.4 Peserta Kegiatan', 2);
+        $section->addText('Sasaran dari kegiatan ini adalah SMA/SMK Sederajat di Wilayah Priangan Timur (Kabupaten Garut, Kabupaten Tasikmalaya, Kota Tasikmalaya, Kabupaten Ciamis, Kota Banjar, Kabupaten Pangandaran);', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.5 Waktu Pelaksanaan', 2);
+        $section->addText('Sasaran dari kegiatan ini adalah SMA/SMK Sederajat di Wilayah Priangan Timur (Kabupaten Garut, Kabupaten Tasikmalaya, Kota Tasikmalaya, Kabupaten Ciamis, Kota Banjar, Kabupaten Pangandaran);', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.6 Susunan Acara', 2);
+        $section->addText('Sasaran dari kegiatan ini adalah SMA/SMK Sederajat di Wilayah Priangan Timur (Kabupaten Garut, Kabupaten Tasikmalaya, Kota Tasikmalaya, Kabupaten Ciamis, Kota Banjar, Kabupaten Pangandaran);', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.7 Susunan Panitia', 2);
+        $section->addText('Sasaran dari kegiatan ini adalah SMA/SMK Sederajat di Wilayah Priangan Timur (Kabupaten Garut, Kabupaten Tasikmalaya, Kota Tasikmalaya, Kabupaten Ciamis, Kota Banjar, Kabupaten Pangandaran);', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addTitle('2.8 Rencana Anggaran', 2);
+        $section->addText('Sasaran dari kegiatan ini adalah SMA/SMK Sederajat di Wilayah Priangan Timur (Kabupaten Garut, Kabupaten Tasikmalaya, Kota Tasikmalaya, Kabupaten Ciamis, Kota Banjar, Kabupaten Pangandaran);', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+
+        $section = $phpWord->addSection();
+        $section->addTitle("BAB III \nPENUTUP", 1);
+        $section->addText('Demikian proposal ini disusun sebagai dasar dan bahan pertimbangan bagi pelaksanaan kegiatan yang dimaksud, diharapkan menjadi kegiatan yang bermanfaat bagi semua yang telah mendukung dan berpartisipasi didalamnya. Atas segala perhatian dan kerjasama Bapak/Ibu kami ucapkan terima kasih.', [], [
+            'indentation' => ['firstLine' => 480],
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $section->addText('Tasikmalaya, 17 Oktober 2024', [], [
+            'alignment' => Alignment::HORIZONTAL_RIGHT
+        ]);
+        $section->addText('Hormat Kami,', [], [
+            'alignment' => Alignment::HORIZONTAL_LEFT
+        ]);
+        $table = $section->addTable();
+
+        // Tambahkan baris pertama untuk tanda tangan
+        $table->addRow();
+        $cell1 = $table->addCell(4000);
+        $cell2 = $table->addCell(4000);
+
+        // Menambahkan gambar tanda tangan
+        $cell1->addImage(public_path('ttd.png'), [
+            'width' => 150,
+            'height' => 80,
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+        ]);
+        $cell2->addImage(public_path('ttd.png'), [
+            'width' => 150,
+            'height' => 80,
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+        ]);
+
+        // Tambahkan baris kedua untuk nama dan jabatan
+        $table->addRow();
+        $cell1->addText('Herlan Sutisna, S.T, M.Kom' . PHP_EOL . 'Ketua Panitia', ['bold' => true], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $cell2->addText('Agung Baitul Hikmah, M.Kom' . PHP_EOL . 'Kepala Kampus', ['bold' => true], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 
         // Membuat file Word dalam format .docx di memori
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
