@@ -2,7 +2,7 @@
     <form wire:submit.prevent="submit">
         <div class="card-body text-center">
             <select wire:model.lazy="status" id="" class="d-flex justify-content-start form-control">
-                <option selected>Pilih jabatan</option>
+                <option selected>Pilih Jabatan</option>
                 <option value="Koordinator Markom">Koordinator Markom</option>
                 <option value="KA. Divisi MER">KA. Divisi MER</option>
                 <option value="KA. BAKU">KA. BAKU</option>
@@ -17,6 +17,8 @@
                 </label>
                 <input type="file" wire:model.lazy="tanda_tangan" id="fileUpload" class="form-control d-none">
                 <input type="text" wire:model.lazy="nama_pemilik" name="" id="" placeholder="Nama pemilik tanda tangan"
+                    class="d-block w-100 form-control mt-2">
+                <input type="text" wire:model.lazy="nip" name="" id="" placeholder="NIP"
                     class="d-block w-100 form-control mt-2">
             </div>
             <button type="submit" class="btn btn-success btn-sm w-100" id="uploadButton">

@@ -34,7 +34,7 @@ class Signature extends Component
         }
     }
 
-    public function updateNamaPemilik($id, $field, $value)
+    public function updateDataPemilik($id, $field, $value)
     {
         $signature = SG::findOrFail($id);
 

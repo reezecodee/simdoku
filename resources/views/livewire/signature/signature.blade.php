@@ -56,8 +56,9 @@
                         <img src="{{ asset('storage/'.$item->tanda_tangan) }}" alt="" srcset="" class="w-50"
                             loading="lazy">
                     </div>
+                    <input type="text" wire:input="updateDataPemilik('{{ $item->id }}', 'nama_pemilik', $event.target.value)" value="{{ $item->nama_pemilik }}" id="" class="w-100 mb-2" placeholder="Nama pemilik">
                     <div class="d-flex justify-content-end">
-                        <input type="text" wire:input="updateNamaPemilik('{{ $item->id }}', 'nama_pemilik', $event.target.value)" value="{{ $item->nama_pemilik }}" id="" class="w-100">
+                        <input type="text" wire:input="updateDataPemilik('{{ $item->id }}', 'nip', $event.target.value)" value="{{ $item->nip }}" id="" class="w-100" placeholder="NIP pemilik">
                         <button wire:click="deleteSignature('{{ $item->id }}')" class="btn btn-danger btn-sm ml-2">
                             Hapus
                         </button>
