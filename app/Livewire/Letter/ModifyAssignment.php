@@ -9,8 +9,13 @@ use App\Models\Volunteer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Cell;
+use PhpOffice\PhpWord\Style\Paper;
 
 class ModifyAssignment extends Component
 {
@@ -43,49 +48,13 @@ class ModifyAssignment extends Component
         $this->volunteers = Volunteer::where('surat_tugas_id', $id)->get();
     }
 
-    // public function generatePdf()
-    // {
-    //     include(public_path('jpgraph/src/jpgraph.php'));
-    //     include(public_path('jpgraph/src/jpgraph_pie.php'));
-
-    //     $data = [10, 20, 30, 40];
-    //     $labels = ['January', 'February', 'March', 'April'];
-
-    //     $graph = new \PieGraph(400, 300);
-    //     $graph->SetShadow();
-
-    //     $p1 = new \PiePlot($data);
-    //     $p1->SetLegends($labels);
-
-    //     $graph->Add($p1);
-    //     $graph->Stroke(public_path('charts/piechart.png'));
-
-    //     $imagePath = public_path('charts/piechart.png');
-    //     $imageData = base64_encode(file_get_contents($imagePath));
-    //     $image = '<img src="data:image/png;base64,' . $imageData . '" alt="Pie Chart">';
-
-    //     $pdf = Pdf::loadView('pdf.surat-tugas', [
-    //         'image' => $image
-    //     ]);
-
-    //     return response()->streamDownload(
-    //         function () use ($pdf, $imagePath) {
-    //             print($pdf->stream());
-    //             if (file_exists($imagePath)) {
-    //                 unlink($imagePath);
-    //             }
-    //         },
-    //         'laporan.pdf'
-    //     );    
-    // }
-
     public function printPDF()
     {
         $today = Carbon::today()->translatedFormat('d F Y');
-        $path = storage_path('app/public/'.$this->letter->signature->tanda_tangan);
+        $path = storage_path('app/public/' . $this->letter->signature->tanda_tangan);
         $imageData = base64_encode(file_get_contents($path));
-        $imageBase64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$imageData;
-        
+        $imageBase64 = 'data:image/' . pathinfo($path, PATHINFO_EXTENSION) . ';base64,' . $imageData;
+
         $pdf = Pdf::loadView('pdf.surat-tugas', [
             'letter' => $this->letter,
             'today' => $today,
@@ -102,6 +71,187 @@ class ModifyAssignment extends Component
             },
             'laporan.pdf'
         );
+    }
+
+    public function printWord()
+    {
+        $phpWord = new PhpWord();
+        $phpWord->setDefaultFontName('Times New Roman');
+        $phpWord->setDefaultFontSize(11);
+        $phpWord->setDefaultParagraphStyle([
+            'lineHeight' => 1,
+        ]);
+
+        $section = $phpWord->addSection([
+            'paperSize' => 'Letter'
+        ]);
+
+        $section->addText('Tasikmalaya, 26 Februari 2024', [], ['alignment' => Alignment::HORIZONTAL_RIGHT]);
+        $section->addText('Kepada Yth.', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $section->addText('Kepada Divisi MER Universitas Bina Sarana Informatika.', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $section->addText('di', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $textRun = $section->addTextRun(['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $textRun->addText("\t");
+        $textRun->addText("JAKARTA", ['spacing' => 150, 'underline' => 'single']);
+        $section->addText('Perihal :', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $section->addText('Berikut kami kirimkan pengajuan Surat Tugas kegiatan . Berikut Staf yang akan bertugas:', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+
+        $styleTable = [
+            'borderSize' => 6,
+            'borderColor' => '000000',
+            'cellMargin' => 70
+        ];
+
+        $table = $section->addTable($styleTable);
+        
+        $table->addRow();
+        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("No", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(1500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("NIP", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(4000, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Nama", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Sekolah", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Tanggal Pelaksanaan", [], ['alignment' => Jc::CENTER]);
+        
+        $table->addRow();
+        $cellNo = $table->addCell(800, ['vMerge' => 'restart', 'valign' => 'center']);
+        $cellNo->addText("1", [], ['alignment' => Jc::CENTER]);
+        
+        $table->addCell(1500)->addText("200809852", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(3000)->addText("Agung Baitul Hikmah, S.Kom, M.Kom", [], []);
+        
+        $cellSekolah = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
+        $cellSekolah->addText("SMAN 10\nTasikmalaya", ['bold' => true], ['alignment' => Jc::CENTER]);
+        
+        $cellTanggal = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
+        $cellTanggal->addText("Selasa\n29 Oktober 2024\nPukul 07:00 – 16:00", [], ['alignment' => Jc::CENTER]);
+        
+        $table->addRow();
+        $table->addCell(null, ['vMerge' => 'continue']); 
+        $table->addCell(1500)->addText("202108186", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(3000)->addText("Haerul Fatah, S.Kom, M.Kom", [], []);
+        $table->addCell(2500, ['vMerge' => 'continue']); 
+        $table->addCell(null, ['vMerge' => 'continue']); 
+        
+        $table->addRow();
+        $table->addCell(null, ['vMerge' => 'continue']); 
+        $table->addCell(1500)->addText("201706153", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(3000)->addText("Herlan Sutisna, S.T, M.Kom", [], []);
+        $table->addCell(2500, ['vMerge' => 'continue']); 
+        $table->addCell(null, ['vMerge' => 'continue']);
+
+        $section->addTextBreak(1);
+        $section->addText('Volunteer:', ['bold' => true], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $table = $section->addTable($styleTable);
+        
+        $table->addRow();
+        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("No", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(1500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("NIM", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(4000, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Nama", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Sekolah", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Tanggal Pelaksanaan", [], ['alignment' => Jc::CENTER]);
+        
+        $table->addRow();
+        $cellNo = $table->addCell(800, ['vMerge' => 'restart', 'valign' => 'center']);
+        $cellNo->addText("1", [], ['alignment' => Jc::CENTER]);
+        
+        $table->addCell(1500)->addText("200809852", [], ['alignment' => Jc::CENTER]);
+        $table->addCell(3000)->addText("Agung Baitul Hikmah, S.Kom, M.Kom", [], []);
+        
+        $cellSekolah = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
+        $cellSekolah->addText("SMAN 10\nTasikmalaya", ['bold' => true], ['alignment' => Jc::CENTER]);
+        
+        $cellTanggal = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
+        $cellTanggal->addText("Selasa\n29 Oktober 2024\nPukul 07:00 – 16:00", [], ['alignment' => Jc::CENTER]);
+
+        $section->addTextBreak(1);
+
+        $section->addText("\tDemikian pengajuan ini kami sampaikan. Atas segala perhatian dan kebijakannya kami mengucapkan terimakasih.", [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+
+        $section->addTextBreak(1);
+
+        $tableStyle = [
+            'alignment' => Jc::CENTER, 
+            'cellMargin' => 0, 
+        ];
+
+        $table = $section->addTable($tableStyle);
+
+        $table->addRow();
+        $cell1 = $table->addCell(5000);
+        $cell2 = $table->addCell(5000);
+
+        $cell1->addText(
+            "Koordinator Markom UBSI Tasikmalaya",
+            [],
+            ['alignment' => Jc::CENTER]
+        );
+        $cell2->addText(
+            "Kepala Kampus UBSI Tasikmalaya",
+            [],
+            ['alignment' => Jc::CENTER]
+        );
+
+        $table->addRow();
+        $cell1 = $table->addCell(4000);
+        $cell2 = $table->addCell(4000);
+
+        $cell1->addImage(public_path('ttd.png'), [
+            'width' => 110,
+            'height' => 50,
+            'alignment' => Jc::CENTER
+        ]);
+        $cell2->addImage(public_path('ttd.png'), [
+            'width' => 110,
+            'height' => 50,
+            'alignment' => Jc::CENTER
+        ]);
+
+        $table->addRow();
+        $cell1 = $table->addCell(5000);
+        $cell2 = $table->addCell(5000);
+
+        $cell1->addText(
+            "Herlan Sutisna, S.T, M.Kom",
+            ['bold' => true],
+            ['alignment' => Jc::CENTER]
+        );
+        $cell2->addText(
+            "Agung Baitul Hikmah, M.Kom",
+            ['bold' => true],
+            ['alignment' => Jc::CENTER]
+        );
+
+        $table->addRow();
+        $cell1 = $table->addCell(5000);
+        $cell2 = $table->addCell(5000);
+
+        $cell1->addText(
+            "NIP. 201706153",
+            [],
+            ['alignment' => Jc::CENTER]
+        );
+        $cell2->addText(
+            "NIP. 201706153",
+            [],
+            ['alignment' => Jc::CENTER]
+        );
+
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+
+        $fileName = 'surat_pengajuan.docx';
+        $response = response()->stream(
+            function () use ($objWriter) {
+                $objWriter->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'Content-Disposition' => 'attachment;filename="' . $fileName . '"',
+                'Cache-Control' => 'max-age=0',
+                'Cache-Control' => 'max-age=1',
+            ]
+        );
+
+        return $response;
     }
 
     public function render()

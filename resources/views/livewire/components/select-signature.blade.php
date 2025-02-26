@@ -8,7 +8,7 @@
                 alt="" srcset="">
         </div>
         <p class="paragraph-height"><b>{{ $$doc->$relationName->nama_pemilik }}</b></p>
-        <p class="paragraph-height"><b>NIP.29398434234</b></p>
+        <p class="paragraph-height"><b>NIP.{{ $$doc->$relationName->nip }}</b></p>
     </div>
     @endif
     <div>

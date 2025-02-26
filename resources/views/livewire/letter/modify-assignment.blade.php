@@ -7,7 +7,7 @@
                 </a>
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-success mr-2">Preview Surat</button>
-                    <button class="btn btn-primary mr-2">Cetak Word</button>
+                    <button class="btn btn-primary mr-2" wire:click="printWord">Cetak Word</button>
                     <button class="btn btn-danger" wire:click="printPDF">Cetak PDF</button>
                 </div>
             </div>
