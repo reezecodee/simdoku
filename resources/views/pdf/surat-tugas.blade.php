@@ -235,7 +235,7 @@
                     <img src="{{ $imgbase64 }}" width="120" alt="" srcset="">
                 </div>
                 <p class="signature-name">{{ $letter->signature->nama_pemilik }}</p>
-                <p class="signature-nip">NIP. 201706153</p>
+                <p class="signature-nip">NIP. {{ $letter->signature->nip }}</p>
             </div>
             @php
             $path = storage_path('app/public/'.$user->tanda_tangan);

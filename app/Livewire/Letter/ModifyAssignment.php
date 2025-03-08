@@ -4,6 +4,7 @@ namespace App\Livewire\Letter;
 
 use App\Models\Execution;
 use App\Models\LetterAssignment;
+use App\Models\Profile;
 use App\Models\Staff;
 use App\Models\Volunteer;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -14,8 +15,6 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Cell;
-use PhpOffice\PhpWord\Style\Paper;
 
 class ModifyAssignment extends Component
 {
@@ -24,6 +23,8 @@ class ModifyAssignment extends Component
     public $date;
     public $id;
     public $letter;
+    public $path;
+    public $profile;
 
     public $firstIdExecutionStaff;
     public $firstIdExecutionVolunteer;
@@ -37,7 +38,9 @@ class ModifyAssignment extends Component
     {
         $this->date = Carbon::now()->translatedFormat('d F Y');
         $this->id = $id;
-        $this->letter = LetterAssignment::findOrFail($id);
+        $this->letter = LetterAssignment::findOrFail($id); //
+        $this->path = storage_path('app/public/' . $this->letter->signature->tanda_tangan);
+        $this->profile = Profile::first();
 
         $this->firstIdExecutionStaff = Execution::where('surat_tugas_id', $id)->where('type', 'Staff')->first();
         $this->firstIdExecutionVolunteer = Execution::where('surat_tugas_id', $id)->where('type', 'Volunteer')->first();
@@ -50,10 +53,9 @@ class ModifyAssignment extends Component
 
     public function printPDF()
     {
-        $today = Carbon::today()->translatedFormat('d F Y');
-        $path = storage_path('app/public/' . $this->letter->signature->tanda_tangan);
-        $imageData = base64_encode(file_get_contents($path));
-        $imageBase64 = 'data:image/' . pathinfo($path, PATHINFO_EXTENSION) . ';base64,' . $imageData;
+        $today = $this->date;
+        $imageData = base64_encode(file_get_contents($this->path));
+        $imageBase64 = 'data:image/' . pathinfo($this->path, PATHINFO_EXTENSION) . ';base64,' . $imageData;
 
         $pdf = Pdf::loadView('pdf.surat-tugas', [
             'letter' => $this->letter,
@@ -86,15 +88,16 @@ class ModifyAssignment extends Component
             'paperSize' => 'Letter'
         ]);
 
-        $section->addText('Tasikmalaya, 26 Februari 2024', [], ['alignment' => Alignment::HORIZONTAL_RIGHT]);
+        $section->addText("Tasikmalaya, {$this->date}", [], ['alignment' => Alignment::HORIZONTAL_RIGHT]);
         $section->addText('Kepada Yth.', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
         $section->addText('Kepada Divisi MER Universitas Bina Sarana Informatika.', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $section->addText($this->letter->kepala_devisi_mer, [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
         $section->addText('di', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
         $textRun = $section->addTextRun(['alignment' => Alignment::HORIZONTAL_LEFT]);
         $textRun->addText("\t");
         $textRun->addText("JAKARTA", ['spacing' => 150, 'underline' => 'single']);
-        $section->addText('Perihal :', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
-        $section->addText('Berikut kami kirimkan pengajuan Surat Tugas kegiatan . Berikut Staf yang akan bertugas:', [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $section->addText("Perihal: {$this->letter->perihal}", [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+        $section->addText("Berikut kami kirimkan pengajuan Surat Tugas kegiatan {$this->letter->nama_acara}. Berikut Staf yang akan bertugas:", [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
 
         $styleTable = [
             'borderSize' => 6,
@@ -102,75 +105,103 @@ class ModifyAssignment extends Component
             'cellMargin' => 70
         ];
 
-        $table = $section->addTable($styleTable);
-        
-        $table->addRow();
-        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("No", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(1500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("NIP", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(4000, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Nama", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Sekolah", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Tanggal Pelaksanaan", [], ['alignment' => Jc::CENTER]);
-        
-        $table->addRow();
-        $cellNo = $table->addCell(800, ['vMerge' => 'restart', 'valign' => 'center']);
-        $cellNo->addText("1", [], ['alignment' => Jc::CENTER]);
-        
-        $table->addCell(1500)->addText("200809852", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(3000)->addText("Agung Baitul Hikmah, S.Kom, M.Kom", [], []);
-        
-        $cellSekolah = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
-        $cellSekolah->addText("SMAN 10\nTasikmalaya", ['bold' => true], ['alignment' => Jc::CENTER]);
-        
-        $cellTanggal = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
-        $cellTanggal->addText("Selasa\n29 Oktober 2024\nPukul 07:00 – 16:00", [], ['alignment' => Jc::CENTER]);
-        
-        $table->addRow();
-        $table->addCell(null, ['vMerge' => 'continue']); 
-        $table->addCell(1500)->addText("202108186", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(3000)->addText("Haerul Fatah, S.Kom, M.Kom", [], []);
-        $table->addCell(2500, ['vMerge' => 'continue']); 
-        $table->addCell(null, ['vMerge' => 'continue']); 
-        
-        $table->addRow();
-        $table->addCell(null, ['vMerge' => 'continue']); 
-        $table->addCell(1500)->addText("201706153", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(3000)->addText("Herlan Sutisna, S.T, M.Kom", [], []);
-        $table->addCell(2500, ['vMerge' => 'continue']); 
-        $table->addCell(null, ['vMerge' => 'continue']);
+        if ($this->executionStaffs->isNotEmpty()) {
+            $table = $section->addTable($styleTable);
 
-        $section->addTextBreak(1);
-        $section->addText('Volunteer:', ['bold' => true], ['alignment' => Alignment::HORIZONTAL_LEFT]);
-        $table = $section->addTable($styleTable);
-        
-        $table->addRow();
-        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("No", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(1500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("NIM", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(4000, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Nama", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Sekolah", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Tanggal Pelaksanaan", [], ['alignment' => Jc::CENTER]);
-        
-        $table->addRow();
-        $cellNo = $table->addCell(800, ['vMerge' => 'restart', 'valign' => 'center']);
-        $cellNo->addText("1", [], ['alignment' => Jc::CENTER]);
-        
-        $table->addCell(1500)->addText("200809852", [], ['alignment' => Jc::CENTER]);
-        $table->addCell(3000)->addText("Agung Baitul Hikmah, S.Kom, M.Kom", [], []);
-        
-        $cellSekolah = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
-        $cellSekolah->addText("SMAN 10\nTasikmalaya", ['bold' => true], ['alignment' => Jc::CENTER]);
-        
-        $cellTanggal = $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center']);
-        $cellTanggal->addText("Selasa\n29 Oktober 2024\nPukul 07:00 – 16:00", [], ['alignment' => Jc::CENTER]);
+            $table->addRow();
+            $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("No", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(1500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("NIP", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(4000, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Nama", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Sekolah", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Tanggal Pelaksanaan", [], ['alignment' => Jc::CENTER]);
 
-        $section->addTextBreak(1);
+            foreach ($this->executionStaffs as $index => $execution) {
+                $relatedStaffs = $execution->staff;
+
+                $table->addRow();
+                $table->addCell(800, ['vMerge' => 'restart', 'valign' => 'center'])
+                    ->addText($index + 1, [], ['alignment' => Jc::CENTER]);
+
+                if ($relatedStaffs->count() == 0) {
+                    $table->addCell(5500, ['gridSpan' => 2])->addText("Belum ada anggota", [], []);
+                } else {
+                    $table->addCell(1500)->addText($relatedStaffs->first()->nip, [], ['alignment' => Jc::CENTER]);
+                    $table->addCell(4000)->addText($relatedStaffs->first()->nama, [], []);
+                }
+
+                $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center'])
+                    ->addText($execution->nama_sekolah, ['bold' => true], ['alignment' => Jc::CENTER]);
+
+                $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center'])
+                    ->addText($execution->tgl_pelaksanaan, [], ['alignment' => Jc::CENTER]);
+
+                if ($relatedStaffs->count() > 1) {
+                    foreach ($relatedStaffs->skip(1) as $staff) {
+                        $table->addRow();
+                        $table->addCell(null, ['vMerge' => 'continue']);
+                        $table->addCell(1500)->addText($staff->nip, [], ['alignment' => Jc::CENTER]);
+                        $table->addCell(4000)->addText($staff->nama, [], []);
+                        $table->addCell(2500, ['vMerge' => 'continue']);
+                        $table->addCell(2500, ['vMerge' => 'continue']);
+                    }
+                }
+            }
+            $section->addTextBreak(1);
+        }
+
+        if ($this->executionVolunteers->isNotEmpty()) {
+            $section->addText('Volunteer:', ['bold' => true], ['alignment' => Alignment::HORIZONTAL_LEFT]);
+
+            $table = $section->addTable($styleTable);
+
+            $table->addRow();
+            $table->addCell(800, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("No", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(1500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("NIM", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(4000, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Nama", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Sekolah", [], ['alignment' => Jc::CENTER]);
+            $table->addCell(2500, ['valign' => 'center', 'bgColor' => 'D9D9D9'])->addText("Tanggal Pelaksanaan", [], ['alignment' => Jc::CENTER]);
+
+            foreach ($this->executionVolunteers as $index => $execution) {
+                $relatedVolunteers = $execution->volunteer;
+
+                $table->addRow();
+                $table->addCell(800, ['vMerge' => 'restart', 'valign' => 'center'])
+                    ->addText($index + 1, [], ['alignment' => Jc::CENTER]);
+
+                if ($relatedVolunteers->count() == 0) {
+                    $table->addCell(5500, ['gridSpan' => 2])->addText("Belum ada anggota", [], []);
+                } else {
+                    $table->addCell(1500)->addText($relatedVolunteers->first()->nim, [], ['alignment' => Jc::CENTER]);
+                    $table->addCell(4000)->addText($relatedVolunteers->first()->nama, [], []);
+                }
+
+                $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center'])
+                    ->addText($execution->nama_sekolah, ['bold' => true], ['alignment' => Jc::CENTER]);
+
+                $table->addCell(2500, ['vMerge' => 'restart', 'valign' => 'center'])
+                    ->addText($execution->tgl_pelaksanaan, [], ['alignment' => Jc::CENTER]);
+
+                if ($relatedVolunteers->count() > 1) {
+                    foreach ($relatedVolunteers->skip(1) as $volunteer) {
+                        $table->addRow();
+                        $table->addCell(null, ['vMerge' => 'continue']);
+                        $table->addCell(1500)->addText($volunteer->nim, [], ['alignment' => Jc::CENTER]);
+                        $table->addCell(4000)->addText($volunteer->nama, [], []);
+                        $table->addCell(2500, ['vMerge' => 'continue']);
+                        $table->addCell(2500, ['vMerge' => 'continue']);
+                    }
+                }
+            }
+            $section->addTextBreak(1);
+        }
 
         $section->addText("\tDemikian pengajuan ini kami sampaikan. Atas segala perhatian dan kebijakannya kami mengucapkan terimakasih.", [], ['alignment' => Alignment::HORIZONTAL_LEFT]);
 
         $section->addTextBreak(1);
 
         $tableStyle = [
-            'alignment' => Jc::CENTER, 
-            'cellMargin' => 0, 
+            'alignment' => Jc::CENTER,
+            'cellMargin' => 0,
         ];
 
         $table = $section->addTable($tableStyle);
@@ -194,12 +225,12 @@ class ModifyAssignment extends Component
         $cell1 = $table->addCell(4000);
         $cell2 = $table->addCell(4000);
 
-        $cell1->addImage(public_path('ttd.png'), [
+        $cell1->addImage($this->path, [
             'width' => 110,
             'height' => 50,
             'alignment' => Jc::CENTER
         ]);
-        $cell2->addImage(public_path('ttd.png'), [
+        $cell2->addImage(storage_path('app/public/' . $this->profile->tanda_tangan), [
             'width' => 110,
             'height' => 50,
             'alignment' => Jc::CENTER
@@ -210,12 +241,12 @@ class ModifyAssignment extends Component
         $cell2 = $table->addCell(5000);
 
         $cell1->addText(
-            "Herlan Sutisna, S.T, M.Kom",
+            $this->letter->signature->nama_pemilik,
             ['bold' => true],
             ['alignment' => Jc::CENTER]
         );
         $cell2->addText(
-            "Agung Baitul Hikmah, M.Kom",
+            $this->profile->nama,
             ['bold' => true],
             ['alignment' => Jc::CENTER]
         );
@@ -225,12 +256,12 @@ class ModifyAssignment extends Component
         $cell2 = $table->addCell(5000);
 
         $cell1->addText(
-            "NIP. 201706153",
+            "NIP. {$this->letter->signature->nip}",
             [],
             ['alignment' => Jc::CENTER]
         );
         $cell2->addText(
-            "NIP. 201706153",
+            "NIP. {$this->profile->nip}",
             [],
             ['alignment' => Jc::CENTER]
         );
