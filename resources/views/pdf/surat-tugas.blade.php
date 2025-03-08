@@ -85,13 +85,6 @@
             padding: 10px;
         }
 
-        .signature-line {
-            margin: 0 auto;
-            border-bottom: 1px solid black;
-            width: 200px;
-            height: auto;
-        }
-
         .signature-title {
             font-weight: normal;
             margin-bottom: 10px;
@@ -238,7 +231,7 @@
         <div class="signature-wrapper">
             <div class="signature-column">
                 <p class="signature-title">Koordinator Markom UBSI Tasikmalaya</p>
-                <div class="signature-line">
+                <div>
                     <img src="{{ $imgbase64 }}" width="120" alt="" srcset="">
                 </div>
                 <p class="signature-name">{{ $letter->signature->nama_pemilik }}</p>
@@ -251,7 +244,7 @@
             @endphp
             <div class="signature-column">
                 <p class="signature-title">Kepala Kampus UBSI Tasikmalaya</p>
-                <div class="signature-line">
+                <div>
                     <img src="{{ $base64 }}" width="120" alt="" srcset="">
                 </div>
                 <p class="signature-name">{{ $user->nama }}</p>
