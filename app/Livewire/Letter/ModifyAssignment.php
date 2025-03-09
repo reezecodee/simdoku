@@ -17,10 +17,9 @@ class ModifyAssignment extends Component
 {
     #[Title('Buat Surat Tugas')]
 
-    public $date;
     public $id;
+    public $today;
     public $letter;
-    public $path;
     public $my;
 
     public $firstIdExecutionStaff;
@@ -33,10 +32,9 @@ class ModifyAssignment extends Component
 
     public function mount($id)
     {
-        $this->date = Carbon::now()->translatedFormat('d F Y');
         $this->id = $id;
+        $this->today = Carbon::now()->translatedFormat('d F Y');
         $this->letter = LetterAssignment::with('signature')->findOrFail($id);
-        $this->path = storage_path('app/public/' . $this->letter->signature->tanda_tangan);
         $this->my = Profile::first();
 
         $this->firstIdExecutionStaff = Execution::where('surat_tugas_id', $id)->where('type', 'Staff')->first();
@@ -51,7 +49,7 @@ class ModifyAssignment extends Component
     public function printPDF()
     {
         return PDFLetterService::print(
-            $this->date,
+            $this->today,
             $this->letter,
             $this->executionStaffs,
             $this->staffs,
@@ -63,7 +61,7 @@ class ModifyAssignment extends Component
     public function printWord()
     {
         return WordLetterService::print(
-            $this->date,
+            $this->today,
             $this->letter,
             $this->executionStaffs,
             $this->executionVolunteers,

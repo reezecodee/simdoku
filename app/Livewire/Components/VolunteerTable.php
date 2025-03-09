@@ -16,8 +16,6 @@ class VolunteerTable extends Component
     public $firstIdExecutionVolunteer;
     public $selectedExecutionId;
 
-    public $saving = false;
-
     public function mount()
     {
         $this->selectedExecutionId = null;
@@ -75,30 +73,22 @@ class VolunteerTable extends Component
 
     public function updateVolunteer($id, $field, $value)
     {
-        $this->saving = true; 
-
         $volunteer = Volunteer::findOrFail($id);
 
         if ($volunteer) {
             $volunteer->$field = $value;
             $volunteer->save();
         }
-
-        $this->saving = false; 
     }
 
     public function updateExecution($id, $field, $value)
     {
-        $this->saving = true; 
-
         $execution = Execution::findOrFail($id);
 
         if ($execution) {
             $execution->$field = $value;
             $execution->save();
         }
-
-        $this->saving = false; 
     }
 
     public function render()

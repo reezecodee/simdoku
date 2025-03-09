@@ -7,10 +7,6 @@
         }
     </style>
 
-    <div wire:loading wire:target="updateStaff, updateExecution" class="text-info">
-        Menyimpan data...
-    </div>
-
     <div class="d-flex justify-content-end">
         <button class="btn btn-primary mb-3 mr-2" wire:click="addExecutionStaff('{{ $letterId }}')">Tambah
             Pelaksanaan</button>
