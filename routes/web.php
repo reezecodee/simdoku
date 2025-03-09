@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\Preview\LetterPreviewController;
 use App\Livewire\Archive\ListFiles;
 use App\Livewire\Archive\UploadFile;
 use App\Livewire\Dashboard\Dashboard;
@@ -22,6 +23,7 @@ Route::get('/', Dashboard::class)->name('dashboard');
 Route::prefix('surat')->group(function(){
     Route::get('tugas', Assignment::class)->name('letter.index');
     Route::get('tugas/{id}/modify', ModifyAssignment::class)->name('letter.modify');
+    Route::get('tugas/{id}/preview', [LetterPreviewController::class, 'preview'])->name('letter.preview');
 });
 
 Route::prefix('proposal')->group(function(){
