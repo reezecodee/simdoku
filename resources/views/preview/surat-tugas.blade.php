@@ -18,7 +18,6 @@
             width: 21cm;
             height: 29.7cm;
             margin: auto;
-            /* padding: 2cm; */
             box-sizing: border-box;
             background: #f0f0f0;
             display: flex;
@@ -50,17 +49,9 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #D9D9D9;
             text-align: center;
             font-weight: normal;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
         }
 
         .signature-container {

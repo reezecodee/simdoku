@@ -10,7 +10,7 @@
         body {
             font-family: 'Times New Roman', serif;
             font-size: 11pt;
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         table {
@@ -27,13 +27,9 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #D9D9D9;
             text-align: center;
             font-weight: normal;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
         }
 
         table td:nth-child(1),

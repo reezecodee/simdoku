@@ -12,7 +12,7 @@ class WordLetterService
     protected static $styleTable = [
         'borderSize' => 6,
         'borderColor' => '000000',
-        'cellMargin' => 70
+        'cellMargin' => 70,
     ];
 
     public static function print($today, $letter, $executionStaffs, $executionVolunteers, $my)
@@ -129,11 +129,11 @@ class WordLetterService
                 if ($relatedStaffs->count() > 1) {
                     foreach ($relatedStaffs->skip(1) as $staff) {
                         $table->addRow();
-                        $table->addCell(null, ['vMerge' => 'continue']);
+                        $table->addCell(null, ['vMerge' => 'continue', 'valign' => 'center']);
                         $table->addCell(1500)->addText($staff->nip, [], ['alignment' => Jc::CENTER]);
                         $table->addCell(4000)->addText($staff->nama, [], []);
-                        $table->addCell(2500, ['vMerge' => 'continue']);
-                        $table->addCell(2500, ['vMerge' => 'continue']);
+                        $table->addCell(2500, ['vMerge' => 'continue', 'valign' => 'center']);
+                        $table->addCell(2500, ['vMerge' => 'continue', 'valign' => 'center']);
                     }
                 }
             }
