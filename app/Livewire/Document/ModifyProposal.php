@@ -2,16 +2,14 @@
 
 namespace App\Livewire\Document;
 
+use App\Models\Profile;
 use App\Models\Proposal;
+use App\Models\ProposalPlanSchedule;
 use App\Services\WordProposalService;
 use Carbon\Carbon;
 
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Shared\Html;
 
 class ModifyProposal extends Component
 {
@@ -22,16 +20,23 @@ class ModifyProposal extends Component
     public $id;
     public $proposal;
     public $date;
+    public $my;
+    public $planSchedules = [];
 
     public function mount($id)
     {
         $this->id = $id;
-        $this->proposal = Proposal::findOrFail($id);
+        $this->proposal = Proposal::with(
+            'introduction',
+            'planActivity'
+        )->findOrFail($id);
         $this->judul = $this->proposal->judul ?? '';
         $this->tahun = $this->proposal->tahun ?? '';
         $this->kata_pengantar = $this->proposal->kata_pengantar ?? '';
         $this->penutup = $this->proposal->penutup ?? '';
         $this->date = Carbon::now()->translatedFormat('d F Y');
+        $this->my = Profile::first();
+        $this->planSchedules = ProposalPlanSchedule::where('proposal_id', $id)->get();
     }
 
     public function updated($property)
@@ -43,7 +48,12 @@ class ModifyProposal extends Component
 
     public function createWordDocument()
     {
-        return WordProposalService::print();
+        return WordProposalService::print(
+            $this->proposal, 
+            $this->my, 
+            $this->date, 
+            $this->planSchedules
+        );
     }
 
     public function generatePDF() {}

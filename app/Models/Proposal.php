@@ -15,4 +15,14 @@ class Proposal extends Model
     {
         return $this->belongsTo(Signature::class, 'ttd_ketua_panitia_id');
     }
+
+    public function introduction()
+    {
+        return $this->hasOne(ProposalIntroduction::class, 'proposal_id');
+    }
+
+    public function planActivity()
+    {
+        return $this->hasOne(ProposalPlanActivity::class, 'proposal_id');
+    }
 }
