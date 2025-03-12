@@ -7,20 +7,22 @@ use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Shared\Html;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Cell;
 use PhpOffice\PhpWord\Style\Table;
 
 class WordProposalService
 {
-    public static function print($proposal, $my, $today, $planSchedules, $committees)
+    public static function print($proposal, $my, $today, $planSchedules, $committees, $budgets)
     {
+        // $proposal = $proposal->planActivity;
+        // dd(self::convertToParagraph($proposal->tema_kegiatan), self::convertToParagraph($proposal->deskripsi_kegiatan), self::convertToParagraph($proposal->penyelenggara_kegiatan), self::convertToParagraph($proposal->peserta_kegiatan), self::convertToParagraph($proposal->waktu_pelaksanaan));
+        // return;
         $phpWord = self::init();
 
         $phpWord = self::cover($phpWord, $proposal);
         $phpWord = self::foreword($phpWord, $proposal, $my, $today);
         $phpWord = self::TOC($phpWord);
         $phpWord = self::introduction($phpWord, $proposal);
-        $phpWord = self::planActivity($phpWord, $proposal, $planSchedules, $committees);
+        $phpWord = self::planActivity($phpWord, $proposal, $planSchedules, $committees, $budgets);
         $phpWord = self::closing($phpWord, $proposal, $today, $my);
 
         return self::output($phpWord);
@@ -33,7 +35,7 @@ class WordProposalService
         $phpWord->setDefaultFontSize(12);
         $phpWord->setDefaultParagraphStyle([
             'indentation' => ['firstLine' => 480],
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+            'alignment' => Jc::BOTH,
             'lineHeight' => 1.5,
             'spaceAfter' => 120,
         ]);
@@ -135,7 +137,7 @@ class WordProposalService
 
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+            'alignment' => Jc::CENTER
         ]);
 
         return $phpWord;
@@ -148,7 +150,7 @@ class WordProposalService
 
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+            'alignment' => Jc::CENTER
         ]);
 
         return $phpWord;
@@ -177,7 +179,7 @@ class WordProposalService
         return $phpWord;
     }
 
-    private static function planActivity($phpWord, $proposal, $planSchedules, $committees)
+    private static function planActivity($phpWord, $proposal, $planSchedules, $committees, $budgets)
     {
         $proposal = $proposal->planActivity;
         $section = $phpWord->addSection();
@@ -198,7 +200,6 @@ class WordProposalService
         $section->addTitle('2.5 Waktu Pelaksanaan', 2);
         Html::addHtml($section, self::convertToParagraph($proposal->waktu_pelaksanaan), false, false);
 
-        $section->addTitle('2.6 Susunan Acara', 2);
         $tableStyle = [
             'borderSize' => 6,
             'borderColor' => '000000',
@@ -207,49 +208,72 @@ class WordProposalService
         ];
 
         $phpWord->addTableStyle('CustomTable', $tableStyle);
-        $table = $section->addTable('CustomTable');
 
         $headerStyle = ['bgColor' => 'D9D9D9'];
 
-        $table->addRow();
-        $table->addCell(1500, $headerStyle)->addText("No");
-        $table->addCell(6000, $headerStyle)->addText("Nama Kegiatan");
-        $table->addCell(3500, $headerStyle)->addText("Waktu");
+        if ($planSchedules->isNotEmpty()) {
+            $section->addTitle('2.6 Susunan Acara', 2);
+            $table = $section->addTable('CustomTable');
 
-        $no = 1;
-        foreach ($planSchedules as $item) {
             $table->addRow();
-            $table->addCell(1500)->addText($no);
-            $table->addCell(6000)->addText($item->nama_kegiatan);
-            $table->addCell(3500)->addText($item->waktu);
-            $no++;
+            $table->addCell(1500, $headerStyle)->addText("No");
+            $table->addCell(6000, $headerStyle)->addText("Nama Kegiatan");
+            $table->addCell(3500, $headerStyle)->addText("Waktu");
+
+            $no = 1;
+            foreach ($planSchedules as $item) {
+                $table->addRow();
+                $table->addCell(1500)->addText($no);
+                $table->addCell(6000)->addText($item->nama_kegiatan);
+                $table->addCell(3500)->addText($item->waktu);
+                $no++;
+            }
         }
 
-        $section->addTitle('2.7 Susunan Panitia', 2);
-        $table = $section->addTable('CustomTable');
+        if ($committees->isNotEmpty()) {
+            $section->addTitle('2.7 Susunan Panitia', 2);
+            $table = $section->addTable('CustomTable');
 
-        $headerStyle = ['bgColor' => 'D9D9D9'];
-
-        $table->addRow();
-        $table->addCell(1500, $headerStyle)->addText("No");
-        $table->addCell(6000, $headerStyle)->addText("Nama Panitia");
-        $table->addCell(3500, $headerStyle)->addText("Peran");
-
-        $no = 1;
-        foreach ($committees as $item) {
             $table->addRow();
-            $table->addCell(1500)->addText($no);
-            $table->addCell(6000)->addText($item->nama);
-            $table->addCell(3500)->addText($item->peran);
-            $no++;
+            $table->addCell(1500, $headerStyle)->addText("No");
+            $table->addCell(6000, $headerStyle)->addText("Nama Panitia");
+            $table->addCell(3500, $headerStyle)->addText("Peran");
+
+            $no = 1;
+            foreach ($committees as $item) {
+                $table->addRow();
+                $table->addCell(1500)->addText($no);
+                $table->addCell(6000)->addText($item->nama);
+                $table->addCell(3500)->addText($item->peran);
+                $no++;
+            }
         }
 
-        $section->addTitle('2.8 Rencana Anggaran', 2);
-        Html::addHtml($section, "<p>Total anggaran yang dibutuhkan adalah <strong>Rp 10.000.000,-</strong></p>", false, false);
+        if ($budgets->isNotEmpty()) {
+            $section->addTitle('2.8 Rencana Anggaran', 2);
+            $totalBudgets = $budgets->sum('total');
+            $table = $section->addTable('CustomTable');
+
+            $table->addRow();
+            $table->addCell(6000, $headerStyle)->addText("Uraian");
+            $table->addCell(3500, $headerStyle)->addText("Jumlah");
+            $table->addCell(3500, $headerStyle)->addText("Total");
+
+            foreach ($budgets as $item) {
+                $table->addRow();
+                $table->addCell(6000)->addText($item->uraian);
+                $table->addCell(3500)->addText($item->jumlah);
+                $table->addCell(3500)->addText($item->total);
+            }
+
+            $table->addRow();
+            $table->addCell(7500, ['gridSpan' => 2])->addText("Jumlah pengeluaran");
+            $table->addCell(3500)->addText("Rp. {$totalBudgets}");
+        }
 
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+            'alignment' => Jc::CENTER
         ]);
 
         return $phpWord;
@@ -268,7 +292,7 @@ class WordProposalService
         $section->addText('Hormat Kami,', [], [
             'alignment' => Alignment::HORIZONTAL_LEFT
         ]);
-        
+
         $tableStyle = [
             'alignment' => Jc::CENTER,
             'cellMargin' => 0,
@@ -323,7 +347,7 @@ class WordProposalService
 
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+            'alignment' => Jc::CENTER
         ]);
 
         return $phpWord;
@@ -331,11 +355,13 @@ class WordProposalService
 
     private static function convertToParagraph($content)
     {
-        $content = preg_replace('/<div>(.*?)<\/div>/', '<p>$1</p>', $content);
-        $content = preg_replace('/<br\s*\/?>/', "\n", $content);
-        $content = preg_replace('/\n+/', '</p><p>', $content);
-        $content = preg_replace('/<p>\s*<\/p>/', '', $content);
+        $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
+        $content = str_replace("\u{A0}", ' ', $content);
+        $content = preg_replace('/<div>\s*(.*?)\s*<\/div>/i', '<p>$1</p>', $content);
+        $content = preg_replace('/(<br\s*\/?>\s*)+/', ' ', $content);
+        $content = preg_replace('/<p>\s*/', '<p>', $content);
+        $content = preg_replace('/\s*<\/p>/', '</p>', $content);
 
-        return $content;
+        return trim($content);
     }
 }

@@ -60,6 +60,7 @@
             <div class="main-content">
                 <section class="section">
                     <x-alert.success />
+                    <x-alert.failed />
                     {{ $slot }}
                 </section>
             </div>
