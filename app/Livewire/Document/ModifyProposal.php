@@ -4,6 +4,7 @@ namespace App\Livewire\Document;
 
 use App\Models\Profile;
 use App\Models\Proposal;
+use App\Models\ProposalPlanCommittee;
 use App\Models\ProposalPlanSchedule;
 use App\Services\WordProposalService;
 use Carbon\Carbon;
@@ -22,6 +23,7 @@ class ModifyProposal extends Component
     public $date;
     public $my;
     public $planSchedules = [];
+    public $committees = [];
 
     public function mount($id)
     {
@@ -37,6 +39,7 @@ class ModifyProposal extends Component
         $this->date = Carbon::now()->translatedFormat('d F Y');
         $this->my = Profile::first();
         $this->planSchedules = ProposalPlanSchedule::where('proposal_id', $id)->get();
+        $this->committees = ProposalPlanCommittee::where('proposal_id', $id)->get();
     }
 
     public function updated($property)
@@ -52,7 +55,8 @@ class ModifyProposal extends Component
             $this->proposal, 
             $this->my, 
             $this->date, 
-            $this->planSchedules
+            $this->planSchedules,
+            $this->committees
         );
     }
 

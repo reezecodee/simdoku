@@ -12,7 +12,7 @@ use PhpOffice\PhpWord\Style\Table;
 
 class WordProposalService
 {
-    public static function print($proposal, $my, $today, $planSchedules)
+    public static function print($proposal, $my, $today, $planSchedules, $committees)
     {
         $phpWord = self::init();
 
@@ -20,7 +20,7 @@ class WordProposalService
         $phpWord = self::foreword($phpWord, $proposal, $my, $today);
         $phpWord = self::TOC($phpWord);
         $phpWord = self::introduction($phpWord, $proposal);
-        $phpWord = self::planActivity($phpWord, $proposal, $planSchedules);
+        $phpWord = self::planActivity($phpWord, $proposal, $planSchedules, $committees);
         $phpWord = self::closing($phpWord, $proposal, $today, $my);
 
         return self::output($phpWord);
@@ -177,7 +177,7 @@ class WordProposalService
         return $phpWord;
     }
 
-    private static function planActivity($phpWord, $proposal, $planSchedules)
+    private static function planActivity($phpWord, $proposal, $planSchedules, $committees)
     {
         $proposal = $proposal->planActivity;
         $section = $phpWord->addSection();
@@ -226,7 +226,23 @@ class WordProposalService
         }
 
         $section->addTitle('2.7 Susunan Panitia', 2);
-        Html::addHtml($section, "<p>Ketua Panitia: <strong>Agung Baitul Hikmah</strong></p>", false, false);
+        $table = $section->addTable('CustomTable');
+
+        $headerStyle = ['bgColor' => 'D9D9D9'];
+
+        $table->addRow();
+        $table->addCell(1500, $headerStyle)->addText("No");
+        $table->addCell(6000, $headerStyle)->addText("Nama Panitia");
+        $table->addCell(3500, $headerStyle)->addText("Peran");
+
+        $no = 1;
+        foreach ($committees as $item) {
+            $table->addRow();
+            $table->addCell(1500)->addText($no);
+            $table->addCell(6000)->addText($item->nama);
+            $table->addCell(3500)->addText($item->peran);
+            $no++;
+        }
 
         $section->addTitle('2.8 Rencana Anggaran', 2);
         Html::addHtml($section, "<p>Total anggaran yang dibutuhkan adalah <strong>Rp 10.000.000,-</strong></p>", false, false);

@@ -3,13 +3,13 @@
         <label for="susunan-panitia" class="form-label"><b>2.7 Susunan Panitia</b></label>
         <div class="form-group">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-primary mb-3" wire:click="addCommittee">Tambah Pelindung</button>
+                <button class="btn btn-primary mb-3" wire:click="addCommittee">Tambah Panitia</button>
             </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Pelindung</th>
+                        <th>Nama Panitia</th>
                         <th>Peran</th>
                         <th>Aksi</th>
                     </tr>
