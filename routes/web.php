@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\Preview\LetterPreviewController;
+use App\Http\Controllers\Preview\PropsalPreviewController;
 use App\Livewire\Archive\ListFiles;
 use App\Livewire\Archive\UploadFile;
 use App\Livewire\Dashboard\Dashboard;
@@ -29,6 +30,7 @@ Route::prefix('surat')->group(function () {
 Route::prefix('proposal')->group(function () {
     Route::get('kegiatan', Proposal::class)->name('proposal.index');
     Route::get('kegiatan/{id}/modify', ModifyProposal::class)->name('proposal.modify');
+    Route::get('kegiatan/{id}/preview', [PropsalPreviewController::class, 'preview'])->name('proposal.preview');
 });
 
 Route::prefix('laporan')->group(function () {
@@ -57,7 +59,3 @@ Route::prefix('profile-saya')->group(function () {
 Route::get('/data', [DataController::class, 'getDummyData']);
 
 require __DIR__ . '/datatable.php';
-
-Route::get('test-proposal', function () {
-    return view('pdf.proposal');
-});

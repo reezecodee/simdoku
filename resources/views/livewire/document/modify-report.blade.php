@@ -6,7 +6,9 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-success mr-2">Preview Laporan</button>
+                    <a href="{{ route('proposal.preview', $id) }}" target="_blank">
+                        <button class="btn btn-success mr-2">Preview Laporan</button>
+                    </a>
                     <button class="btn btn-primary mr-2" wire:click="createWordDocument">Cetak Word</button>
                     <button class="btn btn-danger" wire:click="generatePDF">Cetak PDF</button>
                 </div>

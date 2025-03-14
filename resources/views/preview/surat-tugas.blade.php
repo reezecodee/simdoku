@@ -16,7 +16,7 @@
             font-family: 'Times New Roman', serif;
             font-size: 11pt;
             width: 21cm;
-            height: 29.7cm;
+            height: auto;
             margin: auto;
             box-sizing: border-box;
             background: #f0f0f0;

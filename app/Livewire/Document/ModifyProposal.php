@@ -108,7 +108,7 @@ class ModifyProposal extends Component
             $this->date,
             $this->planSchedules,
             $this->committees,
-            $this->budgets
+            $this->budgets,
         );
     }
 
