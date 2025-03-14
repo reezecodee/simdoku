@@ -8,7 +8,7 @@
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-success mr-2">Preview Proposal</button>
                     <button class="btn btn-primary mr-2" wire:click="createWordDocument">Cetak Word</button>
-                    <button class="btn btn-danger" wire:click="generatePDF">Cetak PDF</button>
+                    <button class="btn btn-danger" wire:click="createPDFDocument">Cetak PDF</button>
                 </div>
             </div>
         </div>

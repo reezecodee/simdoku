@@ -13,9 +13,6 @@ class WordProposalService
 {
     public static function print($proposal, $my, $today, $planSchedules, $committees, $budgets)
     {
-        // $proposal = $proposal->planActivity;
-        // dd(self::convertToParagraph($proposal->tema_kegiatan), self::convertToParagraph($proposal->deskripsi_kegiatan), self::convertToParagraph($proposal->penyelenggara_kegiatan), self::convertToParagraph($proposal->peserta_kegiatan), self::convertToParagraph($proposal->waktu_pelaksanaan));
-        // return;
         $phpWord = self::init();
 
         $phpWord = self::cover($phpWord, $proposal);
@@ -111,7 +108,7 @@ class WordProposalService
     {
         $section = $phpWord->addSection();
         $section->addTitle('KATA PENGANTAR', 1);
-        Html::addHtml($section, self::convertToParagraph($proposal->kata_pengantar), false, false);
+        Html::addHtml($section, paragraph($proposal->kata_pengantar), false, false);
 
         $section->addTextBreak(2);
 
@@ -122,22 +119,16 @@ class WordProposalService
         ]);
         $section->addText('Penyusun', [], [
             'indentation' => [
-                'left' => 0,
-                'right' => 820
+                'left' => 0
             ],
             'alignment' => Alignment::HORIZONTAL_RIGHT
         ]);
-        $section->addTextBreak(1);
+        $section->addTextBreak(2);
         $section->addText($my->nama, [], [
             'indentation' => [
                 'left' => 0,
             ],
             'alignment' => Alignment::HORIZONTAL_RIGHT
-        ]);
-
-        $footer = $section->addFooter();
-        $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => Jc::CENTER
         ]);
 
         return $phpWord;
@@ -147,11 +138,6 @@ class WordProposalService
     {
         $section = $phpWord->addSection();
         $section->addTitle("DAFTAR ISI", 1);
-
-        $footer = $section->addFooter();
-        $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => Jc::CENTER
-        ]);
 
         return $phpWord;
     }
@@ -163,18 +149,13 @@ class WordProposalService
         $section->addTitle("BAB I", 1);
         $section->addTitle("PENDAHULUAN", 1);
         $section->addTitle('1.1 Latar Belakang', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->latar_belakang), false, false);
+        Html::addHtml($section, paragraph($proposal->latar_belakang), false, false);
 
         $section->addTitle('1.2 Tujuan Kegiatan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->tujuan_kegiatan), false, false);
+        Html::addHtml($section, paragraph($proposal->tujuan_kegiatan), false, false);
 
         $section->addTitle('1.3 Indikator Keberhasilan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->indikator_keberhasilan), false, false);
-
-        $footer = $section->addFooter();
-        $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => Jc::CENTER
-        ]);
+        Html::addHtml($section, paragraph($proposal->indikator_keberhasilan), false, false);
 
         return $phpWord;
     }
@@ -186,19 +167,19 @@ class WordProposalService
         $section->addTitle("BAB II", 1);
         $section->addTitle("PERENCANAAN KEGIATAN", 1);
         $section->addTitle('2.1 Nama dan Tema Kegiatan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->tema_kegiatan), false, false);
+        Html::addHtml($section, paragraph($proposal->tema_kegiatan), false, false);
 
         $section->addTitle('2.2 Deskripsi Kegiatan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->deskripsi_kegiatan), false, false);
+        Html::addHtml($section, paragraph($proposal->deskripsi_kegiatan), false, false);
 
         $section->addTitle('2.3 Penyelenggara Kegiatan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->penyelenggara_kegiatan), false, false);
+        Html::addHtml($section, paragraph($proposal->penyelenggara_kegiatan), false, false);
 
         $section->addTitle('2.4 Peserta Kegiatan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->peserta_kegiatan), false, false);
+        Html::addHtml($section, paragraph($proposal->peserta_kegiatan), false, false);
 
         $section->addTitle('2.5 Waktu Pelaksanaan', 2);
-        Html::addHtml($section, self::convertToParagraph($proposal->waktu_pelaksanaan), false, false);
+        Html::addHtml($section, paragraph($proposal->waktu_pelaksanaan), false, false);
 
         $tableStyle = [
             'borderSize' => 6,
@@ -228,6 +209,7 @@ class WordProposalService
                 $table->addCell(3500)->addText($item->waktu);
                 $no++;
             }
+            $section->addTextBreak(1);
         }
 
         if ($committees->isNotEmpty()) {
@@ -247,6 +229,7 @@ class WordProposalService
                 $table->addCell(3500)->addText($item->peran);
                 $no++;
             }
+            $section->addTextBreak(1);
         }
 
         if ($budgets->isNotEmpty()) {
@@ -269,12 +252,8 @@ class WordProposalService
             $table->addRow();
             $table->addCell(7500, ['gridSpan' => 2])->addText("Jumlah pengeluaran");
             $table->addCell(3500)->addText("Rp. {$totalBudgets}");
+            $section->addTextBreak(1);
         }
-
-        $footer = $section->addFooter();
-        $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => Jc::CENTER
-        ]);
 
         return $phpWord;
     }
@@ -284,7 +263,7 @@ class WordProposalService
         $section = $phpWord->addSection();
         $section->addTitle("BAB III", 1);
         $section->addTitle("PENUTUP", 1);
-        Html::addHtml($section, self::convertToParagraph($proposal->penutup), false, false);
+        Html::addHtml($section, paragraph($proposal->penutup), false, false);
 
         $section->addText("Tasikmalaya, {$today}", [], [
             'alignment' => Alignment::HORIZONTAL_RIGHT
@@ -336,32 +315,15 @@ class WordProposalService
 
         $cell1->addText(
             "Ketua Panitia",
-            ['bold' => true],
+            [],
             ['alignment' => Jc::CENTER]
         );
         $cell2->addText(
             "Kepala Kampus",
-            ['bold' => true],
+            [],
             ['alignment' => Jc::CENTER]
         );
 
-        $footer = $section->addFooter();
-        $footer->addPreserveText('{PAGE}', null, [
-            'alignment' => Jc::CENTER
-        ]);
-
         return $phpWord;
-    }
-
-    private static function convertToParagraph($content)
-    {
-        $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
-        $content = str_replace("\u{A0}", ' ', $content);
-        $content = preg_replace('/<div>\s*(.*?)\s*<\/div>/i', '<p>$1</p>', $content);
-        $content = preg_replace('/(<br\s*\/?>\s*)+/', ' ', $content);
-        $content = preg_replace('/<p>\s*/', '<p>', $content);
-        $content = preg_replace('/\s*<\/p>/', '</p>', $content);
-
-        return trim($content);
     }
 }

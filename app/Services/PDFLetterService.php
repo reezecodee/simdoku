@@ -8,7 +8,7 @@ class PDFLetterService
 {
     public static function print($today, $letter, $executionStaffs, $staffs, $executionVolunteers, $volunteers)
     {
-        $imageBase64 = self::generateBase64($letter->signature->tanda_tangan);
+        $imageBase64 = generateBase64($letter->signature->tanda_tangan);
 
         $pdf = Pdf::loadView('pdf.surat-tugas', [
             'letter' => $letter,
@@ -26,14 +26,5 @@ class PDFLetterService
             },
             'laporan.pdf'
         );
-    }
-
-    private static function generateBase64($path)
-    {
-        $storagePath = storage_path('app/public/' . $path);
-        $imageData = base64_encode(file_get_contents($storagePath));
-        $result = 'data:image/' . pathinfo($storagePath, PATHINFO_EXTENSION) . ';base64,' . $imageData;
-
-        return $result;
     }
 }
