@@ -3,6 +3,7 @@
 namespace App\Livewire\Document;
 
 use App\Models\Report;
+use App\Services\PDFReportService;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -28,6 +29,11 @@ class ModifyReport extends Component
         $this->report->update([
             $property => $this->$property
         ]);
+    }
+
+    public function createPDFDocument()
+    {
+        return PDFReportService::print();
     }
 
     public function render()

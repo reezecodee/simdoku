@@ -6,11 +6,11 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('proposal.preview', $id) }}" target="_blank">
+                    <a href="{{ route('report.preview', $id) }}" target="_blank">
                         <button class="btn btn-success mr-2">Preview Laporan</button>
                     </a>
                     <button class="btn btn-primary mr-2" wire:click="createWordDocument">Cetak Word</button>
-                    <button class="btn btn-danger" wire:click="generatePDF">Cetak PDF</button>
+                    <button class="btn btn-danger" wire:click="createPDFDocument">Cetak PDF</button>
                 </div>
             </div>
         </div>
