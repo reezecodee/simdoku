@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             @foreach($budgets as $item)
-            <tr>
+            <tr wire:key="{{ $item->id }}">
                 <td>{{ $loop->iteration }}</td>
                 <td>
                     <input type="text" wire:input="updateBudget('{{ $item->id }}', 'anggaran', $event.target.value)" value="{{ $item->anggaran }}" class="form-control">

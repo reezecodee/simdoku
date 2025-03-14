@@ -41,7 +41,7 @@
     @if($signatures->isNotEmpty())
     <div class="row mb-5">
         @foreach ($signatures as $item)
-        <div class="col-md-4">
+        <div wire:key="{{ $item->id }}" class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <select wire:change="updateStatus('{{ $item->id }}', 'status', $event.target.value)" class="d-flex justify-content-start form-control mb-2">

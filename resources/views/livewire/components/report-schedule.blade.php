@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             @foreach($schedules as $item)
-            <tr>
+            <tr wire:key="{{ $item->id }}">
                 <td>{{ $loop->iteration }}</td>
                 <td>
                     <input type="text" wire:input="updateSchedule('{{ $item->id }}', 'waktu', $event.target.value)"

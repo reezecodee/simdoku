@@ -22,7 +22,7 @@
             wire:change="addVolunteerFromDropdown($event.target.value)">
             <option selected>Tambah Volunteer</option>
             @foreach ($executionVolunteers as $execution)
-            <option value="{{ $execution->id }}">Tambah volunteer pelaksanaan {{ $loop->iteration }}</option>
+            <option wire:key="add-{{ $execution->id }}" value="{{ $execution->id }}">Tambah volunteer pelaksanaan {{ $loop->iteration }}</option>
             @endforeach
         </select>
         @endif
@@ -45,7 +45,7 @@
             @php
             $relatedVolunteers = $execution->volunteer;
             @endphp
-            <tr>
+            <tr wire:key="volunteer-{{ $loop->iteration }}">
                 <td rowspan="{{ max($relatedVolunteers->count(), 1) }}">{{ $loop->iteration }}</td>
                 @if($relatedVolunteers->count() == 0)
                 <td colspan="3">Belum ada anggota</td>

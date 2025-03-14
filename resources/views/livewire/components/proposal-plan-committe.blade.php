@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     @foreach ($planCommittees as $item)
-                    <tr>
+                    <tr wire:key="{{ $item->id }}">
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             <input type="text"

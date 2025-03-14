@@ -31,7 +31,7 @@
     @if($archives->isNotEmpty())
     <div class="row mb-5">
         @foreach ($archives as $item)
-        <div class="col-md-4">
+        <div wire:key="{{ $item->id }}" class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <div class="d-flex justify-content-end">
