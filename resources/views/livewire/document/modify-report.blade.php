@@ -90,4 +90,27 @@
             </div>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <h4 class="card-title">LAMPIRAN</h4>
+            </div>
+            <div class="form-group">
+                <label for="press-release" class="form-label"><b>Press Release</b></label>
+                <x-text-editor.trix title="press_release" value="{{ $press_release }}" />
+            </div>
+            <div class="form-group">
+                <label for="dokumentation" class="form-label"><b>Dokumentasi</b></label>
+                <livewire:components.upload-images />
+            </div>
+            <div class="form-group">
+                <label for="daftar-hadir" class="form-label"><b>Daftar Hadir Peserta</b></label>
+                <livewire:components.upload-images />
+            </div>
+            <div class="form-group">
+                <label for="bukti-kwitansi" class="form-label"><b>Bukti Kwitansi</b></label>
+                <livewire:components.upload-images />
+            </div>
+        </div>
+    </div>
 </div>

@@ -12,7 +12,7 @@ class ModifyReport extends Component
 {
     #[Title('Modify Laporan Kegiatan')]
 
-    public $id, $judul, $kutipan, $kata_pengantar, $penutup;
+    public $id, $judul, $kutipan, $kata_pengantar, $penutup, $press_release;
     public $report;
 
     public function mount($id)
@@ -23,6 +23,7 @@ class ModifyReport extends Component
         $this->kutipan = $this->report->kutipan;
         $this->kata_pengantar = $this->report->kata_pengantar;
         $this->penutup = $this->report->penutup;
+        $this->press_release = $this->report->press_release;
     }
 
     public function updated($property)
