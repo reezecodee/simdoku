@@ -16,6 +16,10 @@ return new class extends Migration
             $table->foreignUuid('laporan_id')->constrained('reports')->cascadeOnDelete();
             $table->string('peserta_daftar')->nullable();
             $table->string('peserta_hadir')->nullable();
+            $table->string('siswa')->nullable();
+            $table->string('guru')->nullable();
+            $table->string('mahasiswa')->nullable();
+            $table->string('masyarakat_umum')->nullable();
             $table->string('peserta_puas')->nullable();
             $table->string('peserta_cukup_puas')->nullable();
             $table->string('peserta_tidak_puas')->nullable();

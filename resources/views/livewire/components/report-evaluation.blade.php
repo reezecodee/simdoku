@@ -13,6 +13,25 @@
                 <input type="text" class="form-control" wire:model.lazy="peserta_hadir" placeholder="Jumlah peserta hadir">
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="peserta-hadir" class="form-label">c. Jumlah Peserta Berdasarkan Kategori</label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" wire:model.lazy="siswa" placeholder="Jumlah siswa">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" wire:model.lazy="guru" placeholder="Jumlah guru">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" wire:model.lazy="mahasiswa" placeholder="Jumlah mahasiswa">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" wire:model.lazy="masyarakat_umum" placeholder="Jumlah masyarakat_umum">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <label for="kepuasan-peserta" class="form-label d-block">2. Kepuasan Peserta</label>
     <div class="row">

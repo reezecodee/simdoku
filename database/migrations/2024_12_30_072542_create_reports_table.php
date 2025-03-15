@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kutipan')->nullable();
             $table->text('kata_pengantar')->nullable();
             $table->text('penutup')->nullable();
+            $table->text('press_release')->nullable();
             $table->foreignUuid('ttd_ketua_pelaksana')->nullable()->constrained('signatures');
             $table->foreignUuid('ttd_kadiv_dmer')->nullable()->constrained('signatures');
             $table->timestamps();

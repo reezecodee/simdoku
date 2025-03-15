@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class ReportEvaluation extends Component
 {
-    public $id, $peserta_daftar, $peserta_hadir, $peserta_puas, $peserta_cukup_puas, $peserta_tidak_puas, $penilaian_sangat_bagus, $penilaian_cukup_bagus, $penilaian_kurang_bagus;
+    public $id, $peserta_daftar, $peserta_hadir, $siswa, $guru, $mahasiswa, $masyarakat_umum, $peserta_puas, $peserta_cukup_puas, $peserta_tidak_puas, $penilaian_sangat_bagus, $penilaian_cukup_bagus, $penilaian_kurang_bagus;
     public $reportEval;
 
     public function mount()
@@ -15,6 +15,10 @@ class ReportEvaluation extends Component
         $this->reportEval = ModelsReportEvaluation::where('laporan_id', $this->id)->first();
         $this->peserta_daftar = $this->reportEval->peserta_daftar;
         $this->peserta_hadir = $this->reportEval->peserta_hadir;
+        $this->siswa = $this->reportEval->siswa;
+        $this->guru = $this->reportEval->guru;
+        $this->mahasiswa = $this->reportEval->mahasiswa;
+        $this->masyarakat_umum = $this->reportEval->masyarakat_umum;
         $this->peserta_puas = $this->reportEval->peserta_puas;
         $this->peserta_cukup_puas = $this->reportEval->peserta_cukup_puas;
         $this->peserta_tidak_puas = $this->reportEval->peserta_tidak_puas;

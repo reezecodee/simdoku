@@ -13,7 +13,7 @@ class DeleteReportController extends Controller
         $letter = Report::findOrFail($id);
         $letter->delete();
 
-        session()->flash('success', 'Berhasil menghapus laooran kegiatan.');
+        session()->flash('success', 'Berhasil menghapus laporan kegiatan.');
         return redirect()->to(route('report.index'));
     }
 }
