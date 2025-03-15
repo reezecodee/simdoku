@@ -4,6 +4,7 @@ namespace App\Livewire\Document;
 
 use App\Models\Report;
 use App\Services\PDFReportService;
+use App\Services\WordReportService;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -34,6 +35,11 @@ class ModifyReport extends Component
     public function createPDFDocument()
     {
         return PDFReportService::print();
+    }
+
+    public function createWordDocument()
+    {
+        return WordReportService::print();
     }
 
     public function render()
