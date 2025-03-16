@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-class ReportReceipt extends Model
+class ReportFile extends Model
 {
     use HasUuids;
 

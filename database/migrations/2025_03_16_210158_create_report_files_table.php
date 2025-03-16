@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('report_attendances', function (Blueprint $table) {
-            $table->uuid('id');
+        Schema::create('report_files', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->foreignUuid('laporan_id')->constrained('reports')->cascadeOnDelete();
-            $table->string('file_kehadiran');
+            $table->string('type');
+            $table->string('filename');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('report_attendances');
+        Schema::dropIfExists('report_files');
     }
 };

@@ -101,15 +101,15 @@
             </div>
             <div class="form-group">
                 <label for="dokumentation" class="form-label"><b>Dokumentasi</b></label>
-                <livewire:components.upload-images />
+                <livewire:components.upload-images :id="$id" type="documentation" key="upload-documentation" />
             </div>
             <div class="form-group">
                 <label for="daftar-hadir" class="form-label"><b>Daftar Hadir Peserta</b></label>
-                <livewire:components.upload-images />
+                <livewire:components.upload-images :id="$id" type="attendance" key="upload-attendance" />
             </div>
             <div class="form-group">
                 <label for="bukti-kwitansi" class="form-label"><b>Bukti Kwitansi</b></label>
-                <livewire:components.upload-images />
+                <livewire:components.upload-images :id="$id" type="receipt" key="upload-attendance" />
             </div>
         </div>
     </div>

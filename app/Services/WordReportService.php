@@ -336,12 +336,12 @@ class WordReportService
         $cell2 = $table->addCell(5000);
 
         $cell1->addText(
-            "Budi Tukam",
+            "Budi Nugraha",
             ['underline' => 'single'],
             ['alignment' => Jc::CENTER]
         );
         $cell2->addText(
-            "Budi Ambatu",
+            "Budi Al Harits",
             ['underline' => 'single'],
             ['alignment' => Jc::CENTER]
         );
@@ -383,7 +383,7 @@ class WordReportService
         $cell1 = $table->addCell(5000);
 
         $cell1->addText(
-            "Budi Tukam",
+            "Elfira Karina",
             ['underline' => 'single'],
             ['alignment' => Jc::CENTER]
         );
