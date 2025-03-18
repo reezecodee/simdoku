@@ -11,17 +11,28 @@ use PhpOffice\PhpWord\Style\Table;
 
 class WordReportService
 {
-    public static function print()
-    {
+    public static function print(
+        $report,
+        $introduction,
+        $planActivities,
+        $schedules,
+        $budgetRealizations,
+        $committee,
+        $evaluation,
+        $documentations,
+        $attendances,
+        $receipts,
+        $my
+    ) {
         $phpWord = self::init();
 
-        $phpWord = self::cover($phpWord);
-        $phpWord = self::foreword($phpWord);
+        $phpWord = self::cover($phpWord, $report);
+        $phpWord = self::foreword($phpWord, $report);
         $phpWord = self::TOC($phpWord);
-        $phpWord = self::introduction($phpWord);
-        $phpWord = self::implementationActivity($phpWord);
-        $phpWord = self::closing($phpWord);
-        $phpWord = self::attachments($phpWord);
+        $phpWord = self::introduction($phpWord, $introduction);
+        $phpWord = self::implementationActivity($phpWord, $planActivities, $schedules, $budgetRealizations, $committee, $evaluation);
+        $phpWord = self::closing($phpWord, $report, $my);
+        $phpWord = self::attachments($phpWord, $documentations, $attendances, $receipts);
 
         return self::output($phpWord);
     }
@@ -80,12 +91,14 @@ class WordReportService
         return $response;
     }
 
-    private static function cover($phpWord)
+    private static function cover($phpWord, $report)
     {
         $section = $phpWord->addSection();
         $section->addText('LAPORAN', ['bold' => true, 'size' => 20], ['alignment' => Alignment::HORIZONTAL_CENTER]);
-        $section->addText("SHARING ILMU BARENG TDKF", ['bold' => true, 'size' => 20], ['alignment' => Alignment::HORIZONTAL_CENTER]);
-        $section->addText("“Langkah Mudah Menjadi Content Creator Tanpa Ribet”", ['bold' => true, 'size' => 12], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        $section->addText($report->judul, ['bold' => true, 'size' => 20], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        if ($report->kutipan) {
+            $section->addText("“{$report->kutipan}”", ['bold' => true, 'size' => 12], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+        }
 
         $section->addTextBreak(3);
         $imagePath = public_path('images/logo/logo-bsi.png');
@@ -105,11 +118,11 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function foreword($phpWord)
+    private static function foreword($phpWord, $report)
     {
         $section = $phpWord->addSection();
         $section->addTitle('KATA PENGANTAR', 1);
-        Html::addHtml($section, "<p>Dengan mengucap Puji Syukur Kehadirat Allah Yang Maha Kuasa yang telah melimpahkan Rahmat dan Hidayah-Nya kepada kami semua, sehingga kami dapat menyelesaikan Laporan pengajuan acara Sharing Ilmu Bareng TDKF dengan tema “Langkah Mudah Menjadi Content Creator Tanpa Ribet”.</p>", false, false);
+        Html::addHtml($section, $report->kata_pengantar, false, false);
 
         return $phpWord;
     }
@@ -122,54 +135,54 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function introduction($phpWord)
+    private static function introduction($phpWord, $introduction)
     {
         $section = $phpWord->addSection();
         $section->addTitle("BAB I", 1);
         $section->addTitle("PENDAHULUAN", 1);
         $section->addTitle('1.1 Latar Belakang', 2);
-        Html::addHtml($section, "<p>Setelah terbentuknya TDKF (Tasik Digital Kreatif Forum) di Universitas BSI Kampus Tasikmalaya, sebagai langkah awal untuk launching dan mengenalkan TDKF pada masyarakat di Kota Tasikmalaya, maka tepatnya kiranya jika membuat sebuat event yang berkaitan erat dengan nama TDKF, yaitu tentang dunia Digital Kreatif. Saat ini, yang menjadi hobi dan ambisi sebagian besar masyarakat terutama anak muda dibidang digital kreatif adalah menjadi seorang content creator.</p>", false, false);
+        Html::addHtml($section, $introduction->latar_belakang, false, false);
 
         $section->addTitle('1.2 Tujuan Kegiatan', 2);
-        Html::addHtml($section, "<p>Nama kegiatan “Sharing Ilmu Bareng TDKF” dipilih dengan alasan agar event yang diselenggarakan ini terkesan lebih santai, belajar secara bersama, berkolaborasi, dan tidak terkesan “menggurui”. Sehingga diharapkan masyarakat dari berbagai kalangan dan usia akan lebih tertarik untuk ikut pada kegiatan ini. Ditambah dengan mendatangkan narasumber seorang content creator yang ternama, senior, memiliki banyak massa/follower, dan cukup terkenal di Kota Tasikmalaya, tentunya akan semakin menambah daya tarik dan nilai jual dari event ini.</p>", false, false);
+        Html::addHtml($section, $introduction->tujuan_kegiatan, false, false);
 
         $section->addTitle('1.3 Manfaat Kegiatan', 2);
-        Html::addHtml($section, "<p>Manfaat kegiatan ini adalah sebagai sarana dan media untuk menambah wawasan siswa dan masyarakat Tasikmalaya tentang pentingnya pemanfaatan teknologi dalam perkembangan dunia digital kreatif, dan lebih percaya diri untuk memulai berkreasi menjadi seorang content creator tanpa ribet, serta tentunya sebagai media branding promosi UBSI Kampus Tasikmalaya, dan menjalin relasi dan berkolaborasi dengan komunitas-komunitas di Kota Tasikmalaya dan sekitarnya, serta lebih jauhnya bisa mencapai ke Priangan Timur.</p>", false, false);
+        Html::addHtml($section, $introduction->manfaat_kegiatan, false, false);
 
         $section->addTitle('1.4 Indikator Keberhasilan', 2);
-        Html::addHtml($section, "<p>Manfaat kegiatan ini adalah sebagai sarana dan media untuk menambah wawasan siswa dan masyarakat Tasikmalaya tentang pentingnya pemanfaatan teknologi dalam perkembangan dunia digital kreatif, dan lebih percaya diri untuk memulai berkreasi menjadi seorang content creator tanpa ribet, serta tentunya sebagai media branding promosi UBSI Kampus Tasikmalaya, dan menjalin relasi dan berkolaborasi dengan komunitas-komunitas di Kota Tasikmalaya dan sekitarnya, serta lebih jauhnya bisa mencapai ke Priangan Timur.</p>", false, false);
+        Html::addHtml($section, $introduction->indikator_keberhasilan, false, false);
 
         return $phpWord;
     }
 
-    private static function implementationActivity($phpWord)
+    private static function implementationActivity($phpWord, $planActivities, $schedules, $budgetRealizations, $committee, $evaluation)
     {
         $section = $phpWord->addSection();
         $section->addTitle("BAB II", 1);
         $section->addTitle("PERENCANAAN KEGIATAN", 1);
 
         $section->addTitle('2.1 Nama dan Tema Kegiatan', 2);
-        Html::addHtml($section, '<p>Nama kegiatan ini adalah Sharing Ilmu Bareng TDKF dengan tema "Langkah Mudah Menjadi Content Creator Tanpa Ribet"</p>', false, false);
+        Html::addHtml($section, $planActivities->tema_kegiatan, false, false);
 
         $section->addTitle('2.2 Deskripsi Kegiatan', 2);
-        Html::addHtml($section, "<p>Manfaat kegiatan ini adalah sebagai sarana dan media untuk menambah wawasan siswa dan masyarakat Tasikmalaya tentang pentingnya pemanfaatan teknologi dalam perkembangan dunia digital kreatif, dan lebih percaya diri untuk memulai berkreasi menjadi seorang content creator tanpa ribet, serta tentunya sebagai media branding promosi UBSI Kampus Tasikmalaya, dan menjalin relasi dan berkolaborasi dengan komunitas-komunitas di Kota Tasikmalaya dan sekitarnya, serta lebih jauhnya bisa mencapai ke Priangan Timur.</p>", false, false);
+        Html::addHtml($section, $planActivities->deskripsi_kegiatan, false, false);
 
         $section->addTitle('2.3 Penyelenggara Kegiatan', 2);
-        Html::addHtml($section, "<p>Kegiatan ini diselenggarakan oleh Universitas Bina Sarana Informatika Kampus Tasikmalaya dan TDKF (Tasik Digital Kreatif Forum).</p>", false, false);
+        Html::addHtml($section, $planActivities->penyelenggara_kegiatan, false, false);
 
         $section->addTitle('2.4 Pemateri atau Narasumber', 2);
-        Html::addHtml($section, "<p>Kegiatan ini diselenggarakan oleh Universitas Bina Sarana Informatika Kampus Tasikmalaya dan TDKF (Tasik Digital Kreatif Forum). asdkjasd aksdha dq 42342 ahqwdasd kqh 3424 asdada @asd 434%$^ </p>", false, false);
+        Html::addHtml($section, $planActivities->pemateri_narasumber, false, false);
 
         $section->addTitle('2.5 Peserta Kegiatan', 2);
-        Html::addHtml($section, "<p>Kegiatan ini diselenggarakan oleh Universitas Bina Sarana Informatika Kampus Tasikmalaya dan TDKF (Tasik Digital Kreatif Forum). asdkjasd aksdha dq 42342 ahqwdasd kqh 3424 asdada @asd 434%$^ </p>", false, false);
+        Html::addHtml($section, $planActivities->peserta_kegiatan, false, false);
 
         $section->addTitle('2.6 Waktu Pelaksanaan', 2);
-        Html::addHtml($section, "<p>Kegiatan ini diselenggarakan oleh Universitas Bina Sarana Informatika Kampus Tasikmalaya dan TDKF (Tasik Digital Kreatif Forum). asdkjasd aksdha dq 42342 ahqwdasd kqh 3424 asdada @asd 434%$^ </p>", false, false);
+        Html::addHtml($section, $planActivities->waktu_pelaksanaan, false, false);
 
         $section->addTitle('2.7 Evaluasi Kegiatan', 2);
         $section->addText("a. Jumlah Peserta", ['bold' => true]);
-        $section->addText("- Jumlah peserta daftar : 188 Orang");
-        $section->addText("- Jumlah peserta hadir : 103 Orang peserta");
+        $section->addText("- Jumlah peserta daftar : {$evaluation->peserta_daftar} Orang");
+        $section->addText("- Jumlah peserta hadir : {$evaluation->peserta_hadir} Orang peserta");
 
         $imagePath = public_path('charts/pie.png');
         $section->addImage($imagePath, [
@@ -213,83 +226,88 @@ class WordReportService
 
         $headerStyle = ['bgColor' => 'D9D9D9'];
 
-        $section->addTitle('2.8 Susunan Acara', 2);
-        $table = $section->addTable('CustomTable');
+        if ($schedules->isNotEmpty()) {
+            $section->addTitle('2.8 Susunan Acara', 2);
+            $table = $section->addTable('CustomTable');
 
-        $table->addRow();
-        $table->addCell(1000, $headerStyle)->addText("NO", ['bold' => true], 'TableHeaderStyle');
-        $table->addCell(2000, $headerStyle)->addText("WAKTU", ['bold' => true], 'TableCellStyle');
-        $table->addCell(4000, $headerStyle)->addText("Sub Acara", ['bold' => true], 'TableCellStyle');
-        $table->addCell(5000, $headerStyle)->addText("KETERANGAN", ['bold' => true], 'TableCellStyle');
+            $table->addRow();
+            $table->addCell(1000, $headerStyle)->addText("NO", ['bold' => true], 'TableHeaderStyle');
+            $table->addCell(2000, $headerStyle)->addText("WAKTU", ['bold' => true], 'TableCellStyle');
+            $table->addCell(4000, $headerStyle)->addText("Sub Acara", ['bold' => true], 'TableCellStyle');
+            $table->addCell(5000, $headerStyle)->addText("KETERANGAN", ['bold' => true], 'TableCellStyle');
 
-        $table->addRow();
-        $table->addCell(1000)->addText("1", [], 'TableHeaderStyle');
-        $table->addCell(2000)->addText("08.00 - 09.00", [], 'TableCellStyle');
-        $table->addCell(4000)->addText("Video - video opening event", [], 'TableCellStyle');
-        $table->addCell(5000)->addText("Sie Regis + Multimedia + Sie Pengatur Peserta + Sie Konsumsi", [], 'TableCellStyle');
+            $no = 1;
+            foreach ($schedules as $item) {
+                $table->addRow();
+                $table->addCell(1000)->addText($no, [], 'TableHeaderStyle');
+                $table->addCell(2000)->addText($item->waktu, [], 'TableCellStyle');
+                $table->addCell(4000)->addText($item->sub_acara, [], 'TableCellStyle');
+                $table->addCell(5000)->addText($item->keterangan, [], 'TableCellStyle');
+                $no++;
+            }
+            $section->addTextBreak(1);
+        }
 
-        $table->addRow();
-        $table->addCell(1000)->addText("2", [], 'TableHeaderStyle');
-        $table->addCell(2000)->addText("08.00 - 09.00", [], 'TableCellStyle');
-        $table->addCell(4000)->addText("Video - video opening event", [], 'TableCellStyle');
-        $table->addCell(5000)->addText("Sie Regis + Multimedia + Sie Pengatur Peserta + Sie Konsumsi", [], 'TableCellStyle');
+
+        if ($committee->isNotEmpty()) {
+            $section->addTitle('2.9 Susunan Panitia', 2);
+            $table = $section->addTable([
+                'borderSize' => 0,
+                'borderColor' => 'FFFFFF'
+            ]);
+
+            $roles = ['penasehat', 'pembina', 'penanggung_jawab', 'ketua_pelaksana', 'moderator', 'publikasi_media', 'sie_konsumsi', 'sie_registrasi', 'dokumentasi', 'sosialisasi', 'multimedia', 'perlengkapan'];
+
+            $titles = ['Penasehat', 'Pembina', 'Penanggung Jawab', 'Ketua Pelaksana', 'Moderator', 'Publikasi & Media', 'Sie Konsumsi', 'Sie Registrasi', 'Dokumentasi', 'Sosialisasi Beasiswa UBSI', 'Multimedia', 'Perlengkapan'];
+
+            $no = 1;
+            foreach ($roles as $role) {
+                if ($committee->$role) {
+                    $table->addRow();
+                    $table->addCell(1000)->addText($titles[$no], [], 'TableHeaderStyle');
+                    $table->addCell(8000)->addText($committee->$role, [], 'TableCellStyle');
+                    $no++;
+                }
+            }
+
+            $section->addTextBreak(1);
+        }
 
 
-        $section->addTextBreak(1);
+        if ($budgetRealizations->isNotEmpty()) {
+            $section->addTitle('2.10 Realisasi Anggaran', 2);
+            $table = $section->addTable('CustomTable');
 
-        $section->addTitle('2.9 Susunan Panitia', 2);
-        $table = $section->addTable('CustomTable');
+            $table->addRow();
+            $table->addCell(6000, $headerStyle)->addText("Anggaran", ['bold' => true], 'TableHeaderStyle');
+            $table->addCell(2000, $headerStyle)->addText("Jumlah", ['bold' => true], 'TableHeaderStyle');
+            $table->addCell(3000, $headerStyle)->addText("(Rupiah)", ['bold' => true], 'TableHeaderStyle');
 
-        $table->addRow();
-        $table->addCell(1000, $headerStyle)->addText("NO", ['bold' => true], 'TableHeaderStyle');
-        $table->addCell(4000, $headerStyle)->addText("Nama Panitia", ['bold' => true], 'TableCellStyle');
-        $table->addCell(4000, $headerStyle)->addText("Peran Panitia", ['bold' => true], 'TableCellStyle');
+            $total = $budgetRealizations->sum('rupiah');
 
-        $table->addRow();
-        $table->addCell(1000)->addText("1", [], 'TableHeaderStyle');
-        $table->addCell(4000)->addText("Budi Santoso", [], 'TableCellStyle');
-        $table->addCell(4000)->addText("Ketua Pelaksana", [], 'TableCellStyle');
+            foreach ($budgetRealizations as $item) {
+                $table->addRow();
+                $table->addCell(6000)->addText($item->anggaran, [], 'TableCellStyle');
+                $table->addCell(2000)->addText($item->jumlah, [], 'TableHeaderStyle');
+                $table->addCell(3000)->addText($item->rupiah, [], 'TableCellStyle');
+            }
 
-        $table->addRow();
-        $table->addCell(1000)->addText("2", [], 'TableHeaderStyle');
-        $table->addCell(4000)->addText("Rina Kartika", [], 'TableCellStyle');
-        $table->addCell(4000)->addText("Sekretaris", [], 'TableCellStyle');
+            $table->addRow();
+            $table->addCell(8000, ['gridSpan' => 2])->addText("Total pengeluaran", ['bold' => true, 'italic' => true, 'alignment' => 'center'], 'TableHeaderStyle');
+            $table->addCell(3000)->addText("Rp. {$total}", ['bold' => true], 'TableHeaderStyle');
 
-        $section->addTextBreak(1);
-
-        $section->addTitle('2.9 Susunan Panitia', 2);
-        $table = $section->addTable('CustomTable');
-
-        $table->addRow();
-        $table->addCell(6000, $headerStyle)->addText("Anggaran", ['bold' => true], 'TableHeaderStyle');
-        $table->addCell(2000, $headerStyle)->addText("Jumlah", ['bold' => true], 'TableHeaderStyle');
-        $table->addCell(3000, $headerStyle)->addText("(Rupiah)", ['bold' => true], 'TableHeaderStyle');
-
-        $table->addRow();
-        $table->addCell(6000)->addText("Spanduk (4x1)", [], 'TableCellStyle');
-        $table->addCell(2000)->addText("1", [], 'TableHeaderStyle');
-        $table->addCell(3000)->addText("Rp. 150000", [], 'TableCellStyle');
-
-        $table->addRow();
-        $table->addCell(6000)->addText("Baliho (3x2)", [], 'TableCellStyle');
-        $table->addCell(2000)->addText("1", [], 'TableHeaderStyle');
-        $table->addCell(3000)->addText("Rp. 50000", [], 'TableCellStyle');
-
-        $table->addRow();
-        $table->addCell(8000, ['gridSpan' => 2])->addText("Total pengeluaran", ['bold' => true, 'italic' => true, 'alignment' => 'center'], 'TableHeaderStyle');
-        $table->addCell(3000)->addText("Rp. 200000", ['bold' => true], 'TableHeaderStyle');
-
-        $section->addTextBreak(1);
+            $section->addTextBreak(1);
+        }
 
         return $phpWord;
     }
 
-    private static function closing($phpWord)
+    private static function closing($phpWord, $report, $my)
     {
         $section = $phpWord->addSection();
         $section->addTitle("BAB III", 1);
         $section->addTitle("PENUTUP", 1);
-        Html::addHtml($section, "<p>Demikianlah laporan Sharing Ilmu Bareng TDKF dengan tema \"Langkah Mudah Menjadi Content Creator Tanpa Ribet\" kami sampaikan. Besar harapan kami demi kelancaran kegiatan ini partisipasi dari semua pihak sangat kami harapkan demi keberhasilan kegiatan ini. Atas perhatian bapak/ibu serta semua pihak yang ada, kami ucapkan banyak terima kasih</p>", false, false);
+        Html::addHtml($section, $report->penutup, false, false);
         $section->addText("Tasikmalaya, 28 Agustus 2024", [], ['alignment' => Jc::CENTER]);
         $section->addTextBreak(2);
         $section->addText("Hormat Kami,", [], ['alignment' => Jc::CENTER]);
@@ -320,12 +338,12 @@ class WordReportService
         $cell1 = $table->addCell(4000);
         $cell2 = $table->addCell(4000);
 
-        $cell1->addImage(public_path('ttd.png'), [
+        $cell1->addImage(storage_path('app/public/' . $my->tanda_tangan), [
             'width' => 110,
             'height' => 50,
             'alignment' => Jc::CENTER
         ]);
-        $cell2->addImage(public_path('ttd.png'), [
+        $cell2->addImage(storage_path('app/public/' . $report->signature->tanda_tangan), [
             'width' => 110,
             'height' => 50,
             'alignment' => Jc::CENTER
@@ -336,12 +354,12 @@ class WordReportService
         $cell2 = $table->addCell(5000);
 
         $cell1->addText(
-            "Budi Nugraha",
+            $my->nama,
             ['underline' => 'single'],
             ['alignment' => Jc::CENTER]
         );
         $cell2->addText(
-            "Budi Al Harits",
+            $report->signature->nama_pemilik,
             ['underline' => 'single'],
             ['alignment' => Jc::CENTER]
         );
@@ -383,7 +401,7 @@ class WordReportService
         $cell1 = $table->addCell(5000);
 
         $cell1->addText(
-            "Elfira Karina",
+            $report->signature2->nama_pemilik,
             ['underline' => 'single'],
             ['alignment' => Jc::CENTER]
         );
@@ -400,7 +418,7 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function attachments($phpWord)
+    private static function attachments($phpWord, $documentations, $attendances, $receipts)
     {
         $section = $phpWord->addSection();
 
