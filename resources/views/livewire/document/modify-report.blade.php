@@ -118,7 +118,7 @@
             </div>
             <div class="form-group">
                 <label for="bukti-kwitansi" class="form-label"><b>Bukti Kwitansi</b></label>
-                <livewire:components.upload-images :id="$id" type="receipt" key="upload-attendance" />
+                <livewire:components.upload-images :id="$id" type="receipt" key="upload-receipt" />
             </div>
         </div>
     </div>

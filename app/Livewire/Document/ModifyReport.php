@@ -14,18 +14,15 @@ use App\Models\ReportSchedule;
 use App\Services\PDFReportService;
 use App\Services\WordReportService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\PhpWord;
 
 class ModifyReport extends Component
 {
     #[Title('Modify Laporan Kegiatan')]
 
     public $id, $judul, $kutipan, $kata_pengantar, $penutup, $press_release, $date;
-    public $report, $introduction, $planActivities, $schedules, $budgetRealizations, $committee, $evaluation, $documentations, $attendances, $receipts, $my;
+    public $report, $introduction, $planActivity, $schedules, $budgetRealizations, $committee, $evaluation, $documentations, $attendances, $receipts, $my;
 
     public function mount($id)
     {
@@ -39,7 +36,7 @@ class ModifyReport extends Component
         $this->date = Carbon::now()->translatedFormat('d F Y');
 
         $this->introduction = ReportIntroduction::where('laporan_id', $id)->first();
-        $this->planActivities = ReportPlanActivity::where('laporan_id', $id)->first();
+        $this->planActivity = ReportPlanActivity::where('laporan_id', $id)->first();
         $this->schedules = ReportSchedule::where('laporan_id', $id)->get();
         $this->budgetRealizations = ReportBudgetRealization::where('laporan_id', $id)->get();
         $this->committee = ReportCommittee::where('laporan_id', $id)->first();
@@ -59,7 +56,19 @@ class ModifyReport extends Component
 
     public function createPDFDocument()
     {
-        return PDFReportService::print();
+        return PDFReportService::print(
+            $this->report,
+            $this->introduction,
+            $this->planActivity,
+            $this->schedules,
+            $this->budgetRealizations,
+            $this->committee,
+            $this->evaluation,
+            $this->documentations,
+            $this->attendances,
+            $this->receipts,
+            $this->date,
+        );
     }
 
     public function createWordDocument()
@@ -67,7 +76,7 @@ class ModifyReport extends Component
         return WordReportService::print(
             $this->report,
             $this->introduction,
-            $this->planActivities,
+            $this->planActivity,
             $this->schedules,
             $this->budgetRealizations,
             $this->committee,

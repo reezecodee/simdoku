@@ -65,31 +65,6 @@
             font-weight: normal;
         }
 
-        table td:nth-child(1),
-        table th:nth-child(1) {
-            width: 5%;
-        }
-
-        table td:nth-child(2),
-        table th:nth-child(2) {
-            width: 15%;
-        }
-
-        table td:nth-child(3),
-        table th:nth-child(3) {
-            width: 35%;
-        }
-
-        table td:nth-child(4),
-        table th:nth-child(4) {
-            width: 20%;
-        }
-
-        table td:nth-child(5),
-        table th:nth-child(5) {
-            width: 25%;
-        }
-
         tr:hover {
             background-color: #f5f5f5;
         }
@@ -136,8 +111,10 @@
     <div class="paper">
         <div class="cover" style="text-align: center">
             <h2>LAPORAN</h2>
-            <h2>SHARING ILMU BARENG TDKF</h2>
-            <h3 style="font-style: italic">"Langkah Mudah Menjadi Content Creator Tanpa Ribet"</h3>
+            <h2>{{ $report->judul }}</h2>
+            @if($report->kutipan)
+            <h3 style="font-style: italic">"{{ $report->kutipan }}"</h3>
+            @endif
             <br><br><br><br><br><br><br>
             @php
             $path = public_path('images/logo/logo-bsi.png');
@@ -148,17 +125,14 @@
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             <h3>UNIVERSITAS BINA SARANA INFORMATIKA KAMPUS KOTA</h3>
             <h3>TASIKMALAYA</h3>
-            <h3>2024</h3>
+            <h3>{{ date('Y') }}</h3>
         </div>
 
         <br><br>
 
         <div class="kata-pengantar new-page">
             <h3 style="text-align: center">KATA PENGANTAR</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, earum corporis! Vero itaque
-                repellendus accusantium nulla placeat? Dolorem porro fuga saepe, sint, inventore repellat tempore fugit
-                quia facere molestias, repellendus alias delectus illum! Ullam officia ad sed reiciendis possimus culpa.
-                Corrupti libero modi minus harum! Expedita error praesentium accusamus ut.</p>
+            {!! paragraph($report->kata_pengantar) !!}
         </div>
 
         <br><br>
@@ -167,39 +141,13 @@
             <h3 style="text-align: center">BAB I</h3>
             <h3 style="text-align: center">PENDAHULUAN</h3>
             <p class="normal-paragraph" style="font-weight: bold">1.1 Latar Belakang</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint ad, vel, suscipit blanditiis nulla enim
-                alias, ea quo nemo natus inventore quidem! Iste pariatur necessitatibus dignissimos? Illo quam maxime
-                impedit alias culpa aliquid temporibus pariatur dicta itaque voluptatem. Error, laudantium nihil. Quas,
-                ab illo illum maiores ut labore dignissimos eos!</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint ad, vel, suscipit blanditiis nulla enim
-                alias, ea quo nemo natus inventore quidem! Iste pariatur necessitatibus dignissimos? Illo quam maxime
-                impedit alias culpa aliquid temporibus pariatur dicta itaque voluptatem. Error, laudantium nihil. Quas,
-                ab illo illum maiores ut labore dignissimos eos!</p>
+            {!! paragraph($introduction->latar_belakang) !!}
             <p class="normal-paragraph" style="font-weight: bold">1.2 Tujuan Kegiatan</p>
-            <ol>
-                <li style="font-weight: bold">Lorem ipsum dolor sit amet consectetur.</li>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quae laborum ratione recusandae eaque!
-                    Dolor cum saepe praesentium recusandae nam.</p>
-                <li style="font-weight: bold">Lorem ipsum dolor sit amet consectetur.</li>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quae laborum ratione recusandae eaque!
-                    Dolor cum saepe praesentium recusandae nam.</p>
-                <li style="font-weight: bold">Lorem ipsum dolor sit amet consectetur.</li>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quae laborum ratione recusandae eaque!
-                    Dolor cum saepe praesentium recusandae nam.</p>
-            </ol>
+            {!! paragraph($introduction->tujuan_kegiatan) !!}
             <p class="normal-paragraph" style="font-weight: bold">1.3 Manfaat Kegiatan</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, inventore, velit facere dignissimos, dicta
-                neque accusamus exercitationem laudantium porro totam aliquid unde perspiciatis ipsa voluptatibus ipsam
-                qui cum ad sit obcaecati vero! Nostrum, molestias debitis! Rerum, quos quae aperiam reprehenderit odio
-                dolor expedita molestias? Minus ab voluptates harum maiores illo!</p>
+            {!! paragraph($introduction->manfaat_kegiatan) !!}
             <p class="normal-paragraph" style="font-weight: bold">1.4 Indikator Keberhasilan</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, nesciunt.</p>
-            <ol>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-            </ol>
+            {!! paragraph($introduction->indikator_keberhasilan) !!}
         </div>
 
         <br><br>
@@ -208,54 +156,77 @@
             <h3 style="text-align: center">BAB II</h3>
             <h3 style="text-align: center">PELAKSANAAN KEGIATAN</h3>
             <p class="normal-paragraph" style="font-weight: bold">2.1 Nama dan Tema Kegiatan</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure repellat accusantium eos optio quaerat
-                sint illum at placeat doloremque amet.</p>
+            {!! paragraph($planActivity->tema_kegiatan) !!}
             <p class="normal-paragraph" style="font-weight: bold">2.2 Deskripsi Kegiatan</p>
-            <ol>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-                <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptates?</li>
-            </ol>
+            {!! paragraph($planActivity->deskripsi_kegiatan) !!}
             <p class="normal-paragraph" style="font-weight: bold">2.3 Penyelenggara Kegiatan</p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi impedit dolores temporibus mollitia error
-            eveniet, architecto iure? Tenetur, ipsum quia.
+            {!! paragraph($planActivity->penyelenggara_kegiatan) !!}
             <p class="normal-paragraph" style="font-weight: bold">2.4 Pemateri atau Narasumber</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates illo harum, assumenda ut error
-                magnam nemo eum eligendi. Animi, similique!</p>
+            {!! paragraph($planActivity->pemateri_narasumber) !!}
             <p class="normal-paragraph" style="font-weight: bold">2.5 Peserta Kegiatan</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam deserunt corrupti, ullam eligendi
-                perferendis ratione mollitia quasi nostrum id adipisci.</p>
+            {!! paragraph($planActivity->peserta_kegiatan) !!}
             <p class="normal-paragraph" style="font-weight: bold">2.6 Waktu Pelaksanaan</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam deserunt corrupti, ullam eligendi
-                perferendis ratione mollitia quasi nostrum id adipisci.</p>
+            {!! paragraph($planActivity->waktu_pelaksanaan) !!}
             <p class="normal-paragraph" style="font-weight: bold">2.7 Evaluasi Kegiatan</p>
             <div style="margin-left: 20px">
                 <p class="normal-paragraph" style="font-weight: bold;">a. Jumlah Peserta</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam deserunt corrupti, ullam eligendi
-                    perferendis ratione mollitia quasi nostrum id adipisci.</p>
+                <p>- Jumlah peserta daftar: {{ $evaluation->peserta_daftar }} Orang</p>
+                <p>- Jumlah peserta hadir: {{ $evaluation->peserta_hadir }}, yang terdiri siswa dan guru, mahasiswa
+                    serta masyarakat umum, dengan rincian persentase sebagai berikut:</p>
                 @php
-                $path = public_path('charts/pie.png');
-                $image = base64_encode(file_get_contents($path));
-                $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
+                $image = base64_encode(file_get_contents($pieChart1));
+                $base64 = 'data:image/'.pathinfo($pieChart1, PATHINFO_EXTENSION).';base64,'.$image;
                 @endphp
-                <img src="{{ $base64 }}" alt="" srcset="">
+                <div style="text-align: center">
+                    <img src="{{ $base64 }}" alt="" srcset="">
+                </div>
 
                 <p class="normal-paragraph" style="font-weight: bold;">b. Kepuasan Peserta</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam deserunt corrupti, ullam eligendi
-                    perferendis ratione mollitia quasi nostrum id adipisci.</p>
-                <img src="{{ $base64 }}" alt="" srcset="">
+                @php
+                $image = base64_encode(file_get_contents($pieChart2));
+                $base64 = 'data:image/'.pathinfo($pieChart2, PATHINFO_EXTENSION).';base64,'.$image;
+                @endphp
+                <div style="text-align: center">
+                    <img src="{{ $base64 }}" alt="" srcset="">
+                </div>
 
                 <p class="normal-paragraph" style="font-weight: bold;">c. Penilaian Tentang Acara</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam deserunt corrupti, ullam eligendi
-                    perferendis ratione mollitia quasi nostrum id adipisci.</p>
-                <img src="{{ $base64 }}" alt="" srcset="">
+                @php
+                $path = public_path($pieChart3);
+                $image = base64_encode(file_get_contents($pieChart3));
+                $base64 = 'data:image/'.pathinfo($pieChart3, PATHINFO_EXTENSION).';base64,'.$image;
+                @endphp
+                <div style="text-align: center">
+                    <img src="{{ $base64 }}" alt="" srcset="">
+                </div>
 
             </div>
 
+            @if($schedules->isNotEmpty())
             <p class="normal-paragraph" style="font-weight: bold">2.8 Susunan Acara</p>
+            <style>
+                .table1 td:nth-child(1),
+                .table1 th:nth-child(1) {
+                    width: 5%;
+                }
 
-            <table class="custom-table">
+                .table1 td:nth-child(2),
+                .table1 th:nth-child(2) {
+                    width: 20%;
+                }
+
+                .table1 td:nth-child(3),
+                .table1 th:nth-child(3) {
+                    width: 40%;
+                }
+
+                .table1 td:nth-child(4),
+                .table1 th:nth-child(4) {
+                    width: 25%;
+                }
+            </style>
+
+            <table class="custom-table table1">
                 <thead>
                     <tr>
                         <th>NO</th>
@@ -265,93 +236,93 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($schedules as $item)
                     <tr>
-                        <td>1</td>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td style="text-align: center">{{ $loop->iteration }}</td>
+                        <td>{{ $item->waktu }}</td>
+                        <td>{{ $item->sub_acara }}</td>
+                        <td>{{ $item->keterangan }}</td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
+            @endif
 
             <p class="normal-paragraph" style="font-weight: bold">2.9 Susunan Panitia</p>
 
-            <table class="custom-table">
-                <thead>
-                    <tr>
-                        <th>NO</th>
-                        <th>WAKTU</th>
-                        <th>Sub acara</th>
-                        <th>KETERANGAN</th>
-                    </tr>
-                </thead>
+            <style>
+                .table2 td:nth-child(1),
+                .table2 th:nth-child(1) {
+                    width: 45%;
+                }
+
+                .table2 td:nth-child(2),
+                .table2 th:nth-child(2) {
+                    width: 55%;
+                }
+            </style>
+
+            <table class="table2">
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
+                    @foreach ($roles as $role)
+                    <tr style="border: 0 solid white">
+                        <td style="border: 0 solid white">{{ $titles[$loop->iteration - 1] }}</td>
+                        <td style="border: 0 solid white">{{ $committee->$role }}</td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
 
+            @if($budgetRealizations->isNotEmpty())
             <p class="normal-paragraph" style="font-weight: bold">2.10 Realisasi Anggaran</p>
+            <style>
+                .table3 td:nth-child(1),
+                .table3 th:nth-child(1) {
+                    width: 5%;
+                }
 
-            <table class="custom-table">
+                .table3 td:nth-child(2),
+                .table3 th:nth-child(2) {
+                    width: 55%;
+                }
+
+                .table3 td:nth-child(3),
+                .table3 th:nth-child(3) {
+                    width: 5%;
+                }
+
+                .table3 td:nth-child(4),
+                .table3 th:nth-child(4) {
+                    width: 35%;
+                }
+            </style>
+
+            <table class="custom-table table3">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Anggaran</th>
                         <th>Jumlah</th>
                         <th>(Rupiah)</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($budgetRealizations as $item)
                     <tr>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td style="text-align: center">{{ $loop->iteration }}</td>
+                        <td>{{ $item->anggaran }}</td>
+                        <td style="text-align: center">{{ $item->jumlah }}</td>
+                        <td>{{ idr($item->rupiah) }}</td>
                     </tr>
+                    @endforeach
                     <tr>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
-                    <tr>
-                        <td>10:20 - 20:20</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: center; font-weight: bold; font-style: italic">Total
+                        <td colspan="3" style="text-align: center; font-weight: bold; font-style: italic">Total
                             Pengeluaran</td>
-                        <td style="font-weight: bold">Rp. 20000</td>
+                        <td style="font-weight: bold">{{ idr($budgetRealizations->sum('rupiah')) }}</td>
                     </tr>
                 </tbody>
             </table>
+            @endif
         </div>
 
         <br><br>
@@ -359,11 +330,8 @@
         <div class="penutup new-page">
             <h3 style="text-align: center">BAB III</h3>
             <h3 style="text-align: center">PENUTUP</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis quia ad recusandae sed quis!
-                Veritatis sint perferendis ex repellat inventore totam blanditiis, ut ullam nobis, expedita possimus ab
-                assumenda aperiam quae asperiores harum. Magni qui atque ipsa ipsum repellat, distinctio repudiandae a
-                quia sed aut labore harum saepe! Quasi, debitis.</p>
-            <p class="normal-paragraph" style="text-align: center">Tasikmalaya, 24 Agustus 2024</p>
+            {!! $report->penutup !!}
+            <p class="normal-paragraph" style="text-align: center">Tasikmalaya, {{ $date }}</p>
             <p class="normal-paragraph" style="text-align: center">Hormat Kami,</p>
 
             <div class="signature-container">
@@ -373,7 +341,6 @@
                     $image = base64_encode(file_get_contents($path));
                     $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
                     @endphp
-
                     <div class="signature-column">
                         <p class="signature-title">Mengetahui,</p>
                         <div>
@@ -382,12 +349,17 @@
                         <p class="signature-name"><u>{{ $user->nama }}</u></p>
                         <p class="signature-title" style="font-weight: bold">Kepala Kampus UBSI Tasikmalaya</p>
                     </div>
+                    @php
+                    $path = storage_path('app/public/'.$report->signature->tanda_tangan);
+                    $image = base64_encode(file_get_contents($path));
+                    $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
+                    @endphp
                     <div class="signature-column">
                         <p class="signature-title">Pelaksana,</p>
                         <div>
                             <img src="{{ $base64 }}" width="120" alt="" srcset="">
                         </div>
-                        <p class="signature-name"><u>Nama test</u></p>
+                        <p class="signature-name"><u>{{ $report->signature->nama_pemilik }}</u></p>
                         <p class="signature-title" style="font-weight: bold">Ketua Pelaksana</p>
                     </div>
                 </div>
@@ -395,9 +367,9 @@
                     <div class="signature-column">
                         <p class="signature-title">Menyetujui,</p>
                         <div>
-                            <img src="{{ $base64 }}" width="120" alt="" srcset="">
+                            <br><br>
                         </div>
-                        <p class="signature-name"><u>Ir. Naba Aji Notoseputro, M.Kom</u></p>
+                        <p class="signature-name"><u>{{ $report->signature2->nama_pemilik }}</u></p>
                         <p class="signature-title" style="font-weight: bold">Kadiv DMER Universitas Bina Sarana
                             Informatika</p>
                     </div>
@@ -410,37 +382,41 @@
         <div class="lampiran-lampiran new-page">
             <p class="normal-paragraph" style="font-weight: bold">Lampiran-lampiran</p>
             <p>1. Press Release</p>
-            <ul>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-            </ul>
+            {!! $report->press_release !!}
             <p>2. Dokumentasi Acara</p>
+            @foreach ($documentations as $item)
             @php
-            $path = public_path('charts/dokumentasi.jpg');
+            $path = public_path('storage/'.$item->filename);
             $image = base64_encode(file_get_contents($path));
             $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
             @endphp
             <br>
             <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
             <br><br>
-            <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
-            <br><br>
-            <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
-            <br><br>
+            @endforeach
+
             <p>3. Daftar Hadir Peserta</p>
+            @foreach ($attendances as $item)
+            @php
+            $path = public_path('storage/'.$item->filename);
+            $image = base64_encode(file_get_contents($path));
+            $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
+            @endphp
             <br>
             <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
             <br><br>
-            <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
-            <br><br>
+            @endforeach
             <p>4. Bukti Kwitansi</p>
+            @foreach ($receipts as $item)
+            @php
+            $path = public_path('storage/'.$item->filename);
+            $image = base64_encode(file_get_contents($path));
+            $base64 = 'data:image/'.pathinfo($path, PATHINFO_EXTENSION).';base64,'.$image;
+            @endphp
             <br>
             <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
             <br><br>
-            <img src="{{ $base64 }}" style="width: 100%" alt="" srcset="">
-            <br><br>
+            @endforeach
         </div>
     </div>
 </body>

@@ -15,7 +15,7 @@ class WordReportService
     public static function print(
         $report,
         $introduction,
-        $planActivities,
+        $planActivity,
         $schedules,
         $budgetRealizations,
         $committee,
@@ -32,7 +32,7 @@ class WordReportService
         $phpWord = self::foreword($phpWord, $report);
         $phpWord = self::TOC($phpWord);
         $phpWord = self::introduction($phpWord, $introduction);
-        $phpWord = self::implementationActivity($phpWord, $planActivities, $schedules, $budgetRealizations, $committee, $evaluation);
+        $phpWord = self::implementationActivity($phpWord, $planActivity, $schedules, $budgetRealizations, $committee, $evaluation);
         $phpWord = self::closing($phpWord, $report, $my, $date);
         $phpWord = self::attachments($phpWord, $report, $documentations, $attendances, $receipts);
 
@@ -229,29 +229,29 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function implementationActivity($phpWord, $planActivities, $schedules, $budgetRealizations, $committee, $evaluation)
+    private static function implementationActivity($phpWord, $planActivity, $schedules, $budgetRealizations, $committee, $evaluation)
     {
         $section = $phpWord->addSection();
         $section->addTitle("BAB II", 1);
         $section->addTitle("PERENCANAAN KEGIATAN", 1);
 
         $section->addTitle('2.1 Nama dan Tema Kegiatan', 2);
-        Html::addHtml($section, paragraph($planActivities->tema_kegiatan), false, false);
+        Html::addHtml($section, paragraph($planActivity->tema_kegiatan), false, false);
 
         $section->addTitle('2.2 Deskripsi Kegiatan', 2);
-        Html::addHtml($section, paragraph($planActivities->deskripsi_kegiatan), false, false);
+        Html::addHtml($section, paragraph($planActivity->deskripsi_kegiatan), false, false);
 
         $section->addTitle('2.3 Penyelenggara Kegiatan', 2);
-        Html::addHtml($section, paragraph($planActivities->penyelenggara_kegiatan), false, false);
+        Html::addHtml($section, paragraph($planActivity->penyelenggara_kegiatan), false, false);
 
         $section->addTitle('2.4 Pemateri atau Narasumber', 2);
-        Html::addHtml($section, paragraph($planActivities->pemateri_narasumber), false, false);
+        Html::addHtml($section, paragraph($planActivity->pemateri_narasumber), false, false);
 
         $section->addTitle('2.5 Peserta Kegiatan', 2);
-        Html::addHtml($section, paragraph($planActivities->peserta_kegiatan), false, false);
+        Html::addHtml($section, paragraph($planActivity->peserta_kegiatan), false, false);
 
         $section->addTitle('2.6 Waktu Pelaksanaan', 2);
-        Html::addHtml($section, paragraph($planActivities->waktu_pelaksanaan), false, false);
+        Html::addHtml($section, paragraph($planActivity->waktu_pelaksanaan), false, false);
 
         $section->addTitle('2.7 Evaluasi Kegiatan', 2);
         $section->addText("a. Jumlah Peserta", ['bold' => true]);
