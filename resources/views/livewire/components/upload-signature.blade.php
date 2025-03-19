@@ -1,14 +1,6 @@
 <div>
     <form wire:submit.prevent="submit">
         <div class="card-body text-center">
-            <select wire:model.lazy="status" id="" class="d-flex justify-content-start form-control">
-                <option selected>Pilih Jabatan</option>
-                <option value="Koordinator Markom">Koordinator Markom</option>
-                <option value="KA. Divisi MER">KA. Divisi MER</option>
-                <option value="KA. BAKU">KA. BAKU</option>
-                <option value="Ketua Panitia">Ketua Panitia</option>
-                <option value="Ketua Pelaksana">Ketua Pelaksana</option>
-            </select>
             <h5 class="card-title mt-2">Upload Tanda Tangan</h5>
             <p class="card-text text-muted" id="fileName" wire:ignore>Pilih file yang ingin diunggah.</p>
             <div class="mb-3">

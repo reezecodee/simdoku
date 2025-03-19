@@ -24,16 +24,6 @@ class Signature extends Component
         $signature->delete();
     }
 
-    public function updateStatus($id, $field, $value)
-    {
-        $signature = SG::findOrFail($id);
-
-        if ($signature) {
-            $signature->$field = $value;
-            $signature->save();
-        }
-    }
-
     public function updateDataPemilik($id, $field, $value)
     {
         $signature = SG::findOrFail($id);

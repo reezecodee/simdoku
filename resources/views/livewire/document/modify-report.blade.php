@@ -79,12 +79,12 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <livewire:components.select-signature type="Ketua Pelaksana" doc="report"
+                        <livewire:components.select-signature doc="report"
                             signature="ttd_ketua_pelaksana" function-name="SignatureChiefExecutive" :id="$id" />
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <livewire:components.select-signature type="KA. Divisi MER" doc="report" signature="ttd_kadiv_dmer"
+                    <livewire:components.select-signature doc="report" signature="ttd_kadiv_dmer"
                         function-name="SignatureKaDivMER" relation-name="signature2" :id="$id" />
                 </div>
             </div>

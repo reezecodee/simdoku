@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class SelectSignature extends Component
 {
-    public $type;
     public $id;
     public $doc;
     public $signature;
@@ -66,7 +65,7 @@ class SelectSignature extends Component
 
     public function render()
     {
-        $signatures = Signature::where('status', $this->type)->get();
+        $signatures = Signature::all();
 
         return view('livewire.components.select-signature', compact('signatures'));
     }

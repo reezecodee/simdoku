@@ -82,7 +82,7 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-center">
-                    <livewire:components.select-signature type="Ketua Panitia" doc="proposal"
+                    <livewire:components.select-signature doc="proposal"
                         signature="ttd_ketua_panitia_id" function-name="SignatureLeadCommittee" :id="$id" />
                 </div>
                 <div class="d-flex justify-content-center">

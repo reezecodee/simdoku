@@ -1,7 +1,6 @@
 <div>
     @if($$doc->$signature)
     <div class="text-center">
-        <p>{{ $type }}</p>
         <div class="d-flex justify-content-center">
             <img width="150"
                 src="{{ asset('storage/'.$$doc->$relationName->tanda_tangan) }}"
