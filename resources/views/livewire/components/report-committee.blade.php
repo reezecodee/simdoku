@@ -33,7 +33,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="publikasi-media" class="form-label">f. Publikasi & Media</label>
-                <input type="text" class="form-control" wire:model.lazy="publikasi-media" placeholder="Nama panitia publikasi & media">
+                <input type="text" class="form-control" wire:model.lazy="publikasi_media" placeholder="Nama panitia publikasi & media">
             </div>
         </div>
         <div class="col-md-6">

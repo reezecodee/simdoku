@@ -36,7 +36,7 @@ class WordReportService
         $phpWord = self::closing($phpWord, $report, $my, $date);
         $phpWord = self::attachments($phpWord, $report, $documentations, $attendances, $receipts);
 
-        return self::output($phpWord);
+        return self::output($phpWord, $evaluation);
     }
 
     private static function init()
@@ -71,12 +71,12 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function output($phpWord)
+    private static function output($phpWord, $evaluation)
     {
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
 
         $fileName = 'laporan.docx';
-        $imagePaths = self::generatePieChart();
+        $imagePaths = self::generatePieChart($evaluation);
 
         return response()->stream(
             function () use ($objWriter, $imagePaths) {
@@ -100,7 +100,7 @@ class WordReportService
         return $response;
     }
 
-    private static function generatePieChart()
+    private static function generatePieChart($evaluation)
     {
         require_once(public_path('jpgraph/src/jpgraph.php'));
         require_once(public_path('jpgraph/src/jpgraph_pie.php'));
@@ -115,9 +115,22 @@ class WordReportService
         }
 
         $dataSets = [
-            [$evaluation->siswa ?? 1, $evaluation->guru ?? 1, $evaluation->mahasiswa ?? 1, $evaluation->masyarakat_umum ?? 1],
-            [$evaluation->peserta_puas ?? 1, $evaluation->peserta_cukup_puas ?? 1, $evaluation->peserta_tidak_puas ?? 1],
-            [$evaluation->penilaian_sangat_bagus ?? 1, $evaluation->penilaian_cukup_bagus ?? 1, $evaluation->penilaian_kurang_bagus ?? 1],
+            [
+                (int) ($evaluation->siswa ?? 0),
+                (int) ($evaluation->guru ?? 0),
+                (int) ($evaluation->mahasiswa ?? 0),
+                (int) ($evaluation->masyarakat_umum ?? 0),
+            ],
+            [
+                (int) ($evaluation->peserta_puas ?? 0),
+                (int) ($evaluation->peserta_cukup_puas ?? 0),
+                (int) ($evaluation->peserta_tidak_puas ?? 0),
+            ],
+            [
+                (int) ($evaluation->penilaian_sangat_bagus ?? 0),
+                (int) ($evaluation->penilaian_cukup_bagus ?? 0),
+                (int) ($evaluation->penilaian_kurang_bagus ?? 0),
+            ],
         ];
 
         $legends = [
@@ -158,7 +171,7 @@ class WordReportService
         $section->addText('LAPORAN', ['bold' => true, 'size' => 20], ['alignment' => Alignment::HORIZONTAL_CENTER]);
         $section->addText($report->judul, ['bold' => true, 'size' => 20], ['alignment' => Alignment::HORIZONTAL_CENTER]);
         if ($report->kutipan) {
-            $section->addText("“{$report->kutipan}”", ['bold' => true, 'size' => 12], ['alignment' => Alignment::HORIZONTAL_CENTER]);
+            $section->addText("“{$report->kutipan}”", ['bold' => true, 'size' => 12, 'italic' => true], ['alignment' => Alignment::HORIZONTAL_CENTER]);
         }
 
         $section->addTextBreak(3);
@@ -245,21 +258,21 @@ class WordReportService
         $section->addText("- Jumlah peserta daftar : {$evaluation->peserta_daftar} Orang");
         $section->addText("- Jumlah peserta hadir : {$evaluation->peserta_hadir} Orang peserta");
 
-        $section->addImage(self::generatePieChart()[0], [
+        $section->addImage(self::generatePieChart($evaluation)[0], [
             'alignment' => Jc::CENTER,
             'width' => 420,
             'height' => 250,
         ]);
 
         $section->addText("b. Kepuasan Peserta", ['bold' => true]);
-        $section->addImage(self::generatePieChart()[1], [
+        $section->addImage(self::generatePieChart($evaluation)[1], [
             'alignment' => Jc::CENTER,
             'width' => 420,
             'height' => 250,
         ]);
 
         $section->addText("c. Penilaian Tentang Acara", ['bold' => true]);
-        $section->addImage(self::generatePieChart()[2], [
+        $section->addImage(self::generatePieChart($evaluation)[2], [
             'alignment' => Jc::CENTER,
             'width' => 420,
             'height' => 250,
@@ -308,7 +321,6 @@ class WordReportService
             $section->addTextBreak(1);
         }
 
-
         if ($committee) {
             $section->addTitle('2.9 Susunan Panitia', 2);
             $table = $section->addTable([
@@ -318,13 +330,13 @@ class WordReportService
 
             $roles = ['penasehat', 'pembina', 'penanggung_jawab', 'ketua_pelaksana', 'moderator', 'publikasi_media', 'sie_konsumsi', 'sie_registrasi', 'dokumentasi', 'sosialisasi', 'multimedia', 'perlengkapan'];
 
-            $titles = ['Penasehat', 'Pembina', 'Penanggung Jawab', 'Ketua Pelaksana', 'Moderator', 'Publikasi & Media', 'Sie Konsumsi', 'Sie Registrasi', 'Dokumentasi', 'Sosialisasi Beasiswa UBSI', 'Multimedia', 'Perlengkapan'];
+            $titles = ['Penasehat:', 'Pembina:', 'Penanggung Jawab:', 'Ketua Pelaksana:', 'Moderator:', 'Publikasi dan Media:', 'Sie Konsumsi:', 'Sie Registrasi:', 'Dokumentasi:', 'Sosialisasi Beasiswa UBSI:', 'Multimedia:', 'Perlengkapan:'];
 
-            $no = 1;
+            $no = 0;
             foreach ($roles as $role) {
                 if ($committee->$role) {
                     $table->addRow();
-                    $table->addCell(1000)->addText($titles[$no], [], 'TableHeaderStyle');
+                    $table->addCell(6000)->addText($titles[$no], [], 'TableCellStyle');
                     $table->addCell(8000)->addText($committee->$role, [], 'TableCellStyle');
                     $no++;
                 }
