@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\File;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -74,9 +75,16 @@ class WordReportService
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
 
         $fileName = 'laporan.docx';
+        $imagePaths = self::generatePieChart();
+
         return response()->stream(
-            function () use ($objWriter) {
+            function () use ($objWriter, $imagePaths) {
                 $objWriter->save('php://output');
+                foreach ($imagePaths as $imagePath) {
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
             },
             200,
             [
@@ -89,6 +97,59 @@ class WordReportService
         );
 
         return $response;
+    }
+
+    private static function generatePieChart()
+    {
+        require_once(public_path('jpgraph/src/jpgraph.php'));
+        require_once(public_path('jpgraph/src/jpgraph_pie.php'));
+
+        File::ensureDirectoryExists(public_path('charts'));
+
+        foreach (['pie1.png', 'pie2.png', 'pie3.png'] as $file) {
+            $filePath = public_path("charts/$file");
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $dataSets = [
+            [40, 30, 20, 10], 
+            [50, 20, 15], 
+            [35, 25, 25], 
+        ];
+
+        $legends = [
+            ["Kategori A", "Kategori B", "Kategori C", "Kategori D"],  // Untuk pie chart 1
+            ["Bagian X", "Bagian Y", "Bagian Z"],  // Untuk pie chart 2
+            ["Respon Positif", "Respon Netral", "Respon Negatif"],  // Untuk pie chart 3
+        ];
+
+        $imagePaths = [];
+
+        $colors = ["#DC3812", "#303030", "#109619", "#3266CC"];
+        foreach ($dataSets as $index => $data) {
+            $imagePath = public_path("charts/pie" . ($index + 1) . ".png");
+            $imagePaths[] = $imagePath;
+
+            $graph = new \PieGraph(420, 250);
+            $graph->SetShadow();
+
+            $pie = new \PiePlot($data);
+            $pie->SetSliceColors($colors);
+            $pie->SetLegends($legends[$index]);
+
+            $pie->SetLabelType(\PIE_VALUE_PER);
+            $pie->value->SetFormat('%2.1f%%');
+            $pie->value->SetColor("white");
+            $pie->SetSize(0.4);
+            $pie->SetLabelPos(0.25);
+
+            $graph->Add($pie);
+            $graph->Stroke($imagePath);
+        }
+
+        return $imagePaths;
     }
 
     private static function cover($phpWord, $report)
@@ -184,22 +245,21 @@ class WordReportService
         $section->addText("- Jumlah peserta daftar : {$evaluation->peserta_daftar} Orang");
         $section->addText("- Jumlah peserta hadir : {$evaluation->peserta_hadir} Orang peserta");
 
-        $imagePath = public_path('charts/pie.png');
-        $section->addImage($imagePath, [
+        $section->addImage(self::generatePieChart()[0], [
             'alignment' => Jc::CENTER,
             'width' => 420,
             'height' => 250,
         ]);
 
         $section->addText("b. Kepuasan Peserta", ['bold' => true]);
-        $section->addImage($imagePath, [
+        $section->addImage(self::generatePieChart()[1], [
             'alignment' => Jc::CENTER,
             'width' => 420,
             'height' => 250,
         ]);
 
         $section->addText("c. Penilaian Tentang Acara", ['bold' => true]);
-        $section->addImage($imagePath, [
+        $section->addImage(self::generatePieChart()[2], [
             'alignment' => Jc::CENTER,
             'width' => 420,
             'height' => 250,
@@ -249,7 +309,7 @@ class WordReportService
         }
 
 
-        if ($committee->isNotEmpty()) {
+        if ($committee) {
             $section->addTitle('2.9 Susunan Panitia', 2);
             $table = $section->addTable([
                 'borderSize' => 0,
