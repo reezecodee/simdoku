@@ -20,3 +20,7 @@ function generateBase64($path)
 
     return $result;
 }
+
+function idr($number) {
+    return 'Rp ' . number_format($number, 0, ',', '.');
+}

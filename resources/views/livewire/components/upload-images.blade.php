@@ -1,5 +1,8 @@
 <div>
     <form wire:submit.prevent="submit" enctype="multipart/form-data">
+        @if (session()->has('message'))
+        <div class="alert alert-success mb-3">{{ session('message') }}</div>
+        @endif
         <div class="border p-4 text-center rounded" style="cursor: pointer; position: relative;"
             ondragover="event.preventDefault()" ondrop="handleDrop(event)"
             onclick="document.getElementById('{{ $type }}FileInput').click()">
@@ -29,10 +32,6 @@
         <div class="text-danger mt-2">{{ $message }}</div>
         @enderror
     </form>
-
-    @if (session()->has('message'))
-    <div class="alert alert-success mt-3">{{ session('message') }}</div>
-    @endif
 </div>
 
 <script>

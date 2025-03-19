@@ -59,12 +59,12 @@
                 <x-text-editor.trix title="penutup" value="{{ $penutup }}" />
             </div>
             <div class="mt-1 letter-format">
-                <p class="text-center">Tasikmalaya, 28 Agustus 2024</p>
+                <p class="text-center">Tasikmalaya, {{ $date }}</p>
                 <p class="text-center">Hormat Kami,</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-center">
                         <div class="text-center">
-                            <p>Kepala Kampus UBSI Tasikmalaya</p>
+                            <p>Mengetahui,</p>
                             @if($user)
                             <div class="d-flex justify-content-center">
                                 <img width="150" src="{{ asset('storage/'.$user->tanda_tangan) }}" alt="" srcset="">
@@ -76,16 +76,25 @@
                                 <p>Belum diatur</p>
                             </div>
                             @endif
+                            <p class="text-center">Kepala Kampus UBSI Tasikmalaya</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <livewire:components.select-signature doc="report"
-                            signature="ttd_ketua_pelaksana" function-name="SignatureChiefExecutive" :id="$id" />
+                        <div>
+                            <p class="text-center">Pelaksana,</p>
+                            <livewire:components.select-signature doc="report" signature="ttd_ketua_pelaksana"
+                            function-name="SignatureChiefExecutive" :id="$id" />
+                            <p class="text-center">Ketua Pelaksana</p>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <livewire:components.select-signature doc="report" signature="ttd_kadiv_dmer"
+                    <div>
+                        <p class="text-center">Menyetujui,</p>
+                        <livewire:components.select-signature doc="report" signature="ttd_kadiv_dmer"
                         function-name="SignatureKaDivMER" relation-name="signature2" :id="$id" />
+                        <p class="text-center">Kadiv DMER Universitas Bina Sarana Informatika</p>
+                    </div>
                 </div>
             </div>
         </div>

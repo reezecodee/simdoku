@@ -27,7 +27,7 @@
                         <input type="number" class="form-control" wire:model.lazy="mahasiswa" placeholder="Jumlah mahasiswa">
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" wire:model.lazy="masyarakat_umum" placeholder="Jumlah masyarakat_umum">
+                        <input type="number" class="form-control" wire:model.lazy="masyarakat_umum" placeholder="Jumlah masyarakat umum">
                     </div>
                 </div>
             </div>

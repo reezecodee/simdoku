@@ -23,7 +23,8 @@ class WordReportService
         $documentations,
         $attendances,
         $receipts,
-        $my
+        $my,
+        $date
     ) {
         $phpWord = self::init();
 
@@ -32,8 +33,8 @@ class WordReportService
         $phpWord = self::TOC($phpWord);
         $phpWord = self::introduction($phpWord, $introduction);
         $phpWord = self::implementationActivity($phpWord, $planActivities, $schedules, $budgetRealizations, $committee, $evaluation);
-        $phpWord = self::closing($phpWord, $report, $my);
-        $phpWord = self::attachments($phpWord, $documentations, $attendances, $receipts);
+        $phpWord = self::closing($phpWord, $report, $my, $date);
+        $phpWord = self::attachments($phpWord, $report, $documentations, $attendances, $receipts);
 
         return self::output($phpWord);
     }
@@ -114,20 +115,19 @@ class WordReportService
         }
 
         $dataSets = [
-            [40, 30, 20, 10], 
-            [50, 20, 15], 
-            [35, 25, 25], 
+            [$evaluation->siswa ?? 1, $evaluation->guru ?? 1, $evaluation->mahasiswa ?? 1, $evaluation->masyarakat_umum ?? 1],
+            [$evaluation->peserta_puas ?? 1, $evaluation->peserta_cukup_puas ?? 1, $evaluation->peserta_tidak_puas ?? 1],
+            [$evaluation->penilaian_sangat_bagus ?? 1, $evaluation->penilaian_cukup_bagus ?? 1, $evaluation->penilaian_kurang_bagus ?? 1],
         ];
 
         $legends = [
-            ["Kategori A", "Kategori B", "Kategori C", "Kategori D"],  // Untuk pie chart 1
-            ["Bagian X", "Bagian Y", "Bagian Z"],  // Untuk pie chart 2
-            ["Respon Positif", "Respon Netral", "Respon Negatif"],  // Untuk pie chart 3
+            ["Siswa", "Guru", "Mahasiswa", "Umum"],
+            ["Puas", "Cukup Puas", "Tidak Puas"],
+            ["Sangat Bagus", "Cukup Bagus", "Kurang Bagus"],
         ];
 
         $imagePaths = [];
 
-        $colors = ["#DC3812", "#303030", "#109619", "#3266CC"];
         foreach ($dataSets as $index => $data) {
             $imagePath = public_path("charts/pie" . ($index + 1) . ".png");
             $imagePaths[] = $imagePath;
@@ -136,16 +136,16 @@ class WordReportService
             $graph->SetShadow();
 
             $pie = new \PiePlot($data);
-            $pie->SetSliceColors($colors);
             $pie->SetLegends($legends[$index]);
 
             $pie->SetLabelType(\PIE_VALUE_PER);
             $pie->value->SetFormat('%2.1f%%');
             $pie->value->SetColor("white");
             $pie->SetSize(0.4);
-            $pie->SetLabelPos(0.25);
+            $pie->SetLabelPos(0.6);
 
             $graph->Add($pie);
+            $graph->legend->SetPos(0.5, 0.98, 'center', 'bottom');
             $graph->Stroke($imagePath);
         }
 
@@ -183,7 +183,7 @@ class WordReportService
     {
         $section = $phpWord->addSection();
         $section->addTitle('KATA PENGANTAR', 1);
-        Html::addHtml($section, $report->kata_pengantar, false, false);
+        Html::addHtml($section, paragraph($report->kata_pengantar), false, false);
 
         return $phpWord;
     }
@@ -202,16 +202,16 @@ class WordReportService
         $section->addTitle("BAB I", 1);
         $section->addTitle("PENDAHULUAN", 1);
         $section->addTitle('1.1 Latar Belakang', 2);
-        Html::addHtml($section, $introduction->latar_belakang, false, false);
+        Html::addHtml($section, paragraph($introduction->latar_belakang), false, false);
 
         $section->addTitle('1.2 Tujuan Kegiatan', 2);
-        Html::addHtml($section, $introduction->tujuan_kegiatan, false, false);
+        Html::addHtml($section, paragraph($introduction->tujuan_kegiatan), false, false);
 
         $section->addTitle('1.3 Manfaat Kegiatan', 2);
-        Html::addHtml($section, $introduction->manfaat_kegiatan, false, false);
+        Html::addHtml($section, paragraph($introduction->manfaat_kegiatan), false, false);
 
         $section->addTitle('1.4 Indikator Keberhasilan', 2);
-        Html::addHtml($section, $introduction->indikator_keberhasilan, false, false);
+        Html::addHtml($section, paragraph($introduction->indikator_keberhasilan), false, false);
 
         return $phpWord;
     }
@@ -223,22 +223,22 @@ class WordReportService
         $section->addTitle("PERENCANAAN KEGIATAN", 1);
 
         $section->addTitle('2.1 Nama dan Tema Kegiatan', 2);
-        Html::addHtml($section, $planActivities->tema_kegiatan, false, false);
+        Html::addHtml($section, paragraph($planActivities->tema_kegiatan), false, false);
 
         $section->addTitle('2.2 Deskripsi Kegiatan', 2);
-        Html::addHtml($section, $planActivities->deskripsi_kegiatan, false, false);
+        Html::addHtml($section, paragraph($planActivities->deskripsi_kegiatan), false, false);
 
         $section->addTitle('2.3 Penyelenggara Kegiatan', 2);
-        Html::addHtml($section, $planActivities->penyelenggara_kegiatan, false, false);
+        Html::addHtml($section, paragraph($planActivities->penyelenggara_kegiatan), false, false);
 
         $section->addTitle('2.4 Pemateri atau Narasumber', 2);
-        Html::addHtml($section, $planActivities->pemateri_narasumber, false, false);
+        Html::addHtml($section, paragraph($planActivities->pemateri_narasumber), false, false);
 
         $section->addTitle('2.5 Peserta Kegiatan', 2);
-        Html::addHtml($section, $planActivities->peserta_kegiatan, false, false);
+        Html::addHtml($section, paragraph($planActivities->peserta_kegiatan), false, false);
 
         $section->addTitle('2.6 Waktu Pelaksanaan', 2);
-        Html::addHtml($section, $planActivities->waktu_pelaksanaan, false, false);
+        Html::addHtml($section, paragraph($planActivities->waktu_pelaksanaan), false, false);
 
         $section->addTitle('2.7 Evaluasi Kegiatan', 2);
         $section->addText("a. Jumlah Peserta", ['bold' => true]);
@@ -343,18 +343,18 @@ class WordReportService
             $table->addCell(2000, $headerStyle)->addText("Jumlah", ['bold' => true], 'TableHeaderStyle');
             $table->addCell(3000, $headerStyle)->addText("(Rupiah)", ['bold' => true], 'TableHeaderStyle');
 
-            $total = $budgetRealizations->sum('rupiah');
+            $total = idr($budgetRealizations->sum('rupiah'));
 
             foreach ($budgetRealizations as $item) {
                 $table->addRow();
                 $table->addCell(6000)->addText($item->anggaran, [], 'TableCellStyle');
                 $table->addCell(2000)->addText($item->jumlah, [], 'TableHeaderStyle');
-                $table->addCell(3000)->addText($item->rupiah, [], 'TableCellStyle');
+                $table->addCell(3000)->addText(idr($item->rupiah), [], 'TableCellStyle');
             }
 
             $table->addRow();
             $table->addCell(8000, ['gridSpan' => 2])->addText("Total pengeluaran", ['bold' => true, 'italic' => true, 'alignment' => 'center'], 'TableHeaderStyle');
-            $table->addCell(3000)->addText("Rp. {$total}", ['bold' => true], 'TableHeaderStyle');
+            $table->addCell(3000)->addText($total, ['bold' => true], 'TableHeaderStyle');
 
             $section->addTextBreak(1);
         }
@@ -362,15 +362,21 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function closing($phpWord, $report, $my)
+    private static function closing($phpWord, $report, $my, $date)
     {
         $section = $phpWord->addSection();
         $section->addTitle("BAB III", 1);
         $section->addTitle("PENUTUP", 1);
-        Html::addHtml($section, $report->penutup, false, false);
-        $section->addText("Tasikmalaya, 28 Agustus 2024", [], ['alignment' => Jc::CENTER]);
-        $section->addTextBreak(2);
-        $section->addText("Hormat Kami,", [], ['alignment' => Jc::CENTER]);
+        Html::addHtml($section, paragraph($report->penutup), false, false);
+        $section->addText("Tasikmalaya, {$date}", [], [
+            'alignment' => Jc::CENTER,
+            'indentation' => ['firstLine' => 0]
+        ]);
+        $section->addTextBreak(1);
+        $section->addText("Hormat Kami,", [], [
+            'alignment' => Jc::CENTER,
+            'indentation' => ['firstLine' => 0]
+        ]);
 
         $tableStyle = [
             'alignment' => Jc::CENTER,
@@ -386,17 +392,17 @@ class WordReportService
         $cell1->addText(
             "Mengetahui,",
             [],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
         $cell2->addText(
             "Pelaksana,",
             [],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
 
         $table->addRow();
-        $cell1 = $table->addCell(4000);
-        $cell2 = $table->addCell(4000);
+        $cell1 = $table->addCell(5000);
+        $cell2 = $table->addCell(5000);
 
         $cell1->addImage(storage_path('app/public/' . $my->tanda_tangan), [
             'width' => 110,
@@ -416,12 +422,12 @@ class WordReportService
         $cell1->addText(
             $my->nama,
             ['underline' => 'single'],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
         $cell2->addText(
             $report->signature->nama_pemilik,
             ['underline' => 'single'],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
 
         $table->addRow();
@@ -431,12 +437,12 @@ class WordReportService
         $cell1->addText(
             "Ketua Pelaksana",
             ['bold' => true],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
         $cell2->addText(
             "Kepala Kampus UBSI Tasikmalaya",
             ['bold' => true],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
 
         $section->addTextBreak(1);
@@ -449,13 +455,14 @@ class WordReportService
         $cell1->addText(
             "Menyetujui,",
             [],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
 
         $table->addRow();
-        $cell1 = $table->addCell(4000);
+        $cell1 = $table->addCell(5000);
 
-        $cell1->addText("", [], ['align' => 'center']);
+        $cell1->addText("", [], ['align' => 'center', 'indentation' => 0]);
+        $cell1->addText("", [], ['align' => 'center', 'indentation' => 0]);
 
         $table->addRow();
         $cell1 = $table->addCell(5000);
@@ -463,7 +470,7 @@ class WordReportService
         $cell1->addText(
             $report->signature2->nama_pemilik,
             ['underline' => 'single'],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
 
         $table->addRow();
@@ -472,67 +479,55 @@ class WordReportService
         $cell1->addText(
             "Kadiv DMER Universitas Bina Sarana Informatika",
             ['bold' => true],
-            ['alignment' => Jc::CENTER]
+            ['alignment' => Jc::CENTER, 'indentation' => 0]
         );
 
         return $phpWord;
     }
 
-    private static function attachments($phpWord, $documentations, $attendances, $receipts)
+    private static function attachments($phpWord, $report, $documentations, $attendances, $receipts)
     {
         $section = $phpWord->addSection();
 
         $section->addTitle('Lampiran-lampiran', 2);
         $section->addText("1. Press Release");
-        Html::addHtml($section, "<ul><li>asdasdasdasd asdad asdasd asdas as</li><li>asdasdasdasd asdad asdasd asdas as</li><li>asdasdasdasd asdad asdasd asdas as</li><li>asdasdasdasd asdad asdasd asdas as</li></ul>", false, false);
+        Html::addHtml($section, $report->press_release, false, false);
 
         $section->addText("2. Dokumentasi Acara");
-        $imagePath = public_path('charts/dokumentasi.jpg');
-        if (file_exists($imagePath)) {
-            $section->addImage($imagePath, [
-                'alignment' => Alignment::HORIZONTAL_CENTER,
-                'width' => 420,
-                'height' => 250,
-            ]);
-        }
-        if (file_exists($imagePath)) {
-            $section->addImage($imagePath, [
-                'alignment' => Alignment::HORIZONTAL_CENTER,
-                'width' => 420,
-                'height' => 250,
-            ]);
-        }
-        if (file_exists($imagePath)) {
-            $section->addImage($imagePath, [
-                'alignment' => Alignment::HORIZONTAL_CENTER,
-                'width' => 420,
-                'height' => 250,
-            ]);
+
+        foreach ($documentations as $item) {
+            $imagePath = public_path('storage/' . $item->filename);
+            if (file_exists($imagePath)) {
+                $section->addImage($imagePath, [
+                    'alignment' => Alignment::HORIZONTAL_CENTER,
+                    'width' => 420,
+                    'height' => 250,
+                ]);
+            }
         }
 
         $section->addText("3. Daftar Hadir Peserta");
-        if (file_exists($imagePath)) {
-            $section->addImage($imagePath, [
-                'alignment' => Alignment::HORIZONTAL_CENTER,
-                'width' => 420,
-                'height' => 250,
-            ]);
-        }
-        if (file_exists($imagePath)) {
-            $section->addImage($imagePath, [
-                'alignment' => Alignment::HORIZONTAL_CENTER,
-                'width' => 420,
-                'height' => 250,
-            ]);
+        foreach ($attendances as $item) {
+            $imagePath = public_path('storage/' . $item->filename);
+            if (file_exists($imagePath)) {
+                $section->addImage($imagePath, [
+                    'alignment' => Alignment::HORIZONTAL_CENTER,
+                    'width' => 420,
+                    'height' => 250,
+                ]);
+            }
         }
 
         $section->addText("4. Bukti Kwitansi");
-        if (file_exists($imagePath)) {
-            $section->addImage($imagePath, [
-                'alignment' => Alignment::HORIZONTAL_CENTER,
-                'width' => 420,
-                'height' => 250,
-            ]);
+        foreach ($receipts as $item) {
+            $imagePath = public_path('storage/' . $item->filename);
+            if (file_exists($imagePath)) {
+                $section->addImage($imagePath, [
+                    'alignment' => Alignment::HORIZONTAL_CENTER,
+                    'width' => 420,
+                    'height' => 250,
+                ]);
+            }
         }
 
         return $phpWord;

@@ -30,6 +30,10 @@
                 </td>
             </tr>
             @endforeach
+            <tr>
+                <td colspan="3" style="text-align: center; font-style: italic; font-weight: bold">Total Pengeluaran</td>
+                <td colspan="2" style="font-weight: bold">{{ idr($budgets->sum('rupiah')) }}</td>
+            </tr>
         </tbody>
     </table>
 </div>
