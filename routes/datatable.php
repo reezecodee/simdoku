@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\DeleteFormulirController;
 use App\Http\Controllers\Backend\DeleteLetterController;
 use App\Http\Controllers\Backend\DeleteProposalController;
 use App\Http\Controllers\Backend\DeleteReportController;
+use App\Http\Controllers\Backend\DeleteSholarshipController;
 use App\Http\Controllers\Datatable\FundApplicationDatatableController;
 use App\Http\Controllers\Datatable\LetterDatatableController;
 use App\Http\Controllers\Datatable\ProposalDatatableController;
@@ -24,3 +25,4 @@ Route::delete('/hapus-surat/{id}', [DeleteLetterController::class, 'deleteLetter
 Route::delete('/hapus-formulir/{id}', [DeleteFormulirController::class, 'deleteFormulir'])->name('form.delete');
 Route::delete('/hapus-proposal/{id}', [DeleteProposalController::class, 'deleteProposal'])->name('proposal.delete');
 Route::delete('/hapus-laporan/{id}', [DeleteReportController::class, 'deleteReport'])->name('report.delete');
+Route::delete('/hapus-beasiswa/{id}', [DeleteSholarshipController::class, 'deleteScholarship'])->name('scholarship.delete');

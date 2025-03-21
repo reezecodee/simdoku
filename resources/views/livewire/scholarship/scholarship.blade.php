@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-3">
                     <a>
-                        <button wire:click="createFormulir" class="btn btn-primary">Tambah Penerima Beasiswa</button>
+                        <button wire:click="createScholarship" class="btn btn-primary">Tambah Penerima Beasiswa</button>
                     </a>
                 </div>
                 <table id="myTable" class="table table-striped">
@@ -12,6 +12,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Beasiswa</th>
+                            <th>Periode</th>
                             <th>Tahun</th>
                             <th>Action</th>
                         </tr>
@@ -31,6 +32,7 @@
                     columns: [
                         { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false }, 
                         { data: 'nama', name: 'nama' }, 
+                        { data: 'periode', name: 'periode' }, 
                         { data: 'tahun', name: 'tahun' }, 
                         { data: 'action', name: 'action', orderable: false, searchable: false } 
                     ]

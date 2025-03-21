@@ -15,19 +15,22 @@ class ScholarshipDatatableController extends Controller
 
         return DataTables::of($scholarships)
         ->addIndexColumn()
-        ->addColumn('judul', function($row){
-            return $row->judul ?? 'Judul tidak diketahui';
+        ->addColumn('nama', function($row){
+            return $row->nama ?? 'Nama beasiswa tidak diketahui';
         })
-        ->addColumn('kutipan', function($row){
-            return $row->kutipan ?? 'Kutipan tidak diketahui';
+        ->addColumn('periode', function($row){
+            return $row->periode ?? 'Periode tidak diketahui';
+        })
+        ->addColumn('tahun', function($row){
+            return $row->tahun ?? 'Tahun tidak diketahui';
         })
         ->addColumn('action', function($row){
             return '
             <div class="d-flex">
-            <a wire:navigate class="mr-2 d-inline-block" href="'. route('report.modify', $row->id) .'" style="text-decoration: none;">
+            <a wire:navigate class="mr-2 d-inline-block" href="'. route('scholarship.modify', $row->id) .'" style="text-decoration: none;">
             <button class="btn btn-primary btn-sm">Edit</button>
             </a>
-            <form action="'. route('report.delete', $row->id) .'" method="POST" id="'. $row->id .'">
+            <form action="'. route('scholarship.delete', $row->id) .'" method="POST" id="'. $row->id .'">
             '. csrf_field() .'
             '. method_field('DELETE') .'
             <button class="btn btn-danger btn-sm" onclick="submitForm(\'' . $row->id . '\')" type="button">Hapus</button>
