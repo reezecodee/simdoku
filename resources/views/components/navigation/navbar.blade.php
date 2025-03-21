@@ -104,6 +104,9 @@
         <a href="{{ route('dashboard') }}" wire:navigate.hover class="nav-link"><i
             class="fas fa-chart-pie"></i><span>Dashboard</span></a>
       </li>
+      <li class="nav-item {{ Request::is('beasiswa*') ? 'active' : '' }}">
+        <a href="{{ route('scholarship.index') }}" wire:navigate.hover class="nav-link"><i class="fas fa-graduation-cap"></i><span>Beasiswa</span></a>
+      </li>
       <li class="nav-item {{ Request::is('surat/tugas*') ? 'active' : '' }}">
         <a href="{{ route('letter.index') }}" wire:navigate.hover class="nav-link"><i class="fas fa-mail-bulk"></i><span>Buat
           Surat</span></a>

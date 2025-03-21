@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DataController;
 use App\Http\Controllers\Preview\LetterPreviewController;
 use App\Http\Controllers\Preview\PropsalPreviewController;
 use App\Http\Controllers\Preview\ReportPreviewController;
@@ -16,11 +15,16 @@ use App\Livewire\Form\ModifyFormulir;
 use App\Livewire\Letter\Assignment;
 use App\Livewire\Letter\ModifyAssignment;
 use App\Livewire\Profile\Profile;
+use App\Livewire\Scholarship\Scholarship;
 use App\Livewire\Signature\Signature;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', Dashboard::class)->name('dashboard');
+
+Route::prefix('beasiswa')->group(function(){
+    Route::get('/', Scholarship::class)->name('scholarship.index');
+});
 
 Route::prefix('surat')->group(function () {
     Route::get('tugas', Assignment::class)->name('letter.index');
