@@ -14,6 +14,7 @@
     </style>
 
     <div class="d-flex justify-content-end">
+        <button class="btn btn-success mb-3 mr-2" wire:click="uploadExcel">Upload Excel</button>
         <button class="btn btn-primary mb-3" wire:click="createStudent">Tambah Siswa</button>
     </div>
 
