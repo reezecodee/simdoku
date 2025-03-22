@@ -2,11 +2,18 @@
 
 namespace App\Livewire\Components;
 
+use App\Exports\StudentImport;
 use App\Models\Student;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentTable extends Component
 {
+    use WithFileUploads;
+
+    public $excelFile;
     public $id;
 
     public function mount($id)
@@ -29,6 +36,28 @@ class StudentTable extends Component
             $student->$field = $value;
             $student->save();
         }
+    }
+
+    public function saveExcel()
+    {
+        $this->validate([
+            'excelFile' => 'required|mimes:xlsx,csv',
+        ]);
+    
+        $filePath = $this->excelFile->store('temp', 'public');
+    
+        Excel::import(new StudentImport($this->id), Storage::disk('public')->path($filePath));
+    
+        Storage::disk('public')->delete($filePath);
+        $this->reset('excelFile');
+    
+        session()->flash('success', 'Data berhasil diimpor!');
+        return redirect()->to(route('scholarship.modify', $this->id));
+    }
+
+    public function cancleExcel()
+    {
+        $this->excelFile = null;
     }
 
     public function deleteStudent($id)

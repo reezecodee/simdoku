@@ -26,3 +26,4 @@ Route::delete('/hapus-formulir/{id}', [DeleteFormulirController::class, 'deleteF
 Route::delete('/hapus-proposal/{id}', [DeleteProposalController::class, 'deleteProposal'])->name('proposal.delete');
 Route::delete('/hapus-laporan/{id}', [DeleteReportController::class, 'deleteReport'])->name('report.delete');
 Route::delete('/hapus-beasiswa/{id}', [DeleteSholarshipController::class, 'deleteScholarship'])->name('scholarship.delete');
+Route::delete('/hapus-siswa-beasiswa/{id}', [DeleteSholarshipController::class, 'deleteAllStudents'])->name('scholarship.deleteAllStudents');

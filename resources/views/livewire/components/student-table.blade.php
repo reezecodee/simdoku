@@ -13,15 +13,35 @@
         }
     </style>
 
-    <div class="d-flex justify-content-end">
-        <button class="btn btn-success mb-3 mr-2" wire:click="uploadExcel">Upload Excel</button>
-        <button class="btn btn-primary mb-3" wire:click="createStudent">Tambah Siswa</button>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div wire:ignore>
+            <div id="file-info" class="align-items-center" style="display: none;">
+                <img src="/images/excel.svg" width="30" alt="" class="mr-2">
+                <span class="mr-2" id="filename"></span>
+                <button class="btn btn-sm btn-success mr-2" wire:click="saveExcel">Simpan</button>
+                <button class="btn btn-sm btn-danger" wire:click="cancleExcel" id="cancel-upload">Batal</button>
+            </div>
+            <input type="file" class="d-none" id="upload-excel" wire:model="excelFile" accept=".xlsx, .csv">
+        </div>
+        <div class="d-flex justify-content-end">
+            <form action="{{ route('scholarship.deleteAllStudents', $id) }}" id="delete-student" method="POST"
+                class="mr-2">
+                @csrf
+                @method('DELETE')
+                <button type="button" onclick="submitForm('delete-student')" class="btn btn-danger">Hapus
+                    Semua</button>
+            </form>
+            <button class="btn btn-success mr-2" onclick="document.getElementById('upload-excel').click()">Upload
+                Excel</button>
+            <button class="btn btn-primary" wire:click="createStudent">Tambah Siswa</button>
+        </div>
     </div>
 
     <div style="overflow-x: auto;">
         <table class="table table-striped custom-table">
             <thead>
                 <tr>
+                    <th>Aksi</th>
                     <th>Asal sekolah</th>
                     <th>NIS</th>
                     <th>NISN</th>
@@ -30,16 +50,20 @@
                     <th>Jurusan</th>
                     <th>Rangking</th>
                     <th>Besaran beasiswa</th>
-                    <th>Status loA</th>
+                    <th>Status LoA</th>
                     <th>Status SK rektor</th>
                     <th>Status pembayaran</th>
                     <th>Tanggal ajuan</th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($students as $item)
                 <tr wire:key="student-{{ $loop->iteration }}">
+                    <td>
+                        <button class="btn btn-danger" wire:click="deleteStudent('{{ $item->id }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                     <td>
                         <input type="text" class="form-control"
                             wire:input="updateStudent('{{ $item->id }}', 'asal_sekolah', $event.target.value)"
@@ -124,14 +148,29 @@
                             wire:input="updateStudent('{{ $item->id }}', 'tgl_ajuan', $event.target.value)"
                             value="{{ $item->tgl_ajuan }}">
                     </td>
-                    <td>
-                        <button class="btn btn-danger" wire:click="deleteStudent('{{ $item->id }}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    const uploadInput = document.getElementById('upload-excel');
+    const fileInfo = document.getElementById('file-info');
+    const fileName = document.getElementById('filename');
+    const cancelButton = document.getElementById('cancel-upload');
+
+    uploadInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            fileName.textContent = file.name;
+            fileInfo.style.display = 'flex';
+        }
+    });
+
+    cancelButton.addEventListener('click', function () {
+        uploadInput.value = null;
+        fileInfo.style.display = 'none';
+    });
+</script>
