@@ -47,10 +47,10 @@
             <thead>
                 <tr>
                     <th>Aksi</th>
+                    <th>Nama peserta didik</th>
                     <th>Asal sekolah</th>
                     <th>NIS</th>
                     <th>NISN</th>
-                    <th>Nama peserta didik</th>
                     <th>Kelas</th>
                     <th>Jurusan</th>
                     <th>Rangking</th>
@@ -71,6 +71,11 @@
                     </td>
                     <td>
                         <input type="text" class="form-control"
+                            wire:input="updateStudent('{{ $item->id }}', 'nama_peserta_didik', $event.target.value)"
+                            value="{{ $item->nama_peserta_didik }}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
                             wire:input="updateStudent('{{ $item->id }}', 'asal_sekolah', $event.target.value)"
                             value="{{ $item->asal_sekolah }}">
                     </td>
@@ -83,11 +88,6 @@
                         <input type="number" class="form-control"
                             wire:input="updateStudent('{{ $item->id }}', 'nisn', $event.target.value)"
                             value="{{ $item->nisn }}">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control"
-                            wire:input="updateStudent('{{ $item->id }}', 'nama_peserta_didik', $event.target.value)"
-                            value="{{ $item->nama_peserta_didik }}">
                     </td>
                     <td>
                         <select class="form-control"

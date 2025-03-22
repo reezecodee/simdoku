@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Components;
 
-use App\Exports\StudentImport;
+use App\Exports\StudentsImport;
 use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -46,7 +46,7 @@ class StudentTable extends Component
     
         $filePath = $this->excelFile->store('temp', 'public');
     
-        Excel::import(new StudentImport($this->id), Storage::disk('public')->path($filePath));
+        Excel::import(new StudentsImport($this->id), Storage::disk('public')->path($filePath));
     
         Storage::disk('public')->delete($filePath);
         $this->reset('excelFile');

@@ -9,8 +9,10 @@
                     <a href="{{ route('scholarship.statistic', $id) }}" target="_blank">
                         <button class="btn btn-success mr-2">Lihat Statistik</button>
                     </a>
-                    <button class="btn btn-primary mr-2">Download Sebagai Excel</button>
-                    <button class="btn btn-warning mr-2">Download Format</button>
+                    <button class="btn btn-primary mr-2" wire:click="downloadExcel">Download Sebagai Excel</button>
+                    <a href="{{ asset('documents/format.xlsx') }}" download>
+                        <button class="btn btn-warning mr-2">Download Format</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -44,7 +46,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <livewire:components.student-table :id="$id"/>
+            <livewire:components.student-table :id="$id" />
         </div>
     </div>
 </div>

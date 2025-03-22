@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class StudentImport implements ToModel, WithHeadingRow
+class StudentsImport implements ToModel, WithHeadingRow
 {
     protected $beasiswaId;
 

@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Scholarship;
 
+use App\Exports\StudentsExport;
 use App\Models\Scholarship;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ModifyScholarship extends Component
 {
@@ -29,6 +31,11 @@ class ModifyScholarship extends Component
         $this->scholarship->update([
             $property => $this->$property
         ]);
+    }
+
+    public function downloadExcel()
+    {
+        return Excel::download(new StudentsExport($this->id), 'students.xlsx');
     }
 
     public function render()
