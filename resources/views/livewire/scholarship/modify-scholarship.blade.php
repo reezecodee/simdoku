@@ -6,7 +6,7 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('scholarship.statistic', $id) }}" target="_blank">
+                    <a href="{{ route('scholarship.statistic', $id) }}" wire:navigate.hover>
                         <button class="btn btn-success mr-2">Lihat Statistik</button>
                     </a>
                     <button class="btn btn-primary mr-2" wire:click="downloadExcel">Download Sebagai Excel</button>

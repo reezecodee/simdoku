@@ -3,7 +3,6 @@
 use App\Http\Controllers\Preview\LetterPreviewController;
 use App\Http\Controllers\Preview\PropsalPreviewController;
 use App\Http\Controllers\Preview\ReportPreviewController;
-use App\Http\Controllers\Preview\ScholarshipStatisticController;
 use App\Livewire\Archive\ListFiles;
 use App\Livewire\Archive\UploadFile;
 use App\Livewire\Dashboard\Dashboard;
@@ -18,6 +17,7 @@ use App\Livewire\Letter\ModifyAssignment;
 use App\Livewire\Profile\Profile;
 use App\Livewire\Scholarship\ModifyScholarship;
 use App\Livewire\Scholarship\Scholarship;
+use App\Livewire\Scholarship\ScholarshipStatistics;
 use App\Livewire\Signature\Signature;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +27,7 @@ Route::get('/', Dashboard::class)->name('dashboard');
 Route::prefix('beasiswa')->group(function(){
     Route::get('/', Scholarship::class)->name('scholarship.index');
     Route::get('/{id}/modify', ModifyScholarship::class)->name('scholarship.modify');
-    Route::get('/{id}/statistik-beasiswa', [ScholarshipStatisticController::class, 'statistic'])->name('scholarship.statistic');
+    Route::get('/{id}/statistik-beasiswa', ScholarshipStatistics::class)->name('scholarship.statistic');
 });
 
 Route::prefix('surat')->group(function () {
