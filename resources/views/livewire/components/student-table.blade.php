@@ -11,6 +11,11 @@
             border: 1px solid #ddd;
             width: 200px;
         }
+
+        .custom-table th:first-child,
+        .custom-table td:first-child {
+            width: 100px;
+        }
     </style>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
