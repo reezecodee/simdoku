@@ -26,7 +26,7 @@ class WordLetterService
         $section = self::addVolunteerTable($section, $executionVolunteers);
         $section = self::addSignature($section, $letter, $my);
 
-        $output = self::output($phpWord);
+        $output = self::output($phpWord, $letter);
 
         return $output;
     }
@@ -50,11 +50,12 @@ class WordLetterService
         ];
     }
 
-    private static function output($phpWord)
+    private static function output($phpWord, $letter)
     {
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $title = " {$letter->perihal}" ?? ' Tak Berperihal';
 
-        $fileName = 'surat_pengajuan.docx';
+        $fileName = "Surat Pengajuan{$title}.docx";
         $response = response()->stream(
             function () use ($objWriter) {
                 $objWriter->save('php://output');
@@ -138,9 +139,9 @@ class WordLetterService
                 }
             }
             $section->addTextBreak(1);
-
-            return $section;
         }
+
+        return $section;
     }
 
     private static function addVolunteerTable($section, $executionVolunteers)
@@ -182,9 +183,9 @@ class WordLetterService
                 }
             }
             $section->addTextBreak(1);
-
-            return $section;
         }
+
+        return $section;
     }
 
     private static function addSignature($section, $letter, $my)

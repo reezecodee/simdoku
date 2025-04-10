@@ -62,7 +62,7 @@
     @else
     <div class="mb-5">
         <div class="d-flex justify-content-center">
-            <img src="{{ asset('svgicon/empty.svg') }}" width="100" alt="" srcset="">
+            <img src="{{ asset('images/empty.svg') }}" width="100" alt="" srcset="">
         </div>
         <p class="text-center">Tidak dapat menemukan file arsip.</p>
     </div>
