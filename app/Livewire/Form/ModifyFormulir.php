@@ -66,7 +66,8 @@ class ModifyFormulir extends Component
 
     public function exportExcel()
     {
-        return Excel::download(new FormulirExport($this->id), 'pengajuan_dana.xlsx');
+        $title = " " . $this->form->judul ?? 'Tak Berjudul';
+        return Excel::download(new FormulirExport($this->id), "Pengajuan Dana{$title}.xlsx");
     }
 
     public function render()

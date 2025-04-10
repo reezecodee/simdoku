@@ -42,12 +42,13 @@ class PDFReportService
             'roles' => $roles,
             'titles' => $titles
         ]);
+        $title = " " . $report->judul ?? 'Tak Berjudul';
 
         return response()->streamDownload(
             function () use ($pdf) {
                 echo $pdf->output();
             },
-            'laporan.pdf'
+            "Dokumen Laporan:{$title}.pdf"
         );
     }
 

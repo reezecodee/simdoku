@@ -36,7 +36,7 @@ class WordReportService
         $phpWord = self::closing($phpWord, $report, $my, $date);
         $phpWord = self::attachments($phpWord, $report, $documentations, $attendances, $receipts);
 
-        return self::output($phpWord, $evaluation);
+        return self::output($phpWord, $evaluation, $report);
     }
 
     private static function init()
@@ -71,11 +71,12 @@ class WordReportService
         return $phpWord;
     }
 
-    private static function output($phpWord, $evaluation)
+    private static function output($phpWord, $evaluation, $report)
     {
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $title = " " . $report->judul ?? 'Tak Berjudul';
 
-        $fileName = 'laporan.docx';
+        $fileName = "Dokumen Laporan:{$title}.docx";
         $imagePaths = self::generatePieChart($evaluation);
 
         return response()->stream(

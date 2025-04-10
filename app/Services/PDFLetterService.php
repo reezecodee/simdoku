@@ -9,7 +9,7 @@ class PDFLetterService
     public static function print($today, $letter, $executionStaffs, $staffs, $executionVolunteers, $volunteers)
     {
         $imageBase64 = generateBase64($letter->signature->tanda_tangan);
-        $title = " {$letter->perihal}" ?? ' Tak Berperihal';
+        $title = " " . $letter->perihal ?? 'Tak Berperihal';
 
         $pdf = Pdf::loadView('pdf.surat-tugas', [
             'letter' => $letter,

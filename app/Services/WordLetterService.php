@@ -53,7 +53,7 @@ class WordLetterService
     private static function output($phpWord, $letter)
     {
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $title = " {$letter->perihal}" ?? ' Tak Berperihal';
+        $title = " " . $letter->perihal ?? 'Tak Berperihal';
 
         $fileName = "Surat Pengajuan{$title}.docx";
         $response = response()->stream(

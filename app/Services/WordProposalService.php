@@ -22,7 +22,7 @@ class WordProposalService
         $phpWord = self::planActivity($phpWord, $proposal, $planSchedules, $committees, $budgets);
         $phpWord = self::closing($phpWord, $proposal, $today, $my);
 
-        return self::output($phpWord);
+        return self::output($phpWord, $proposal);
     }
 
     private static function init()
@@ -57,11 +57,12 @@ class WordProposalService
         return $phpWord;
     }
 
-    private static function output($phpWord)
+    private static function output($phpWord, $proposal)
     {
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $title = " " . $proposal->judul ?? "Tak Berjudul";
 
-        $fileName = 'surat_tugas.docx';
+        $fileName = "Dokumen Proposal:{$title}.docx";
         return response()->stream(
             function () use ($objWriter) {
                 $objWriter->save('php://output');
