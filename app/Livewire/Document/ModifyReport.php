@@ -47,6 +47,30 @@ class ModifyReport extends Component
         $this->my = Profile::first();
     }
 
+    protected function check()
+    {
+        if (empty($this->report->judul)) {
+            session()->flash('failed', 'Harap isi judul laporan terlebih dahulu');
+            return redirect()->to(route('report.modify', $this->id));
+        }
+
+        if (empty($this->report->signature->tanda_tangan) || empty($this->my) || empty($this->report->signature2->tanda_tangan)) {
+            session()->flash('failed', 'Harap upload atau pilih tanda tangan terlebih dahulu');
+            return redirect()->to(route('report.modify', $this->id));
+        }
+
+        $signaturePath1 = storage_path('app/public/' . $this->report->signature->tanda_tangan);
+        $signaturePath2 = storage_path('app/public/' . $this->report->signature2->tanda_tangan);
+        $signaturePath3 = storage_path('app/public/' . $this->my->tanda_tangan);
+
+        if (!file_exists($signaturePath1) || !file_exists($signaturePath2) || !file_exists($signaturePath3)) {
+            session()->flash('failed', 'Harap upload atau pilih tanda tangan terlebih dahulu');
+            return redirect()->to(route('report.modify', $this->id));
+        }
+
+        return null;
+    }
+
     public function updated($property)
     {
         $this->report->update([
@@ -54,39 +78,72 @@ class ModifyReport extends Component
         ]);
     }
 
+    public function previewReport()
+    {
+        $check = $this->check();
+
+        if ($check) return $check;
+
+        try {
+            PDFReportService::generatePieChart($this->evaluation);
+            return redirect()->to(route('report.preview', $this->report->id));
+        } catch (\Throwable $e) {
+            session()->flash('failed', 'Pastikan data evaluasi kegiatan sudah di isi dengan benar.');
+            return redirect()->to(route('report.modify', $this->id));
+        }
+    }
+
     public function createPDFDocument()
     {
-        return PDFReportService::print(
-            $this->report,
-            $this->introduction,
-            $this->planActivity,
-            $this->schedules,
-            $this->budgetRealizations,
-            $this->committee,
-            $this->evaluation,
-            $this->documentations,
-            $this->attendances,
-            $this->receipts,
-            $this->date,
-        );
+        $check = $this->check();
+
+        if ($check) return $check;
+
+        try {
+            return PDFReportService::print(
+                $this->report,
+                $this->introduction,
+                $this->planActivity,
+                $this->schedules,
+                $this->budgetRealizations,
+                $this->committee,
+                $this->evaluation,
+                $this->documentations,
+                $this->attendances,
+                $this->receipts,
+                $this->date,
+            );
+        } catch (\Throwable $e) {
+            session()->flash('failed', 'Pastikan data evaluasi kegiatan sudah di isi dengan benar.');
+            return redirect()->to(route('report.modify', $this->id));
+        }
     }
 
     public function createWordDocument()
     {
-        return WordReportService::print(
-            $this->report,
-            $this->introduction,
-            $this->planActivity,
-            $this->schedules,
-            $this->budgetRealizations,
-            $this->committee,
-            $this->evaluation,
-            $this->documentations,
-            $this->attendances,
-            $this->receipts,
-            $this->my,
-            $this->date,
-        );
+        $check = $this->check();
+
+        if ($check) return $check;
+
+        try {
+            return WordReportService::print(
+                $this->report,
+                $this->introduction,
+                $this->planActivity,
+                $this->schedules,
+                $this->budgetRealizations,
+                $this->committee,
+                $this->evaluation,
+                $this->documentations,
+                $this->attendances,
+                $this->receipts,
+                $this->my,
+                $this->date,
+            );
+        } catch (\Throwable $e) {
+            session()->flash('failed', 'Pastikan data evaluasi kegiatan sudah di isi dengan benar.');
+            return redirect()->to(route('report.modify', $this->id));
+        }
     }
 
     public function render()

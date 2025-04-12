@@ -62,7 +62,7 @@ class WordProposalService
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $title = " " . $proposal->judul ?? "Tak Berjudul";
 
-        $fileName = "Dokumen Proposal:{$title}.docx";
+        $fileName = "Dokumen{$title}.docx";
         return response()->stream(
             function () use ($objWriter) {
                 $objWriter->save('php://output');

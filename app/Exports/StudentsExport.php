@@ -61,7 +61,7 @@ class StudentsExport implements FromCollection, WithHeadings, WithColumnWidths, 
                 'Besaran Beasiswa Diajukan' => ($student->besaran_beasiswa * 100) . '%',
                 'Status LoA' => $student->status_loa,
                 'Status SK Rektor' => $student->status_sk_rektor,
-                'Status Pembayaran' => $student->status_pembayaran,
+                'Status Pembayaran ' => $student->status_pembayaran,
                 'Tgl Ajuan LoA' => Carbon::parse($student->tgl_ajuan)->format('Y/m/d'),
             ];
         });
@@ -80,7 +80,7 @@ class StudentsExport implements FromCollection, WithHeadings, WithColumnWidths, 
             'Besaran Beasiswa Diajukan',
             'Status LoA',
             'Status SK Rektor',
-            'Status Pembayaran',
+            'Status Pembayaran ',
             'Tgl Ajuan LoA',
         ];
     }

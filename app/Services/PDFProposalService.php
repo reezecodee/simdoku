@@ -24,7 +24,7 @@ class PDFProposalService{
             function () use ($pdf) {
                 echo $pdf->output();
             },
-            "Dokumen Proposal:{$title}.pdf"
+            "Dokumen{$title}.pdf"
         );
     }
 }

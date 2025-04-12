@@ -19,14 +19,8 @@ class ModifyProposal extends Component
     #[Title('Modify Proposal Kegiatan')]
 
     public $judul, $tahun, $kata_pengantar, $penutup;
-
-    public $id;
-    public $proposal;
-    public $date;
-    public $my;
-    public $planSchedules = [];
-    public $committees = [];
-    public $budgets = [];
+    public $id, $proposal, $date, $my;
+    public $planSchedules = [], $committees = [], $budgets = [];
 
     public function mount($id)
     {
@@ -46,14 +40,7 @@ class ModifyProposal extends Component
         $this->budgets = ProposalBudgetPlan::where('proposal_id', $id)->get();
     }
 
-    public function updated($property)
-    {
-        $this->proposal->update([
-            $property => $this->$property
-        ]);
-    }
-
-    public function createWordDocument()
+    protected function check()
     {
         if (empty($this->proposal->judul)) {
             session()->flash('failed', 'Harap isi judul proposal terlebih dahulu');
@@ -72,6 +59,31 @@ class ModifyProposal extends Component
             session()->flash('failed', 'Harap upload atau pilih tanda tangan terlebih dahulu');
             return redirect()->to(route('proposal.modify', $this->id));
         }
+
+        return null;
+    }
+
+    public function updated($property)
+    {
+        $this->proposal->update([
+            $property => $this->$property
+        ]);
+    }
+
+    public function previewProposal()
+    {
+        $check = $this->check();
+
+        if ($check) return $check;
+
+        return redirect()->to(route('proposal.preview', $this->proposal->id));
+    }
+
+    public function createWordDocument()
+    {
+        $check = $this->check();
+
+        if ($check) return $check;
 
         return WordProposalService::print(
             $this->proposal,
@@ -85,23 +97,9 @@ class ModifyProposal extends Component
 
     public function createPDFDocument()
     {
-        if (empty($this->proposal->judul)) {
-            session()->flash('failed', 'Harap isi judul proposal terlebih dahulu');
-            return redirect()->to(route('proposal.modify', $this->id));
-        }
+        $check = $this->check();
 
-        if (empty($this->proposal->signature->tanda_tangan) || empty($this->my)) {
-            session()->flash('failed', 'Harap upload atau pilih tanda tangan terlebih dahulu');
-            return redirect()->to(route('proposal.modify', $this->id));
-        }
-
-        $signaturePath1 = storage_path('app/public/' . $this->proposal->signature->tanda_tangan);
-        $signaturePath2 = storage_path('app/public/' . $this->my->tanda_tangan);
-
-        if (!file_exists($signaturePath1) || !file_exists($signaturePath2)) {
-            session()->flash('failed', 'Harap upload atau pilih tanda tangan terlebih dahulu');
-            return redirect()->to(route('proposal.modify', $this->id));
-        }
+        if ($check) return $check;
 
         return PDFProposalService::print(
             $this->proposal,

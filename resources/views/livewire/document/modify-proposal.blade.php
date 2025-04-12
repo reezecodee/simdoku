@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading wire:target="createWordDocument, createPDFDocument" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
@@ -6,9 +9,7 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('proposal.preview', $id) }}" target="_blank">
-                        <button class="btn btn-success mr-2">Preview Proposal</button>
-                    </a>
+                    <button class="btn btn-success mr-2" wire:click="previewProposal">Preview Proposal</button>
                     <button class="btn btn-primary mr-2" wire:click="createWordDocument">Cetak Word</button>
                     <button class="btn btn-danger" wire:click="createPDFDocument">Cetak PDF</button>
                 </div>
@@ -82,8 +83,8 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-center">
-                    <livewire:components.select-signature doc="proposal"
-                        signature="ttd_ketua_panitia_id" function-name="SignatureLeadCommittee" :id="$id" />
+                    <livewire:components.select-signature doc="proposal" signature="ttd_ketua_panitia_id"
+                        function-name="SignatureLeadCommittee" :id="$id" />
                 </div>
                 <div class="d-flex justify-content-center">
                     <div class="text-center">

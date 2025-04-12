@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading wire:target="exportExcel" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
@@ -21,8 +24,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="kampus"><b>Hari/Tgl. Pengajuan</b></label>
-                        <input wire:model.lazy="tgl_pengajuan" type="text" class="form-control" placeholder="Masukkan tanggal pengajuan">
+                        <label for="kampus"><b>Tgl. Pengajuan</b></label>
+                        <input wire:model.lazy="tgl_pengajuan" type="date" class="form-control" placeholder="Masukkan tanggal pengajuan">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -52,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="kampus"><b>Tanggal Diperlukan</b></label>
-                        <input wire:model.lazy="tgl_diperlukan" type="text" class="form-control" placeholder="Masukkan tanggal diperlukan">
+                        <input wire:model.lazy="tgl_diperlukan" type="date" class="form-control" placeholder="Masukkan tanggal diperlukan">
                     </div>
                 </div>
             </div>
@@ -80,7 +83,7 @@
                             <input type="text" wire:input="updateBudget('{{ $item->id }}', 'keterangan', $event.target.value)" class="form-control" value="{{ $item->keterangan }}">
                         </td>
                         <td>
-                            <input type="text" wire:input="updateBudget('{{ $item->id }}', 'jumlah', $event.target.value)" class="form-control" value="{{ $item->jumlah }}">
+                            <input type="number" wire:input="updateBudget('{{ $item->id }}', 'jumlah', $event.target.value)" class="form-control" value="{{ $item->jumlah }}">
                         </td>
                         <td>
                             <button class="btn btn-danger" wire:click="deleteBudget('{{ $item->id }}')"><i class="fas fa-trash"></i></button>
@@ -90,14 +93,14 @@
                     <tr>
                         <td colspan="2"><b>Total Dana Dibutuhkan:</b></td>
                         <td style="text-align: right">
-                            <span id="totalTotal"><b>Rp. {{ $total }}</b></span> 
+                            <span id="totalTotal"><b>{{ idr($total) }}</b></span> 
                         </td>
                         <td></td>
                     </tr>
                     <tr>
                         <td colspan="2"><b>Terbilang:</b></td>
                         <td style="text-align: right">
-                            <span><b>#{{ $terbilang }}#</b></span> 
+                            <span><b>#{{ $terbilang }} Rupiah#</b></span> 
                         </td>
                         <td></td>
                     </tr>

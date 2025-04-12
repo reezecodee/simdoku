@@ -43,6 +43,40 @@
         trix-editor {
             min-height: 10rem;
         }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+        }
+
+        .spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #6777EF;
+            border-radius: 50%;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
     </style>
 </head>
 

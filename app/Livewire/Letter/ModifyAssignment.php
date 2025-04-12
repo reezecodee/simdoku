@@ -17,18 +17,9 @@ class ModifyAssignment extends Component
 {
     #[Title('Buat Surat Tugas')]
 
-    public $id;
-    public $today;
-    public $letter;
-    public $my;
-
-    public $firstIdExecutionStaff;
-    public $firstIdExecutionVolunteer;
-
-    public $executionStaffs;
-    public $staffs;
-    public $executionVolunteers;
-    public $volunteers;
+    public $id, $today, $letter, $my;
+    public $firstIdExecutionStaff, $firstIdExecutionVolunteer;
+    public $executionStaffs, $staffs, $executionVolunteers, $volunteers;
 
     public function mount($id)
     {
@@ -46,27 +37,42 @@ class ModifyAssignment extends Component
         $this->volunteers = Volunteer::where('surat_tugas_id', $id)->get();
     }
 
+    public function previewLetter()
+    {
+        return redirect()->to(route('letter.preview', $this->id));
+    }
+
     public function printPDF()
     {
-        return PDFLetterService::print(
-            $this->today,
-            $this->letter,
-            $this->executionStaffs,
-            $this->staffs,
-            $this->executionVolunteers,
-            $this->volunteers
-        );
+        try {
+            return PDFLetterService::print(
+                $this->today,
+                $this->letter,
+                $this->executionStaffs,
+                $this->staffs,
+                $this->executionVolunteers,
+                $this->volunteers
+            );
+        } catch (\Throwable $e) {
+            session()->flash('failed', 'Terjadi kesalahan saat mencoba mengexpor PDF.');
+            return redirect()->to(route('letter.modify', $this->id));
+        }
     }
 
     public function printWord()
     {
-        return WordLetterService::print(
-            $this->today,
-            $this->letter,
-            $this->executionStaffs,
-            $this->executionVolunteers,
-            $this->my
-        );
+        try {
+            return WordLetterService::print(
+                $this->today,
+                $this->letter,
+                $this->executionStaffs,
+                $this->executionVolunteers,
+                $this->my
+            );
+        } catch (\Throwable $e) {
+            session()->flash('failed', 'Terjadi kesalahan saat mencoba mengexpor Word.');
+            return redirect()->to(route('letter.modify', $this->id));
+        }
     }
 
     public function render()

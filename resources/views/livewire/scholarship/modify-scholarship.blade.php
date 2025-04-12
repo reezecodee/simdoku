@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading wire:target="downloadExcel" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">

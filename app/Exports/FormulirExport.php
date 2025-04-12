@@ -4,11 +4,15 @@ namespace App\Exports;
 
 use App\Models\BudgetSubmission;
 use App\Models\Formulir;
+use App\Models\Profile;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use Riskihajar\Terbilang\Facades\Terbilang;
 
 class FormulirExport implements FromCollection, WithEvents
 {
@@ -16,14 +20,14 @@ class FormulirExport implements FromCollection, WithEvents
      * @return \Illuminate\Support\Collection
      */
 
-    public $id;
-    public $formulir;
-    public $budgets;
+    public $id, $formulir, $budgets, $my;
 
     public function __construct($id)
     {
         $this->id = $id;
         $this->formulir = Formulir::findOrFail($id);
+        $this->my = Profile::first();
+
         $this->budgets = BudgetSubmission::where('formulir_id', $id)->get();
     }
 
@@ -34,6 +38,8 @@ class FormulirExport implements FromCollection, WithEvents
 
     public function registerEvents(): array
     {
+        Config::set('terbilang.locale', 'id');
+
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->setShowGridlines(false);
@@ -55,16 +61,6 @@ class FormulirExport implements FromCollection, WithEvents
                 $drawing->setOffsetY(5);
                 $drawing->setWorksheet($event->sheet->getDelegate());
 
-                $signature = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-                $signature->setName('TTD');
-                $signature->setDescription('TTD');
-                $signature->setPath(public_path('/ttd.png'));
-                $signature->setHeight(70);
-                $signature->setCoordinates('C18');
-                $signature->setOffsetX(75);
-                $signature->setOffsetY(-20);
-                $signature->setWorksheet($event->sheet->getDelegate());
-
                 $event->sheet->getRowDimension('1')->setRowHeight(70);
                 $event->sheet->mergeCells('A1:C1');
                 $event->sheet->setCellValue('A1', "FORMULIR PERMOHONAN PENGAJUAN DANA\nUNIVERSITAS BINA SARANA INFORMATIKA");
@@ -82,7 +78,7 @@ class FormulirExport implements FromCollection, WithEvents
 
                 $event->sheet->setCellValue('A4', 'Pemohon');
                 $event->sheet->setCellValue('B4', $this->formulir->pemohon);
-                $event->sheet->setCellValue('C4',  $this->formulir->tgl_pengajuan);
+                $event->sheet->setCellValue('C4',  Carbon::parse($this->formulir->tgl_pengajuan)->translatedFormat('l, d F Y'));
 
                 $event->sheet->setCellValue('A5', 'Unit Kerja');
                 $event->sheet->setCellValue('B5',  $this->formulir->unit_kerja);
@@ -94,7 +90,7 @@ class FormulirExport implements FromCollection, WithEvents
 
                 $event->sheet->setCellValue('A7', 'Nama');
                 $event->sheet->setCellValue('B7', $this->formulir->atas_nama);
-                $event->sheet->setCellValue('C7', $this->formulir->tgl_diperlukan);
+                $event->sheet->setCellValue('C7', Carbon::parse($this->formulir->tgl_diperlukan)->translatedFormat('l, d F Y'));
 
                 $event->sheet->mergeCells('A8:B8');
                 $event->sheet->setCellValue('A8', 'Keterangan Pengajuan Dana');
@@ -108,18 +104,20 @@ class FormulirExport implements FromCollection, WithEvents
                 foreach ($this->budgets as $item) {
                     $event->sheet->mergeCells("A{$i}:B{$i}");
                     $event->sheet->setCellValue("A{$i}", $item->keterangan);
-                    $event->sheet->setCellValue("C{$i}", "Rp. " . $item->jumlah);
+                    $event->sheet->setCellValue("C{$i}", idr($item->jumlah));
                     $i++;
                 }
 
                 $totalRow = $i + 1;
                 $signaturesStartRow = $i + 4;
 
-                $event->sheet->mergeCells("A". $totalRow .":B". $totalRow);
-                $event->sheet->mergeCells("A". $totalRow + 1 .":C". $totalRow + 1);
+                $event->sheet->mergeCells("A" . $totalRow . ":B" . $totalRow);
+                $event->sheet->mergeCells("A" . $totalRow + 1 . ":C" . $totalRow + 1);
                 $event->sheet->setCellValue("A{$totalRow}", 'Total Dana Dibutuhkan');
-                $event->sheet->setCellValue("A".($totalRow + 1), "Terbilang # Enam Ratus Dua Puluh Lima Rupiah");
-                $event->sheet->setCellValue("C{$totalRow}", "Rp. 0");
+                $total = $this->budgets->sum('jumlah');
+                $terbilang = ucwords(Terbilang::make($total));
+                $event->sheet->setCellValue("A" . ($totalRow + 1), "Terbilang # {$terbilang} Rupiah #");
+                $event->sheet->setCellValue("C{$totalRow}", idr($total));
 
                 $event->sheet->getStyle("A8:C8")->applyFromArray([
                     'fill' => [
@@ -166,9 +164,9 @@ class FormulirExport implements FromCollection, WithEvents
                 $event->sheet->setCellValue("B" . ($signaturesStartRow + 1), 'Ka. BAKU');
                 $event->sheet->setCellValue("C" . ($signaturesStartRow + 1), 'Kepala Kampus UBSI Kampus Tasikmalaya');
 
-                $event->sheet->setCellValue("A" . ($signaturesStartRow + 5), '(Ir. Naba Aji Noto Seputro, M.Kom)');
-                $event->sheet->setCellValue("B" . ($signaturesStartRow + 5), '(Dwi Astuti Ratriningsih, M.Kom)');
-                $event->sheet->setCellValue("C" . ($signaturesStartRow + 5), '(Agung Baitul Hikmah,S.Kom, M.Kom)');
+                $event->sheet->setCellValue("A" . ($signaturesStartRow + 5), "({$this->formulir->signature->nama_pemilik})");
+                $event->sheet->setCellValue("B" . ($signaturesStartRow + 5), "({$this->formulir->signature2->nama_pemilik})");
+                $event->sheet->setCellValue("C" . ($signaturesStartRow + 5), "({$this->my->nama})");
 
                 $event->sheet->setCellValue("A" . ($signaturesStartRow + 6), 'Tanggal :');
 
@@ -186,7 +184,7 @@ class FormulirExport implements FromCollection, WithEvents
                 $leftBorder = [
                     'borders' => [
                         'left' => [
-                            'borderStyle' => Border::BORDER_THIN, 
+                            'borderStyle' => Border::BORDER_THIN,
                         ],
                     ],
                 ];
@@ -201,7 +199,7 @@ class FormulirExport implements FromCollection, WithEvents
                 $signature->setDescription('TTD');
                 $signature->setPath(public_path('/ttd.png'));
                 $signature->setHeight(70);
-                $signature->setCoordinates('C'.$totalRow + 6);
+                $signature->setCoordinates('C' . $totalRow + 6);
                 $signature->setOffsetX(75);
                 $signature->setOffsetY(-20);
                 $signature->setWorksheet($event->sheet->getDelegate());

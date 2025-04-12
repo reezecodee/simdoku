@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading wire:target="createWordDocument, createPDFDocument" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
@@ -6,9 +9,7 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('report.preview', $id) }}" target="_blank">
-                        <button class="btn btn-success mr-2">Preview Laporan</button>
-                    </a>
+                    <button class="btn btn-success mr-2" wire:click="previewReport">Preview Laporan</button>
                     <button class="btn btn-primary mr-2" wire:click="createWordDocument">Cetak Word</button>
                     <button class="btn btn-danger" wire:click="createPDFDocument">Cetak PDF</button>
                 </div>
@@ -83,7 +84,7 @@
                         <div>
                             <p class="text-center">Pelaksana,</p>
                             <livewire:components.select-signature doc="report" signature="ttd_ketua_pelaksana"
-                            function-name="SignatureChiefExecutive" :id="$id" />
+                                function-name="SignatureChiefExecutive" :id="$id" />
                             <p class="text-center">Ketua Pelaksana</p>
                         </div>
                     </div>
@@ -92,7 +93,7 @@
                     <div>
                         <p class="text-center">Menyetujui,</p>
                         <livewire:components.select-signature doc="report" signature="ttd_kadiv_dmer"
-                        function-name="SignatureKaDivMER" relation-name="signature2" :id="$id" />
+                            function-name="SignatureKaDivMER" relation-name="signature2" :id="$id" />
                         <p class="text-center">Kadiv DMER Universitas Bina Sarana Informatika</p>
                     </div>
                 </div>

@@ -48,11 +48,11 @@ class PDFReportService
             function () use ($pdf) {
                 echo $pdf->output();
             },
-            "Dokumen Laporan:{$title}.pdf"
+            "Dokumen{$title}.pdf"
         );
     }
 
-    private static function generatePieChart($evaluation)
+    public static function generatePieChart($evaluation)
     {
         require_once(public_path('jpgraph/src/jpgraph.php'));
         require_once(public_path('jpgraph/src/jpgraph_pie.php'));

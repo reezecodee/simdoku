@@ -35,7 +35,8 @@ class ModifyScholarship extends Component
 
     public function downloadExcel()
     {
-        return Excel::download(new StudentsExport($this->id), 'students.xlsx');
+        $title = $this->nama ?? 'Beasiswa Tak Berjudul';
+        return Excel::download(new StudentsExport($this->id), "{$title}.xlsx");
     }
 
     public function render()

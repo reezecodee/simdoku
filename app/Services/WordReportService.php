@@ -76,7 +76,7 @@ class WordReportService
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $title = " " . $report->judul ?? 'Tak Berjudul';
 
-        $fileName = "Dokumen Laporan:{$title}.docx";
+        $fileName = "Dokumen{$title}.docx";
         $imagePaths = self::generatePieChart($evaluation);
 
         return response()->stream(
@@ -101,7 +101,7 @@ class WordReportService
         return $response;
     }
 
-    private static function generatePieChart($evaluation)
+    public static function generatePieChart($evaluation)
     {
         require_once(public_path('jpgraph/src/jpgraph.php'));
         require_once(public_path('jpgraph/src/jpgraph_pie.php'));

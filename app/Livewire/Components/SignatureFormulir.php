@@ -34,7 +34,7 @@ class SignatureFormulir extends Component
 
     public function render()
     {
-        $signatures = Signature::where('status', $this->position)->get();
+        $signatures = Signature::all();
 
         return view('livewire.components.signature-formulir', compact('signatures'));
     }
