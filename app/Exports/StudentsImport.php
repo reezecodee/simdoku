@@ -18,27 +18,24 @@ class StudentsImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+        $tglAjuan = Carbon::createFromFormat('Y/m/d', trim($row['tgl_ajuan_loa']))->format('Y-m-d');
+
         $nomorInduk = explode('/', $row['nomor_induknisn']);
-        if (is_numeric($row['tgl_ajuan_loa'])) {
-            $tanggalAjuan = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_ajuan_loa']))->format('Y-m-d');
-        } else {
-            $tanggalAjuan = Carbon::createFromFormat('d/m/Y', trim($row['tgl_ajuan_loa']))->format('Y-m-d');
-        }
 
         return new Student([
             'beasiswa_id' => $this->beasiswaId,
-            'asal_sekolah' => $row['nama_asal_sekolah'],
-            'nis' => trim($nomorInduk[0]) ?? '',
-            'nisn' => trim($nomorInduk[1]) ?? '',
-            'nama_peserta_didik' => $row['nama_peserta_didik'],
-            'kelas' => $row['kelas'],
-            'jurusan' => $row['jurusan'],
-            'rangking' => $row['rangking'],
-            'besaran_beasiswa' => $row['besaran_beasiswa_diajukan'],
-            'status_loa' => $row['status_loa'],
-            'status_sk_rektor' => $row['status_sk_rektor'],
-            'status_pembayaran' => $row['status_pembayaran'],
-            'tgl_ajuan' => $tanggalAjuan
+            'asal_sekolah' => trim($row['nama_asal_sekolah']),
+            'nis' => isset($nomorInduk[0]) ? trim($nomorInduk[0]) : null,
+            'nisn' => isset($nomorInduk[1]) ? trim($nomorInduk[1]) : null,
+            'nama_peserta_didik' => trim($row['nama_peserta_didik']),
+            'kelas' => trim($row['kelas']),
+            'jurusan' => trim($row['jurusan']),
+            'rangking' => (int) $row['rangking'],
+            'besaran_beasiswa' => (float) str_replace('%', '', trim($row['besaran_beasiswa_diajukan'])),
+            'status_loa' => trim($row['status_loa']),
+            'status_sk_rektor' => trim($row['status_sk_rektor']),
+            'status_pembayaran' => trim($row['status_pembayaran']),
+            'tgl_ajuan' => $tglAjuan,
         ]);
     }
 }

@@ -15,9 +15,7 @@ class ModifyFormulir extends Component
 {
     #[Title('Modify Formulir Kegiatan')]
 
-    public $id;
-    public $form;
-
+    public $id, $form;
     public $judul, $tgl_pengajuan, $pemohon, $unit_kerja, $no_rekening, $atas_nama, $tgl_diperlukan;
 
     public function mount($id)

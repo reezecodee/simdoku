@@ -1,5 +1,5 @@
 <div>
-    <div wire:loading wire:target="downloadExcel" class="loading-overlay">
+    <div wire:loading wire:target="downloadExcel, checkStatistics" class="loading-overlay">
         <div class="spinner"></div>
     </div>
     <div class="card">
@@ -9,9 +9,7 @@
                     <button class="btn btn-danger">Kembali</button>
                 </a>
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('scholarship.statistic', $id) }}" wire:navigate.hover>
-                        <button class="btn btn-success mr-2">Lihat Statistik</button>
-                    </a>
+                    <button class="btn btn-success mr-2" wire:click="checkStatistics">Lihat Statistik</button>
                     <button class="btn btn-primary mr-2" wire:click="downloadExcel">Download Sebagai Excel</button>
                     <a href="{{ asset('documents/format.xlsx') }}" download>
                         <button class="btn btn-warning mr-2">Download Format</button>

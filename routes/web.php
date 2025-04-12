@@ -28,7 +28,7 @@ Route::middleware(['clear-chart'])->group(function () {
     Route::prefix('beasiswa')->group(function () {
         Route::get('/', Scholarship::class)->name('scholarship.index');
         Route::get('/{id}/modify', ModifyScholarship::class)->name('scholarship.modify');
-        Route::get('/{id}/statistik-beasiswa', ScholarshipStatistics::class)->name('scholarship.statistic');
+        Route::get('/{id}/statistik-beasiswa', ScholarshipStatistics::class)->withoutMiddleware(['clear-chart'])->name('scholarship.statistic');
     });
 
     Route::prefix('surat')->group(function () {

@@ -18,8 +18,8 @@
         }
     </style>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <div wire:ignore>
+    <div class="d-flex justify-content-between align-items-center mb-3" wire:ignore>
+        <div>
             <div id="file-info" class="align-items-center" style="display: none;">
                 <img src="/images/excel.svg" width="30" alt="" class="mr-2">
                 <span class="mr-2" id="filename"></span>

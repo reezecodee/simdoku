@@ -40,19 +40,27 @@ class StudentTable extends Component
 
     public function saveExcel()
     {
-        $this->validate([
-            'excelFile' => 'required|mimes:xlsx,csv',
-        ]);
-    
-        $filePath = $this->excelFile->store('temp', 'public');
-    
-        Excel::import(new StudentsImport($this->id), Storage::disk('public')->path($filePath));
-    
-        Storage::disk('public')->delete($filePath);
-        $this->reset('excelFile');
-    
-        session()->flash('success', 'Data berhasil diimpor!');
-        return redirect()->to(route('scholarship.modify', $this->id));
+        try {
+            $this->validate([
+                'excelFile' => 'required|mimes:xlsx',
+            ]);
+
+            $filePath = $this->excelFile->store('temp', 'public');
+
+            Excel::import(new StudentsImport($this->id), Storage::disk('public')->path($filePath));
+
+            Storage::disk('public')->delete($filePath);
+            $this->reset('excelFile');
+
+            session()->flash('success', 'Data berhasil diimpor!');
+            return redirect()->to(route('scholarship.modify', $this->id));
+        } catch (\Throwable $e) {
+            session()->flash('failed', 'Terjadi kesalahan saat mencoba mengimpor data excel, harap gunakan formta yang sudah disediakan.');
+            return redirect()->to(route('form.modify', $this->id));
+        } finally {
+            $files = Storage::disk('public')->allFiles('temp');
+            Storage::disk('public')->delete($files);
+        }
     }
 
     public function cancleExcel()
