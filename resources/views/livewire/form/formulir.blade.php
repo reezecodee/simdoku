@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading wire:target="createFormulir" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="section-body">
         <div class="card">
             <div class="card-body">

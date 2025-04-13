@@ -16,6 +16,17 @@ class Signature extends Component
     public function deleteSignature($id)
     {
         $signature = SG::findOrFail($id);
+        $relations = ['letter', 'proposal', 'report', 'report2', 'formulir', 'formulir2'];
+
+        foreach ($relations as $relation) {
+            if (
+                method_exists($signature, $relation) &&
+                $signature->$relation()->exists()
+            ) {
+                session()->flash('failed', 'Tanda tangan tidak bisa dihapus karena masih digunakan di data lain.');
+                return redirect()->to(route('signature.index'));
+            }
+        }
 
         if ($signature->tanda_tangan && Storage::disk('public')->exists($signature->tanda_tangan)) {
             Storage::disk('public')->delete($signature->tanda_tangan);
@@ -33,14 +44,14 @@ class Signature extends Component
             $signature->save();
         }
     }
-    
+
     public function render()
     {
-        $signatures = SG::when($this->search, function($query) {
+        $signatures = SG::when($this->search, function ($query) {
             return $query->where('nama_pemilik', 'like', '%' . $this->search . '%');
         })
-        ->orderBy('created_at', 'desc')
-        ->paginate(6);
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
         $total = SG::count();
 
         return view('livewire.signature.signature', compact('signatures', 'total'));
