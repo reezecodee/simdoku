@@ -12,73 +12,15 @@
           class="nav-link" wire:navigate.hover>Upload Tanda Tangan</a></li>
     </ul>
   </div>
-  <form class="form-inline ml-auto">
+  <div class="form-inline ml-auto">
     <ul class="navbar-nav">
-      <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+      <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
+      </li>
     </ul>
-    <div class="search-element">
-      <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-      <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-      <div class="search-backdrop"></div>
-      <div class="search-result">
-        <div class="search-header">
-          Histories
-        </div>
-        <div class="search-item">
-          <a href="#">How to hack NASA using CSS</a>
-          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-        </div>
-        <div class="search-item">
-          <a href="#">Kodinger.com</a>
-          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-        </div>
-        <div class="search-item">
-          <a href="#">#Stisla</a>
-          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-        </div>
-        <div class="search-header">
-          Result
-        </div>
-        <div class="search-item">
-          <a href="#">
-            <img class="mr-3 rounded" width="30" src="" alt="product">
-            oPhone S9 Limited Edition
-          </a>
-        </div>
-        <div class="search-item">
-          <a href="#">
-            <img class="mr-3 rounded" width="30" src="" alt="product">
-            Drone X2 New Gen-7
-          </a>
-        </div>
-        <div class="search-item">
-          <a href="#">
-            <img class="mr-3 rounded" width="30" src="" alt="product">
-            Headphone Blitz
-          </a>
-        </div>
-        <div class="search-header">
-          Projects
-        </div>
-        <div class="search-item">
-          <a href="#">
-            <div class="search-icon bg-danger text-white mr-3">
-              <i class="fas fa-code"></i>
-            </div>
-            Stisla Admin Template
-          </a>
-        </div>
-        <div class="search-item">
-          <a href="#">
-            <div class="search-icon bg-primary text-white mr-3">
-              <i class="fas fa-laptop"></i>
-            </div>
-            Create a new Homepage Design
-          </a>
-        </div>
-      </div>
+    <div class="search-element" style="max-width: 600px">
+      <livewire:components.search-document />
     </div>
-  </form>
+  </div>
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
         <img alt="image" src="{{ asset('images/profile/profile.jpg') }}" class="rounded-circle mr-1">
@@ -105,11 +47,13 @@
             class="fas fa-chart-pie"></i><span>Dashboard</span></a>
       </li>
       <li class="nav-item {{ Request::is('beasiswa*') ? 'active' : '' }}">
-        <a href="{{ route('scholarship.index') }}" wire:navigate.hover class="nav-link"><i class="fas fa-graduation-cap"></i><span>Beasiswa</span></a>
+        <a href="{{ route('scholarship.index') }}" wire:navigate.hover class="nav-link"><i
+            class="fas fa-graduation-cap"></i><span>Beasiswa</span></a>
       </li>
       <li class="nav-item {{ Request::is('surat/tugas*') ? 'active' : '' }}">
-        <a href="{{ route('letter.index') }}" wire:navigate.hover class="nav-link"><i class="fas fa-mail-bulk"></i><span>Buat
-          Surat</span></a>
+        <a href="{{ route('letter.index') }}" wire:navigate.hover class="nav-link"><i
+            class="fas fa-mail-bulk"></i><span>Buat
+            Surat</span></a>
       </li>
       <li class="nav-item {{ Request::is('proposal*') || Request::is('laporan*') ? 'active' : '' }} dropdown">
         <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-book"></i><span>Proposal &
